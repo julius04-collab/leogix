@@ -331,7 +331,7 @@ h1 .soft{color:var(--ink);opacity:.22}
 .exit .say2{max-width:340px}
 .exit h3{margin:0;font-weight:800;font-size:clamp(30px,3.4vw,56px);line-height:.95;letter-spacing:-.045em;color:var(--ink)}
 .exit p{margin:14px 0 0;color:var(--muted);font-size:17px}
-.phone{position:relative;width:min(300px,64vw);aspect-ratio:390/844;border-radius:15cqw;background:#0E0F12;padding:2.6cqw;box-shadow:0 0 0 1px #2B2D33 inset,0 0 0 .6cqw #1C1D22 inset,0 60px 100px rgba(20,21,25,.3);container-type:inline-size}
+.phone{--pw:min(300px,64vw);position:relative;width:var(--pw);aspect-ratio:390/844;border-radius:calc(var(--pw) * .155);background:#0E0F12;padding:calc(var(--pw) * .028);box-shadow:0 0 0 1px #2B2D33 inset,0 0 0 calc(var(--pw) * .007) #1C1D22 inset,0 60px 100px rgba(20,21,25,.3);container-type:inline-size}
 .phone::before{content:"";position:absolute;top:4.6cqw;left:50%;width:31cqw;height:8.6cqw;transform:translateX(-50%);border-radius:99px;background:#000;z-index:3}
 .pscreen{position:relative;height:100%;border-radius:12.5cqw;overflow:hidden;background:#EEF0F4;container-type:inline-size}
 .sbar{position:absolute;z-index:1;left:0;right:0;top:0;height:13cqw;display:flex;align-items:center;justify-content:space-between;padding:0 7cqw 0 9.5cqw;font:600 4.2cqw/1 -apple-system,"SF Pro Text",var(--font);color:#141519}
@@ -418,7 +418,7 @@ h1 .soft{color:var(--ink);opacity:.22}
   .exit .say,.exit .say2{justify-self:center;text-align:center}
   .exit .say2{display:none}
   .exit h3{font-size:30px}
-  .phone{width:min(220px,56vw)}
+  .phone{--pw:min(220px,56vw)}
   .exit h3{font-size:26px}
   .exit p{font-size:15px;margin-top:8px}
   .fl img{width:calc(var(--s,120px) * .5)}
@@ -462,11 +462,11 @@ h1 .soft{color:var(--ink);opacity:.22}
 .ib{position:relative;width:40px;height:40px;border-radius:99px;background:#fff;display:grid;place-items:center;color:#2A2C33}
 .ib svg{width:18px}
 .ib .dot{position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:99px;background:#E8083A;border:2px solid #fff}
-.me{width:40px;height:40px;border-radius:99px;background:#1A1D23;color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.dui .me{width:40px;height:40px;border-radius:99px;background:#1A1D23;color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
 .drail{position:absolute;left:20px;top:226px;width:52px;padding:12px 0;border-radius:99px;background:#fff;display:flex;flex-direction:column;align-items:center;gap:16px}
 .drail i{width:24px;height:24px;border-radius:8px;background:#EEF0F4}
 .drail i.on{background:#FFE6DF;box-shadow:inset 0 0 0 2px #F75831}
-.dbody{position:absolute;left:96px;right:28px;top:96px}
+.dui .dmain{position:absolute;left:96px;right:28px;top:96px}
 .dtitle{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px}
 .dtitle h4{margin:0;font-size:30px;font-weight:700;letter-spacing:-.02em}
 .dtitle p{margin:6px 0 0;font-size:15px;color:#5B6270}
@@ -510,12 +510,12 @@ h1 .soft{color:var(--ink);opacity:.22}
 .ch span{font-size:17px;font-weight:500}
 .cc{color:#F75831;font-size:15px;font-weight:600}
 .bars{position:absolute;left:20px;right:20px;bottom:44px;top:86px;display:flex;align-items:flex-end;gap:14px;background-image:repeating-linear-gradient(0deg,transparent 0 41px,#F1F1F3 41px 42px)}
-.bar{position:relative;flex:1;height:100%;display:flex;align-items:flex-end}
-.bar i{display:block;width:100%;height:var(--h,10%);border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#F9A58A,#F75831);transition:height .9s cubic-bezier(.16,1,.3,1)}
-.bar.fut i{background:#FDF1EC;height:100%!important}
-.bar.now i{background:linear-gradient(180deg,#FFB21C,#F75831 60%,#E8083A);box-shadow:0 0 0 3px rgba(247,88,49,.18)}
-.bar.hl i{filter:brightness(1.08);box-shadow:0 0 0 3px rgba(247,88,49,.35)}
-.bar span{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-size:13px;color:#5B6270}
+.dui .bar{position:relative;flex:1;height:100%;display:flex;align-items:flex-end}
+.dui .bar i{display:block;width:100%;height:var(--h,10%);border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#F9A58A,#F75831);transition:height .9s cubic-bezier(.16,1,.3,1)}
+.dui .bar.fut i{background:#FDF1EC;height:100%!important}
+.dui .bar.now i{background:linear-gradient(180deg,#FFB21C,#F75831 60%,#E8083A);box-shadow:0 0 0 3px rgba(247,88,49,.18)}
+.dui .bar.hl i{filter:brightness(1.08);box-shadow:0 0 0 3px rgba(247,88,49,.35)}
+.dui .bar span{position:absolute;bottom:-26px;left:0;right:0;text-align:center;font-size:13px;color:#5B6270}
 .tip{position:absolute;padding:8px 12px;border-radius:10px;background:#1A1D23;color:#fff;font-size:13px;white-space:nowrap;opacity:0;transform:translate(-50%,-6px);transition:opacity .25s,transform .25s;pointer-events:none;z-index:3}
 .tip.on{opacity:1;transform:translate(-50%,-14px)}
 .kc.cal{background:#1E1F24;color:#fff;height:300px;padding:18px 20px}
@@ -755,7 +755,7 @@ html.dive-lock,html.dive-lock body{overflow:hidden;touch-action:none;overscroll-
     </header>
     <aside class="drail"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></aside>
 
-    <div class="dbody">
+    <div class="dmain">
       <div class="dtitle"><div><h4>Campaign Dashboard</h4><p>Sky Rise · 2 campaigns running</p></div><div class="dact"><span class="dd">Today<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></span><span class="nc" id="dNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>New Campaign</span></div></div>
 
       <div class="dgrid">
@@ -1407,7 +1407,13 @@ function buildDive() {
   let locked = false, jumping = false;
   document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => { jumping = true; setTimeout(() => (jumping = false), 1600); }));
   const jumpTo = (y) => { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); window.scrollTo(0, y); };
-  const lock = (y) => { locked = true; lenis && lenis.stop(); document.documentElement.classList.add('dive-lock'); jumpTo(y); };
+  let lockY = 0;
+  const lock = (y) => { locked = true; lockY = y; lenis && lenis.stop(); document.documentElement.classList.add('dive-lock'); jumpTo(y); };
+  const hold = (e) => { if (locked) e.preventDefault(); };
+  addEventListener('touchmove', hold, { passive: false });
+  addEventListener('wheel', hold, { passive: false });
+  addEventListener('keydown', (e) => { if (locked && ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Home', 'End'].includes(e.key)) e.preventDefault(); });
+  addEventListener('scroll', () => { if (locked && Math.abs(scrollY - lockY) > 2) window.scrollTo(0, lockY); }, { passive: true });
   const unlock = () => { locked = false; document.documentElement.classList.remove('dive-lock'); lenis && lenis.start(); };
   const pin = ST.create({ trigger: '#divePin', start: 'top top', end: () => '+=' + Math.round(innerHeight * 0.9), pin: true, anticipatePin: 1, invalidateOnRefresh: true,
     onRefreshInit: () => { if (!tl.progress()) { gsap.set(laptop, { clearProps: 'transform' }); laptop.style.transform = 'translate(-50%,-50%)'; } F = null; },
@@ -1418,11 +1424,11 @@ function buildDive() {
       tl.timeScale(BASE).play();
       tl.eventCallback('onComplete', () => { unlock(); });
     },
-    onLeaveBack: (self) => {
-      if (reduce || jumping || tl.progress() < 0.01) { tl.progress(0); return; }
-      lock(self.start + 1);
-      tl.timeScale(2.6).reverse();
-      tl.eventCallback('onReverseComplete', () => { unlock(); jumpTo(self.start - 2); });
+    onLeaveBack: () => {
+      // going back up: no lock, just reset quietly so the laptop is waiting when you come back down
+      if (locked) return;
+      tl.pause().progress(0);
+      gsap.fromTo([laptop, '#diveHead'], { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power1.out' });
     } });
   // scrolling during the sequence makes it go faster, never skip it
   let speedT = null;
@@ -1549,7 +1555,7 @@ function buildRoad() {
         .to(s.querySelector('.txt'), { opacity: 1, y: 0, duration: 0.4 }, 0.7 + i * 0.95);
     });
   } else {
-    gsap.utils.toArray('.stop').forEach((s) => gsap.from(s, { x: 30, opacity: 0, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: s, start: 'top 85%' } }));
+    gsap.utils.toArray('.stop').forEach((s) => gsap.from(s, { y: 30, opacity: 0, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: s, start: 'top 85%' } }));
   }
 }
 
