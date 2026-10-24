@@ -633,6 +633,21 @@ addEventListener('pointermove', (e) => {
   ptr.tx = (e.clientX / innerWidth) * 2 - 1; ptr.ty = (e.clientY / innerHeight) * 2 - 1;
   if (!reduce) { cursor.style.opacity = 1; gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.25, ease: 'power3.out' }); }
 });
+/* phones: tilt the device to move the logo (gyroscope), like Lusion */
+if (!reduce && 'DeviceOrientationEvent' in window && matchMedia('(hover: none)').matches) {
+  let base = null;
+  const onTilt = (e) => {
+    if (e.gamma == null || e.beta == null) return;
+    if (!base) base = { b: e.beta, g: e.gamma };
+    ptr.tx = Math.max(-1, Math.min(1, (e.gamma - base.g) / 25));
+    ptr.ty = Math.max(-1, Math.min(1, (e.beta - base.b) / 25));
+  };
+  const startTilt = () => addEventListener('deviceorientation', onTilt);
+  if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+    // iPhone asks permission, and only after a tap
+    addEventListener('touchend', () => { DeviceOrientationEvent.requestPermission().then((r) => { if (r === 'granted') startTilt(); }).catch(() => {}); }, { once: true });
+  } else startTilt();
+}
 document.querySelectorAll('[data-cursor]').forEach((el) => {
   el.addEventListener('mouseenter', () => cursor.classList.add('big'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
