@@ -292,34 +292,13 @@ h1 .soft{color:var(--ink);opacity:.22}
 .dive-head h2{margin:16px auto 0;max-width:15ch;font-weight:800;font-size:clamp(38px,5.2vw,88px);line-height:.94;letter-spacing:-.05em}
 .dive-head h2 .g{background:linear-gradient(95deg,var(--m),var(--r) 30%,var(--o) 65%,var(--y));-webkit-background-clip:text;background-clip:text;color:transparent}
 
-.laptop{position:absolute;z-index:2;left:50%;top:62%;width:min(64vw,880px);transform:translate(-50%,-50%);transform-origin:50% 44%;will-change:transform}
-.lid{position:relative;background:#16171C;border-radius:22px 22px 0 0;padding:14px 14px 18px;box-shadow:0 50px 90px rgba(20,21,25,.22)}
-.lid::before{content:"";position:absolute;top:6px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:9px;background:#2A2C33}
-.screen{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:#F4F3F1}
-.lbase{height:16px;margin:0 -6%;border-radius:0 0 18px 18px;background:linear-gradient(#D9D8DC,#B9B8BF);box-shadow:0 30px 50px rgba(20,21,25,.18)}
-.lbase::before{content:"";display:block;width:18%;height:6px;margin:0 auto;border-radius:0 0 8px 8px;background:#A9A8AF}
-/* dashboard inside the laptop */
-.dash{position:absolute;inset:0;display:grid;grid-template-columns:15% 1fr;font-family:var(--font)}
-.dash .side{background:#fff;border-right:1px solid #ECEAE6;padding:6% 10%;display:flex;flex-direction:column;gap:8%}
-.dash .side img{width:58%}
-.dash .side i{display:block;height:5%;border-radius:6px;background:#F1EFEC}
-.dash .side i.on{background:linear-gradient(90deg,var(--r),var(--o))}
-.dash .main{padding:3.2% 3.6%;display:flex;flex-direction:column;gap:3.2%}
-.dash .top{display:flex;justify-content:space-between;align-items:center}
-.dash .top b{font-weight:800;letter-spacing:-.03em;font-size:clamp(9px,1.35vw,20px)}
-.dash .top span{font-weight:700;font-size:clamp(6px,.8vw,12px);color:#fff;background:var(--ink);border-radius:999px;padding:.6em 1.1em}
-.dash .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2.4%}
-.dash .stat{background:#fff;border-radius:10px;padding:7% 9%;border:1px solid #EEECE8}
-.dash .stat small{display:block;font-size:clamp(5px,.62vw,10px);color:var(--muted);font-weight:600}
-.dash .stat b{display:block;font-size:clamp(9px,1.5vw,22px);letter-spacing:-.03em;margin-top:.2em}
-.dash .rows{background:#fff;border-radius:10px;border:1px solid #EEECE8;flex:1;display:flex;flex-direction:column;padding:1.6% 2.4%}
-.dash .row{display:grid;grid-template-columns:auto 1fr auto auto;gap:3%;align-items:center;padding:2.2% 0;border-bottom:1px solid #F3F1EE;font-size:clamp(5px,.7vw,11px)}
-.dash .row:last-child{border:0}
-.dash .row .a{width:clamp(10px,1.7vw,26px);aspect-ratio:1;border-radius:99px;display:grid;place-items:center;font-weight:800;font-size:.85em;background:#FFE6DF;color:#C23F1B}
-.dash .row b{font-weight:700}
-.dash .row em{font-style:normal;font-weight:700;border-radius:99px;padding:.4em .9em;font-size:.9em}
-.dash .row .ok{background:#E6F6EE;color:#0B7A4B}.dash .row .hot{background:#FFEDE7;color:#C23F1B}.dash .row .ai{background:#FFF3D6;color:#9A5B00}
-.dash .row .t{color:var(--muted)}
+.laptop{position:absolute;z-index:2;left:50%;top:64%;width:min(56vw,800px);transform:translate(-50%,-50%);will-change:transform}
+.lid{position:relative;background:#0E0F12;border-radius:20px 20px 6px 6px;padding:2.1% 2.1% 2.6%;box-shadow:0 0 0 1px #2B2D33 inset,0 60px 100px rgba(20,21,25,.22),0 20px 40px rgba(20,21,25,.12)}
+.lid::before{content:"";position:absolute;top:.85%;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:9px;background:#24262C;box-shadow:inset 0 0 0 1.5px #34363D}
+.screen{position:relative;aspect-ratio:16/10;border-radius:6px;overflow:hidden;background:#EEF0F4}
+.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+.lbase{position:relative;height:clamp(10px,1.4vw,18px);margin:0 -7%;border-radius:2px 2px 22px 22px;background:linear-gradient(180deg,#E6E6EA 0%,#CFCFD5 45%,#A9A9B1 100%);box-shadow:0 30px 50px rgba(20,21,25,.18)}
+.lbase::before{content:"";position:absolute;top:0;left:50%;width:16%;height:45%;transform:translateX(-50%);border-radius:0 0 10px 10px;background:linear-gradient(#BEBEC5,#D6D6DB)}
 
 /* the tunnel */
 .tunnel{position:absolute;inset:0;z-index:3;background:#0B0B0E;opacity:0;visibility:hidden;perspective:900px;overflow:hidden}
@@ -352,20 +331,15 @@ h1 .soft{color:var(--ink);opacity:.22}
 .exit .say2{max-width:340px}
 .exit h3{margin:0;font-weight:800;font-size:clamp(30px,3.4vw,56px);line-height:.95;letter-spacing:-.045em;color:var(--ink)}
 .exit p{margin:14px 0 0;color:var(--muted);font-size:17px}
-.phone{width:min(300px,64vw);aspect-ratio:9/19;border-radius:44px;background:#16171C;padding:10px;box-shadow:0 60px 100px rgba(20,21,25,.3);position:relative}
-.phone::before{content:"";position:absolute;top:18px;left:50%;width:84px;height:22px;margin-left:-42px;border-radius:99px;background:#000;z-index:2}
-.pscreen{height:100%;border-radius:36px;overflow:hidden;background:#F4F3F1;display:flex;flex-direction:column;padding:56px 16px 18px;gap:12px;font-family:var(--font)}
-.pscreen .ph{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:-.02em}
-.pscreen .ph img{width:26px}
-.notif{background:#fff;border-radius:20px;padding:14px;box-shadow:0 10px 24px rgba(20,21,25,.08)}
-.notif small{display:block;font:400 10px/1 var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-.notif b{display:block;margin-top:8px;font-size:17px;letter-spacing:-.02em}
-.notif span{display:block;margin-top:4px;color:var(--muted);font-size:14px;font-weight:500}
-.notif.big{background:linear-gradient(135deg,#1B1C22,#0F1013);color:#fff}
-.notif.big small{color:rgba(255,255,255,.5)}
-.notif.big b{font-size:22px}
-.notif.big span{color:rgba(255,255,255,.7)}
-.notif .ok{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 10px;border-radius:99px;background:rgba(87,227,160,.15);color:#57E3A0;font:700 12px/1 var(--font)}
+.phone{width:min(300px,64vw);aspect-ratio:390/844;border-radius:46px;background:#0E0F12;padding:9px;box-shadow:0 0 0 1px #2B2D33 inset,0 60px 100px rgba(20,21,25,.3);position:relative}
+.phone::before{content:"";position:absolute;top:17px;left:50%;width:30%;height:24px;transform:translateX(-50%);border-radius:99px;background:#000;z-index:3}
+.pscreen{position:relative;height:100%;border-radius:38px;overflow:hidden;background:#EEF0F4}
+.pscreen>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.toast{position:absolute;z-index:2;left:6px;right:6px;top:50px;display:flex;gap:10px;align-items:center;padding:12px;border-radius:22px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);box-shadow:0 18px 40px rgba(20,21,25,.22);font-family:var(--font)}
+.toast img{width:34px;flex:none}
+.toast small{display:block;font:500 10px/1 var(--font);color:var(--muted);letter-spacing:.01em}
+.toast b{display:block;font:800 15px/1.15 var(--font);letter-spacing:-.02em;margin-top:3px}
+.toast span{display:block;font:500 12px/1.3 var(--font);color:var(--ink-2)}
 
 /* ---------- section 4: vision ---------- */
 .vision{position:relative;z-index:4;background:#fff;padding:clamp(100px,16vh,180px) var(--gutR) clamp(80px,12vh,140px) var(--gutL)}
@@ -439,7 +413,14 @@ h1 .soft{color:var(--ink);opacity:.22}
   .exit .say,.exit .say2{justify-self:center;text-align:center}
   .exit .say2{display:none}
   .exit h3{font-size:30px}
-  .phone{width:min(190px,48vw)}
+  .phone{width:min(210px,54vw);border-radius:34px;padding:7px}
+  .pscreen{border-radius:30px}
+  .phone::before{top:13px;height:18px}
+  .toast{top:36px;left:4px;right:4px;padding:8px;gap:7px;border-radius:16px}
+  .toast img{width:24px}
+  .toast b{font-size:12px}
+  .toast span{font-size:10px}
+  .toast small{font-size:8px}
   .exit h3{font-size:26px}
   .exit p{font-size:15px;margin-top:8px}
   .fl img{width:calc(var(--s,120px) * .5)}
@@ -636,27 +617,7 @@ h1 .soft{color:var(--ink);opacity:.22}
       </div>
 
       <div class="laptop" id="laptop" aria-hidden="true">
-        <div class="lid"><div class="screen" id="screen">
-          <div class="dash">
-            <div class="side"><img src="assets/leogix-sales-logo-sm.png" alt=""><i class="on"></i><i></i><i></i><i></i><i></i></div>
-            <div class="main">
-              <div class="top"><b>Good morning, Sky Rise</b><span>+ Add lead</span></div>
-              <div class="stats">
-                <div class="stat"><small>New leads</small><b>24</b></div>
-                <div class="stat"><small>Calls by Leo</small><b>61</b></div>
-                <div class="stat"><small>Visits booked</small><b>9</b></div>
-                <div class="stat"><small>Follow-ups due</small><b>5</b></div>
-              </div>
-              <div class="rows">
-                <div class="row"><span class="a">TT</span><b>TSK Technologies</b><em class="ok">Visit booked</em><span class="t">2 min</span></div>
-                <div class="row"><span class="a">RS</span><b>Rahul Sharma</b><em class="ai">Leo calling</em><span class="t">now</span></div>
-                <div class="row"><span class="a">NG</span><b>Neha Gupta</b><em class="hot">Interested</em><span class="t">14 min</span></div>
-                <div class="row"><span class="a">AK</span><b>Amit Kumar</b><em class="ai">Follow-up 10/10</em><span class="t">1 h</span></div>
-                <div class="row"><span class="a">PV</span><b>Priya Verma</b><em class="ok">Visit booked</em><span class="t">3 h</span></div>
-              </div>
-            </div>
-          </div>
-        </div></div>
+        <div class="lid"><div class="screen" id="screen"><img src="assets/screens/sales-lead-desktop.jpg" alt="" width="2880" height="1800"></div></div>
         <div class="lbase"></div>
       </div>
 
@@ -668,11 +629,8 @@ h1 .soft{color:var(--ink);opacity:.22}
 
       <div class="exit" id="exit">
         <div class="say"><h3>Booked before your coffee went cold.</h3><p>Leo called the lead two minutes after they enquired, answered their questions and booked the visit.</p></div>
-        <div class="phone" aria-hidden="true"><div class="pscreen">
-          <div class="ph"><img src="assets/leogix-sales-logo-sm.png" alt="">Leogix Sales</div>
-          <div class="notif big"><small>Just now</small><b>Site visit booked</b><span>TSK Technologies · Shree Kunj Greens, 3 BHK</span><span class="ok">✓ Thu 08/10 · 11:00</span></div>
-          <div class="notif"><small>Leo · call summary</small><b>Interested, budget ₹45 L</b><span>Wants to see the sample flat first.</span></div>
-          <div class="notif"><small>Next</small><b>Reminder on WhatsApp</b><span>Sent automatically the day before</span></div>
+        <div class="phone" aria-hidden="true"><div class="pscreen"><img src="assets/screens/sales-dashboard-mobile.jpg" alt="" width="780" height="1688">
+          <div class="toast" id="toast"><img src="assets/leogix-sales-logo-sm.png" alt=""><div><small>Leogix Sales · now</small><b>Site visit booked</b><span>TSK Technologies · Thu 08/10, 11:00</span></div></div>
         </div></div>
         <div class="say2"><h3>Your team just shows up.</h3><p>Every call, message and follow-up is logged, so nothing slips through.</p></div>
       </div>
@@ -1235,7 +1193,8 @@ function buildDive() {
     gsap.set(laptop, { transformOrigin: `${(r.left + r.width / 2 - lr.left).toFixed(1)}px ${(r.top + r.height / 2 - lr.top).toFixed(1)}px` });
     const s = Math.max(innerWidth / r.width, innerHeight / r.height) * 1.08;
     // move the screen's centre to the viewport centre
-    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const pr = document.getElementById('divePin').getBoundingClientRect();
+    const cx = r.left - pr.left + r.width / 2, cy = r.top - pr.top + r.height / 2;
     return { s, dx: innerWidth / 2 - cx, dy: innerHeight / 2 - cy };
   };
   let F = null;
@@ -1248,6 +1207,7 @@ function buildDive() {
   tl.to('#diveHead', { opacity: 0, y: -60, duration: 0.6, ease: 'power2.in' }, 0.15)
     .to(laptop, { x: () => getF().dx, y: () => getF().dy, scale: () => getF().s, duration: 1.4, ease: 'power3.in' }, 0.2)
     .to('#tunnel', { autoAlpha: 1, duration: 0.35, ease: 'none' }, 1.3)
+    .to(laptop, { autoAlpha: 0, duration: 0.01 }, 1.7)
     .fromTo('#tlogo', { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.45)
     .to(cam, { z: 4700, duration: 3.2, ease: 'none', onUpdate: renderWorld }, 1.5)
     .to('#tlogo', { rotate: 18, duration: 3.2, ease: 'none' }, 1.5)
@@ -1256,6 +1216,7 @@ function buildDive() {
     .fromTo('#exit .phone', { scale: 0.15, rotate: -8 }, { scale: 1, rotate: 0, duration: 0.9, ease: 'power3.out' }, 4.45)
     .to('#tlogo', { scale: 3.5, opacity: 0, duration: 0.6, ease: 'power2.in' }, 4.4)
     .to('#tunnel', { autoAlpha: 0, duration: 0.6, ease: 'none' }, 4.7)
+    .fromTo('#toast', { yPercent: -160, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.5, ease: 'back.out(1.6)' }, 5.0)
     .fromTo('#exit .say, #exit .say2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15 }, 5.1)
     .to({}, { duration: 0.6 });
 }
