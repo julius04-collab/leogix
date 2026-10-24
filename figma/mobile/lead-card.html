@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>Lead card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<style>x-dc{display:none!important}</style>
+<style data-dc-tpl="3">
+body{margin:0}
+</style>
+<style data-dc-tpl="3">
+body{margin:0}
+input::placeholder{color:#8A909B}
+input:focus{outline:none;border-color:#F75831 !important;box-shadow:0 0 0 3px rgba(247,88,49,0.15)}
+button:focus-visible,a:focus-visible{outline:2px solid #F75831;outline-offset:2px}
+.hs::-webkit-scrollbar{display:none}
+</style>
+<style>html,body{margin:0}body{width:auto}</style>
+</head>
+<body>
+<div style="padding:24px;background:#EEF0F4;width:358px;font-family:'Instrument Sans', system-ui, sans-serif;color:rgb(26, 29, 35)"><article data-dc-tpl="67" style="position: relative; display: flex; flex-direction: column; gap: 12px; padding: 16px; background: rgb(255, 255, 255); border: 1.5px solid rgb(255, 255, 255); border-radius: 18px;"><div data-dc-tpl="68" style="display: flex; align-items: flex-start; gap: 10px;"><div data-dc-tpl="74" style="flex-grow: 1; min-width: 0px; display: flex; flex-direction: column; gap: 4px;"><span data-dc-tpl="75" style="font-size: 17px; font-weight: 600;"><span class="sc-interp">TSK Technologies</span></span><span data-dc-tpl="76" style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgb(91, 98, 112);"><svg data-dc-tpl="77" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path data-dc-tpl="78" d="M4 21V9l8-6 8 6v12"></path><path data-dc-tpl="79" d="M9 21v-6h6v6"></path></svg><span class="sc-interp">Shree Kunj Greens</span> · <span class="sc-interp">₹45,000,000</span></span></div><span data-dc-tpl="80" style="flex-shrink: 0; display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; background: rgb(230, 247, 245); color: rgb(15, 118, 110); font-size: 12px; font-weight: 600;"><span data-dc-tpl="81" style="width: 5px; height: 5px; border-radius: 50%; background: currentcolor;"></span><span class="sc-interp">Walk-in</span></span></div><div data-dc-tpl="82" style="display: flex; gap: 8px;"><button data-dc-tpl="83" type="button" aria-label="Status: Lost. Change" style="font-family: inherit; cursor: pointer; flex: 1 1 0%; min-width: 0px; display: flex; align-items: center; gap: 8px; height: 42px; padding: 0px 10px 0px 12px; border: 1px solid rgb(229, 231, 235); border-radius: 12px; background: rgb(255, 255, 255); color: rgb(26, 29, 35); text-align: left;"><span data-dc-tpl="84" style="width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; background: rgb(229, 72, 77);"></span><span data-dc-tpl="85" style="flex-grow: 1; font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Lost</span></span><svg data-dc-tpl="86" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path data-dc-tpl="87" d="m6 9 6 6 6-6"></path></svg></button><button data-dc-tpl="88" type="button" aria-label="Handled by Admin. Reassign" style="font-family: inherit; cursor: pointer; flex: 1 1 0%; min-width: 0px; display: flex; align-items: center; gap: 8px; height: 42px; padding: 0px 10px 0px 6px; border: 1px solid rgb(229, 231, 235); border-radius: 12px; background: rgb(255, 255, 255); color: rgb(26, 29, 35); text-align: left;"><span data-dc-tpl="89" style="width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: rgb(238, 244, 255); color: rgb(30, 58, 114); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;"><span class="sc-interp">AD</span></span><span data-dc-tpl="90" style="flex-grow: 1; font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Admin</span></span><svg data-dc-tpl="91" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B6270" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path data-dc-tpl="92" d="m6 9 6 6 6-6"></path></svg></button></div><div data-dc-tpl="93" style="display: flex; align-items: center; gap: 8px; padding-top: 12px; border-top: 1px solid rgb(238, 240, 243);"><span data-dc-tpl="94" style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0px;"><span data-dc-tpl="95" style="display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: rgb(194, 94, 0);"><svg data-dc-tpl="96" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle data-dc-tpl="97" cx="12" cy="12" r="9"></circle><path data-dc-tpl="98" d="M12 7v5l3 2"></path></svg><span class="sc-interp">Follow-up today</span></span><span data-dc-tpl="99" style="font-size: 12px; color: rgb(138, 144, 155);">Added <span class="sc-interp">19 Sep</span> · <span class="sc-interp">+91 99534 29462</span></span></span><button data-dc-tpl="100" type="button" aria-label="More for TSK Technologies" style="font-family: inherit; cursor: pointer; width: 42px; height: 42px; flex-shrink: 0; border: 1px solid rgb(229, 231, 235); border-radius: 50%; background: rgb(255, 255, 255); color: rgb(55, 65, 81); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="101" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle data-dc-tpl="102" cx="5" cy="12" r="1.8"></circle><circle data-dc-tpl="103" cx="12" cy="12" r="1.8"></circle><circle data-dc-tpl="104" cx="19" cy="12" r="1.8"></circle></svg></button><button data-dc-tpl="105" type="button" style="font-family: inherit; cursor: pointer; flex-shrink: 0; display: inline-flex; align-items: center; gap: 7px; height: 42px; padding: 0px 16px; border: none; border-radius: 999px; background: rgb(231, 247, 236); color: rgb(21, 128, 61); font-size: 14px; font-weight: 600;"><svg data-dc-tpl="106" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path data-dc-tpl="107" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg>Call</button></div></article></div>
+</body>
+</html>
