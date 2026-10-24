@@ -144,9 +144,116 @@ h1 .soft{color:var(--ink);opacity:.22}
 
 
 /* next section stub so the scroll scene has somewhere to land */
-.next{position:relative;z-index:5;background:var(--ink);color:#fff;border-radius:40px 40px 0 0;min-height:70vh;display:grid;place-items:center;text-align:center;padding:120px var(--gutR) 120px var(--gutL)}
-.next p{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-.next h3{margin:18px 0 0;font-weight:700;font-size:clamp(32px,4.4vw,64px);line-height:1;letter-spacing:-.04em}
+/* nav gets a glass backing once you scroll, light or dark to match the section */
+.nav{transition:background-color .4s,backdrop-filter .4s}
+.nav.solid{background:rgba(244,243,241,.72);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4)}
+.nav.solid.dark{background:rgba(13,14,17,.72)}
+@media (min-width: 901px){ .nav.solid:not(.dark){background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none} }
+/* nav over dark sections */
+.nav .brand,.menu a,.talk{transition:color .4s,background-color .4s,border-color .4s}
+.nav.dark .brand{color:#fff}
+.nav.dark .menu{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}
+.nav.dark .menu a{color:rgba(255,255,255,.75)}
+.nav.dark .menu a:hover{background:rgba(255,255,255,.12);color:#fff}
+.nav.dark .talk{background:#fff;color:var(--ink)}
+/* ---------- section 2: the family (dark, horizontal) ---------- */
+.family{position:relative;z-index:5;background:#0D0E11;color:#fff;border-radius:40px 40px 0 0;overflow:hidden}
+.family .wrapH{height:100vh;height:100svh;display:flex;flex-direction:column;position:relative}
+.fam-top{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:96px var(--gutR) 0 var(--gutL);position:relative;z-index:3}
+.fam-top .label{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.ftabs{display:flex;gap:6px;padding:5px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+.ftabs button{all:unset;cursor:pointer;position:relative;overflow:hidden;font:600 13px/1 var(--font);padding:10px 14px;border-radius:999px;color:rgba(255,255,255,.55);display:flex;gap:8px;align-items:center;transition:color .3s}
+.ftabs button i{font:400 10px/1 var(--mono);opacity:.6;font-style:normal}
+.ftabs button b{position:absolute;left:0;bottom:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--m),var(--r),var(--o),var(--y))}
+.ftabs button.on{color:#fff;background:rgba(255,255,255,.08)}
+.ftabs button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.track{flex:1;display:flex;align-items:center;gap:3vw;padding:0 var(--gutR) 0 var(--gutL);will-change:transform}
+.panel{flex:0 0 auto;height:min(72vh,680px);position:relative}
+.panel.intro{width:min(46vw,640px);display:flex;flex-direction:column;justify-content:center}
+.intro h2{margin:0;font-weight:800;font-size:clamp(46px,6.2vw,108px);line-height:.9;letter-spacing:-.055em}
+.intro h2 .g{background:linear-gradient(95deg,var(--m),var(--r) 30%,var(--o) 65%,var(--y));-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro p{margin:28px 0 0;max-width:420px;font-size:18px;line-height:1.55;color:rgba(255,255,255,.62)}
+.intro .drag{margin-top:40px;display:flex;align-items:center;gap:14px;font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.intro .drag i{display:block;width:80px;height:1px;background:rgba(255,255,255,.2);position:relative;overflow:hidden}
+.intro .drag i::after{content:"";position:absolute;inset:0;background:#fff;transform:translateX(-100%);animation:hint 2.2s var(--ease) infinite}
+
+.pcard{width:min(80vw,1180px);height:100%;perspective:1400px}
+.pin3d{position:relative;height:100%;border-radius:36px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;padding:clamp(28px,3.4vw,52px);
+  background:#15161B;border:1px solid rgba(255,255,255,.08);transform-style:preserve-3d;transform-origin:left center;will-change:transform}
+.pin3d::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 80% at 85% 20%, var(--glow), transparent 60%),radial-gradient(60% 60% at 0% 100%, var(--glow2), transparent 60%);opacity:.9}
+.pin3d::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(120deg,rgba(255,255,255,.06),transparent 40%)}
+.support{--glow:rgba(194,24,122,.45);--glow2:rgba(232,8,58,.18);--acc:#FF5FA8}
+.ask{--glow:rgba(255,178,28,.40);--glow2:rgba(247,88,49,.18);--acc:#FFC542}
+.sales{--glow:rgba(232,8,58,.42);--glow2:rgba(247,88,49,.22);--acc:#FF6A4A}
+.pinfo{position:relative;z-index:2;display:flex;flex-direction:column;min-width:0}
+.pnum{display:flex;align-items:center;gap:12px;font:400 12px/1 var(--mono);letter-spacing:.14em;color:rgba(255,255,255,.55);text-transform:uppercase}
+.pnum .st{font:700 11px/1 var(--font);letter-spacing:0;text-transform:none;padding:6px 10px;border-radius:999px;background:rgba(24,178,107,.16);color:#57E3A0}
+.pnum .st.soon{background:rgba(255,95,168,.14);color:#FF8AC0}
+.plogo{width:clamp(110px,11vw,170px);margin:auto 0 18px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.45))}
+.pinfo h3{margin:0;font-weight:800;font-size:clamp(40px,4.6vw,78px);line-height:.92;letter-spacing:-.05em}
+.pinfo h3 span{color:rgba(255,255,255,.4);font-weight:700}
+.pinfo p{margin:16px 0 0;max-width:430px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.66)}
+.feats{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.feats li{font:600 13px/1 var(--font);padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
+.pcta{margin-top:26px;display:flex;gap:10px;align-items:center}
+.btn-w{background:#fff;color:var(--ink)}
+.btn-w .ic{background:linear-gradient(135deg,var(--y),var(--o) 50%,var(--r));color:#fff}
+.btn-w:hover .ic{transform:rotate(-45deg)}
+.btn-line{color:#fff;border:1px solid rgba(255,255,255,.2);padding:0 22px}
+.btn-line:hover{border-color:#fff}
+
+/* demo device */
+.demo{position:relative;z-index:2;align-self:center;justify-self:end;width:100%;max-width:440px;border-radius:26px;background:rgba(255,255,255,.96);color:var(--ink);box-shadow:0 40px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.2);overflow:hidden;transform:translateZ(60px)}
+.dbar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #EEE9E4}
+.dbar img{width:24px}
+.dbar b{font:700 14px/1 var(--font);letter-spacing:-.01em}
+.dbar span{margin-left:auto;font:400 10px/1 var(--mono);letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.dbody{padding:16px;display:flex;flex-direction:column;gap:10px;min-height:300px}
+.who{display:flex;align-items:center;gap:12px}
+.av{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;font:700 14px/1 var(--font);position:relative;flex:none}
+.calling .av::after{content:"";position:absolute;inset:-5px;border-radius:999px;border:2px solid currentColor;animation:ringo 1.2s ease-out infinite}
+@keyframes ringo{from{transform:scale(.9);opacity:.8}to{transform:scale(1.4);opacity:0}}
+.who b{display:block;font:700 15px/1.2 var(--font)}
+.who small{display:block;font:500 12px/1.3 var(--font);color:var(--muted)}
+.wave{display:flex;align-items:center;gap:3px;height:34px;margin:4px 0}
+.wave i{display:block;width:4px;border-radius:4px;background:var(--wave,#E8083A);height:20%;opacity:.25;transition:opacity .3s}
+.talking .wave i{opacity:1;animation:wv .9s ease-in-out infinite}
+@keyframes wv{0%,100%{height:15%}50%{height:var(--h,80%)}}
+.line{font:500 13.5px/1.45 var(--font);padding:9px 12px;border-radius:14px;max-width:88%;opacity:0;transform:translateY(8px)}
+.line.ai{background:#F4F1EE;align-self:flex-start;border-bottom-left-radius:4px}
+.line.me{background:var(--ink);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.line.in{opacity:1;transform:none;transition:opacity .45s,transform .45s var(--ease)}
+.line small{display:block;font:400 10px/1 var(--mono);letter-spacing:.08em;color:var(--muted);margin-bottom:5px;text-transform:uppercase}
+.line.me small{color:rgba(255,255,255,.5)}
+.result{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:#EFFAF4;color:#0B6B41;font:700 13.5px/1.3 var(--font);opacity:0;transform:translateY(8px)}
+.result.in{opacity:1;transform:none;transition:opacity .45s,transform .45s var(--ease)}
+.result svg{width:18px;height:18px;flex:none}
+.typing3{display:inline-flex;gap:4px;padding:12px 14px;border-radius:14px;background:#F4F1EE;align-self:flex-start;opacity:0}
+.typing3.in{opacity:1}
+.typing3 i{width:6px;height:6px;border-radius:999px;background:#C7B9AD;animation:blink 1.2s infinite}
+.typing3 i:nth-child(2){animation-delay:.15s}.typing3 i:nth-child(3){animation-delay:.3s}
+@keyframes blink{40%{background:#6B6E77}}
+.caret{display:inline-block;width:2px;height:1em;background:var(--o);vertical-align:-2px;margin-left:1px;animation:car 1s steps(1) infinite}
+@keyframes car{50%{opacity:0}}
+
+/* family progress line at the bottom */
+.fbar{position:absolute;left:var(--gutL);right:var(--gutR);bottom:28px;height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;z-index:3}
+.fbar b{position:absolute;inset:0;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--m),var(--r),var(--o),var(--y))}
+
+.after{background:#0D0E11;color:rgba(255,255,255,.5);text-align:center;padding:120px var(--gutR) 140px var(--gutL);font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+
+@media (max-width: 900px){
+  .family .wrapH{height:auto}
+  .fam-top{padding-top:72px;flex-direction:column;align-items:flex-start}
+  .ftabs{display:none}
+  .track{flex-direction:column;align-items:stretch;gap:20px;padding-top:24px;padding-bottom:40px;transform:none!important}
+  .panel,.pcard,.panel.intro{width:auto;height:auto}
+  .pin3d{grid-template-columns:1fr;padding:24px;border-radius:28px;transform:none!important}
+  .plogo{margin:22px 0 14px}
+  .demo{justify-self:stretch;max-width:none;transform:none}
+  .dbody{min-height:260px}
+  .fbar{display:none}
+}
 
 /* custom cursor */
 .cursor{position:fixed;left:0;top:0;z-index:95;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:999px;background:var(--ink);pointer-events:none;mix-blend-mode:difference;filter:invert(1);transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),opacity .3s;opacity:0}
@@ -244,12 +351,98 @@ h1 .soft{color:var(--ink);opacity:.22}
     <div class="scrollhint" id="hint"><span>Scroll</span><i></i></div>
   </section>
 
-  <section class="next" id="family">
-    <div>
-      <p>Next section</p>
-      <h3>The family, product by product.</h3>
+  <section class="family" id="family" aria-labelledby="fam-title">
+    <div class="wrapH" id="famPin">
+      <div class="fam-top">
+        <span class="label">The Leogix family</span>
+        <div class="ftabs" role="tablist" aria-label="Products">
+          <button data-go="1" role="tab"><i>01</i>Support<b></b></button>
+          <button data-go="2" role="tab"><i>02</i>Ask<b></b></button>
+          <button data-go="3" role="tab"><i>03</i>Sales<b></b></button>
+        </div>
+      </div>
+
+      <div class="track" id="track">
+        <div class="panel intro">
+          <h2 id="fam-title">The family,<br><span class="g">product by product.</span></h2>
+          <p>Each Leogix product does one job and does it properly. Same brand, same standard, different problem solved.</p>
+          <div class="drag"><span>Keep scrolling</span><i></i></div>
+        </div>
+
+        <article class="panel pcard support" data-demo="support" aria-label="Leogix Support">
+          <div class="pin3d">
+            <div class="pinfo">
+              <div class="pnum">01 · support.leogix.com <span class="st soon">Coming soon</span></div>
+              <img class="plogo" src="assets/leogix-support-logo.png" alt="Leogix Support logo" loading="lazy">
+              <h3>Leogix <span>Support</span></h3>
+              <p>An AI agent that answers your customers' calls, solves the common questions, logs every ticket and hands the hard cases to your team.</p>
+              <ul class="feats"><li>Answers every call</li><li>Logs every ticket</li><li>Hands off to your team</li></ul>
+              <div class="pcta"><a class="btn btn-w" href="#" data-cursor>Join the waitlist <i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a></div>
+            </div>
+            <div class="demo" aria-hidden="true" style="--wave:#C2187A">
+              <div class="dbar"><img src="assets/leogix-support-logo-sm.png" alt=""><b>Leogix Support</b><span>Live call</span></div>
+              <div class="dbody">
+                <div class="who"><span class="av" style="background:#F9E3EF;color:#9C1563">RK</span><div><b>Rohan Kapoor</b><small data-k="status">Incoming call · order #4821</small></div></div>
+                <div class="wave"></div>
+                <div class="line me"><small>Customer</small>My refund for order 4821 hasn't come through.</div>
+                <div class="line ai"><small>Leo</small>I can see it. It was approved yesterday and reaches your bank in 2 working days.</div>
+                <div class="line me"><small>Customer</small>Can someone confirm by email?</div>
+                <div class="result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Ticket logged · sent to Priya to confirm</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel pcard ask" data-demo="ask" aria-label="Leogix Ask">
+          <div class="pin3d">
+            <div class="pinfo">
+              <div class="pnum">02 · ask.leogix.com <span class="st">Live</span></div>
+              <img class="plogo" src="assets/leogix-ask-logo.png" alt="Leogix Ask logo" loading="lazy">
+              <h3>Leogix <span>Ask</span></h3>
+              <p>Ask Leo anything. Write, plan, learn or catch up on today's news in one simple chat, with a canvas for longer work.</p>
+              <ul class="feats"><li>Write and plan</li><li>Today's news</li><li>Canvas for long work</li></ul>
+              <div class="pcta"><a class="btn btn-w" href="https://ask.leogix.com" target="_blank" rel="noopener" data-cursor>Start a chat <i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a></div>
+            </div>
+            <div class="demo" aria-hidden="true">
+              <div class="dbar"><img src="assets/leogix-ask-logo-sm.png" alt=""><b>Ask Leo</b><span>New chat</span></div>
+              <div class="dbody">
+                <div class="line me"><small>You</small>Plan a 3-day budget trip to Goa</div>
+                <div class="typing3"><i></i><i></i><i></i></div>
+                <div class="line ai" data-k="answer"><small>Leo</small><span class="txt"></span></div>
+                <div class="line me"><small>You</small>Add where to eat on day 2</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel pcard sales" data-demo="sales" aria-label="Leogix Sales">
+          <div class="pin3d">
+            <div class="pinfo">
+              <div class="pnum">03 · sales.leogix.com <span class="st">Live</span></div>
+              <img class="plogo" src="assets/leogix-sales-logo.png" alt="Leogix Sales logo" loading="lazy">
+              <h3>Leogix <span>Sales</span></h3>
+              <p>Calls every new lead within minutes, follows up on time and books the site visit, while your team sees every call in one place.</p>
+              <ul class="feats"><li>Calls in minutes</li><li>Never misses a follow-up</li><li>Books site visits</li></ul>
+              <div class="pcta"><a class="btn btn-w" href="#" data-cursor>See Leogix Sales <i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a><a class="btn btn-line" href="#" data-cursor>Book a demo</a></div>
+            </div>
+            <div class="demo" aria-hidden="true" style="--wave:#E8083A">
+              <div class="dbar"><img src="assets/leogix-sales-logo-sm.png" alt=""><b>Leogix Sales</b><span>AI call</span></div>
+              <div class="dbody">
+                <div class="who"><span class="av" style="background:#FFE6DF;color:#C23F1B">TT</span><div><b>TSK Technologies</b><small data-k="status">New enquiry · Shree Kunj Greens</small></div></div>
+                <div class="wave"></div>
+                <div class="line ai"><small>Leo</small>Hi, this is Leo from Sky Rise. You asked about the 3 BHK at Shree Kunj Greens?</div>
+                <div class="line me"><small>Lead</small>Yes. Can I see it this week?</div>
+                <div class="line ai"><small>Leo</small>Of course. Thursday at 11:00?</div>
+                <div class="result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Site visit booked · 08/10, 11:00</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="fbar"><b id="fbar"></b></div>
     </div>
   </section>
+  <div class="after">Next section: vision and roadmap</div>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -531,7 +724,7 @@ intro
   .to('h1 .ln>span', { y: 0, duration: 1.3, stagger: 0.09 }, 'reveal+=0.15')
   .to('.lede, .actions', { opacity: 1, y: 0, duration: 1, stagger: 0.1 }, 'reveal+=0.6')
   .to('#hint', { opacity: 1, duration: 1 }, 'reveal+=1')
-  .add(() => { lenis && lenis.start(); document.getElementById('loader').style.display = 'none'; buildScroll(); }, 'reveal+=1.2');
+  .add(() => { lenis && lenis.start(); document.getElementById('loader').style.display = 'none'; buildScroll(); buildFamily(); }, 'reveal+=1.2');
 
 if (reduce) intro.progress(1);
 
@@ -568,6 +761,96 @@ function buildScroll() {
       ;
   }
   tl.to({}, { duration: 0.5 });
+}
+
+/* ---------- section 2: horizontal family scroll + live demos ---------- */
+function buildFamily() {
+  // waveform bars
+  document.querySelectorAll('.wave').forEach((w) => {
+    for (let i = 0; i < 34; i++) { const b = document.createElement('i'); b.style.setProperty('--h', (25 + Math.abs(Math.sin(i * 1.7)) * 70) + '%'); b.style.animationDelay = (i * 0.045) + 's'; w.appendChild(b); }
+  });
+
+  // demo scripts, played when their card is on screen
+  const demos = {};
+  function lines(el) { return [...el.querySelectorAll('.line')]; }
+  function makeCall(card, statusSteps) {
+    const demo = card.querySelector('.demo'), ls = lines(demo), res = demo.querySelector('.result'), st = demo.querySelector('[data-k="status"]');
+    const tl = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 2.2 });
+    tl.call(() => { demo.classList.add('calling'); demo.classList.remove('talking'); ls.forEach((l) => l.classList.remove('in')); res.classList.remove('in'); st.textContent = statusSteps[0]; })
+      .call(() => { demo.classList.remove('calling'); demo.classList.add('talking'); st.textContent = statusSteps[1]; }, null, 1.6);
+    ls.forEach((l, i) => tl.call(() => l.classList.add('in'), null, 2.0 + i * 1.3));
+    tl.call(() => { demo.classList.remove('talking'); res.classList.add('in'); st.textContent = statusSteps[2]; }, null, 2.2 + ls.length * 1.3)
+      .to({}, { duration: 1 });
+    return tl;
+  }
+  const sup = document.querySelector('[data-demo="support"]'), ask = document.querySelector('[data-demo="ask"]'), sal = document.querySelector('[data-demo="sales"]');
+  demos.support = makeCall(sup, ['Incoming call · order #4821', 'On the call · 0:48', 'Resolved on the first call · 1:12']);
+  demos.sales = makeCall(sal, ['Calling now · new enquiry 2 min ago', 'On the call · 1:05', 'Call ended · 3:49 · Interested']);
+  (function () {
+    const d = ask.querySelector('.demo'), ls = lines(d), ty = d.querySelector('.typing3'), txt = d.querySelector('.txt');
+    const answer = 'Day 1: Baga and Calangute beaches. Day 2: Old Goa churches and Panjim. Day 3: Palolem. Stay near Panjim from ₹1,800 a night.';
+    const o = { n: 0 };
+    const tl = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 2.5 });
+    tl.call(() => { ls.forEach((l) => l.classList.remove('in')); ty.classList.remove('in'); txt.textContent = ''; o.n = 0; })
+      .call(() => ls[0].classList.add('in'), null, 0.4)
+      .call(() => ty.classList.add('in'), null, 1.0)
+      .call(() => { ty.classList.remove('in'); ls[1].classList.add('in'); }, null, 2.4)
+      .to(o, { n: answer.length, duration: 3.2, ease: 'none', onUpdate: () => { txt.innerHTML = answer.slice(0, Math.round(o.n)) + '<span class="caret"></span>'; } }, 2.4)
+      .call(() => { txt.textContent = answer; ls[2].classList.add('in'); }, null, 6.2)
+      .to({}, { duration: 1.2 });
+    demos.ask = tl;
+  })();
+  if (reduce) { Object.values(demos).forEach((t) => t.progress(0.98).pause()); }
+
+  const nav = document.querySelector('.nav');
+  const solid = () => nav.classList.toggle('solid', scrollY > 40);
+  addEventListener('scroll', solid, { passive: true }); solid();
+  ST.create({ trigger: '#family', start: 'top 60px', end: 'bottom 60px', onToggle: (s) => nav.classList.toggle('dark', s.isActive) });
+  const track = document.getElementById('track');
+  const tabs = [...document.querySelectorAll('.ftabs button')];
+  const panels = [...track.querySelectorAll('.panel')];
+  const mm = gsap.matchMedia();
+
+  mm.add('(min-width: 901px)', () => {
+    const dist = () => track.scrollWidth - innerWidth;
+    const hz = gsap.to(track, { x: () => -dist(), ease: 'none',
+      scrollTrigger: { trigger: '#famPin', start: 'top top', end: () => '+=' + dist(), scrub: 1, pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          document.getElementById('fbar').style.transform = `scaleX(${self.progress})`;
+          // which product is centred
+          const cx = innerWidth / 2; let best = 0, bd = 1e9;
+          panels.forEach((p, i) => { const r = p.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - cx); if (d < bd) { bd = d; best = i; } });
+          tabs.forEach((t, i) => { t.classList.toggle('on', i + 1 === best); t.querySelector('b').style.transform = `scaleX(${i + 1 < best ? 1 : i + 1 === best ? 1 : 0})`; });
+        } } });
+    // each card swings in like a page turning, then settles
+    track.querySelectorAll('.pin3d').forEach((card) => {
+      gsap.fromTo(card, { rotateY: -24, scale: 0.86, opacity: 0.35 }, { rotateY: 0, scale: 1, opacity: 1, ease: 'none',
+        scrollTrigger: { trigger: card, containerAnimation: hz, start: 'left 100%', end: 'left 35%', scrub: true } });
+      gsap.to(card, { rotateY: 10, scale: 0.92, opacity: 0.5, ease: 'none',
+        scrollTrigger: { trigger: card, containerAnimation: hz, start: 'right 45%', end: 'right 0%', scrub: true } });
+      const logo = card.querySelector('.plogo');
+      gsap.fromTo(logo, { rotate: -14, y: 30 }, { rotate: 6, y: -10, ease: 'none', scrollTrigger: { trigger: card, containerAnimation: hz, start: 'left 100%', end: 'right 0%', scrub: true } });
+    });
+    track.querySelectorAll('.pcard').forEach((card) => {
+      ST.create({ trigger: card, containerAnimation: hz, start: 'left 70%', end: 'right 30%',
+        onToggle: (s) => { const t = demos[card.dataset.demo]; if (!t || reduce) return; s.isActive ? t.restart() : t.pause(); } });
+    });
+    tabs.forEach((t) => t.addEventListener('click', () => {
+      const i = +t.dataset.go, p = panels[i];
+      const st = hz.scrollTrigger; const total = dist();
+      const x = p.offsetLeft - (innerWidth - p.offsetWidth) / 2;
+      const y = st.start + Math.max(0, Math.min(1, x / total)) * (st.end - st.start);
+      lenis ? lenis.scrollTo(y, { duration: 1.4 }) : scrollTo({ top: y, behavior: 'smooth' });
+    }));
+    return () => {};
+  });
+  mm.add('(max-width: 900px)', () => {
+    track.querySelectorAll('.pcard').forEach((card) => {
+      gsap.fromTo(card, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: card, start: 'top 85%' } });
+      ST.create({ trigger: card, start: 'top 75%', end: 'bottom 25%', onToggle: (s) => { const t = demos[card.dataset.demo]; if (!t || reduce) return; s.isActive ? t.restart() : t.pause(); } });
+    });
+  });
+  ST.refresh();
 }
 </script>
 </body>
