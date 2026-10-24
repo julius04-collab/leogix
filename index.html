@@ -243,7 +243,6 @@ h1 .soft{color:var(--ink);opacity:.22}
 .fbar b{position:absolute;inset:0;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--m),var(--r),var(--o),var(--y))}
 
 .family{border-radius:40px}
-.after{position:relative;z-index:4;background:#FFFFFF;color:var(--muted);text-align:center;margin-top:-40px;padding:160px var(--gutR) 140px var(--gutL);font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
 
 @media (max-width: 900px){
   .family .wrapH{height:auto}
@@ -284,6 +283,188 @@ h1 .soft{color:var(--ink);opacity:.22}
 @media (prefers-reduced-motion: reduce){
   .grain,.live::after,h1 em,.scrollhint i::after{animation:none}
 }
+
+/* ---------- section 3: dive into the screen ---------- */
+.dive{position:relative;z-index:4;background:#fff;margin-top:-40px}
+.dive-pin{position:relative;height:100vh;height:100svh;overflow:hidden;background:#fff}
+.dive-head{position:absolute;z-index:3;left:0;right:0;top:clamp(96px,14vh,140px);text-align:center;padding-left:var(--gutL);padding-right:var(--gutR)}
+.dive-head .eyebrow{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dive-head h2{margin:16px auto 0;max-width:15ch;font-weight:800;font-size:clamp(38px,5.2vw,88px);line-height:.94;letter-spacing:-.05em}
+.dive-head h2 .g{background:linear-gradient(95deg,var(--m),var(--r) 30%,var(--o) 65%,var(--y));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.laptop{position:absolute;z-index:2;left:50%;top:62%;width:min(64vw,880px);transform:translate(-50%,-50%);transform-origin:50% 44%;will-change:transform}
+.lid{position:relative;background:#16171C;border-radius:22px 22px 0 0;padding:14px 14px 18px;box-shadow:0 50px 90px rgba(20,21,25,.22)}
+.lid::before{content:"";position:absolute;top:6px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:9px;background:#2A2C33}
+.screen{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:#F4F3F1}
+.lbase{height:16px;margin:0 -6%;border-radius:0 0 18px 18px;background:linear-gradient(#D9D8DC,#B9B8BF);box-shadow:0 30px 50px rgba(20,21,25,.18)}
+.lbase::before{content:"";display:block;width:18%;height:6px;margin:0 auto;border-radius:0 0 8px 8px;background:#A9A8AF}
+/* dashboard inside the laptop */
+.dash{position:absolute;inset:0;display:grid;grid-template-columns:15% 1fr;font-family:var(--font)}
+.dash .side{background:#fff;border-right:1px solid #ECEAE6;padding:6% 10%;display:flex;flex-direction:column;gap:8%}
+.dash .side img{width:58%}
+.dash .side i{display:block;height:5%;border-radius:6px;background:#F1EFEC}
+.dash .side i.on{background:linear-gradient(90deg,var(--r),var(--o))}
+.dash .main{padding:3.2% 3.6%;display:flex;flex-direction:column;gap:3.2%}
+.dash .top{display:flex;justify-content:space-between;align-items:center}
+.dash .top b{font-weight:800;letter-spacing:-.03em;font-size:clamp(9px,1.35vw,20px)}
+.dash .top span{font-weight:700;font-size:clamp(6px,.8vw,12px);color:#fff;background:var(--ink);border-radius:999px;padding:.6em 1.1em}
+.dash .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2.4%}
+.dash .stat{background:#fff;border-radius:10px;padding:7% 9%;border:1px solid #EEECE8}
+.dash .stat small{display:block;font-size:clamp(5px,.62vw,10px);color:var(--muted);font-weight:600}
+.dash .stat b{display:block;font-size:clamp(9px,1.5vw,22px);letter-spacing:-.03em;margin-top:.2em}
+.dash .rows{background:#fff;border-radius:10px;border:1px solid #EEECE8;flex:1;display:flex;flex-direction:column;padding:1.6% 2.4%}
+.dash .row{display:grid;grid-template-columns:auto 1fr auto auto;gap:3%;align-items:center;padding:2.2% 0;border-bottom:1px solid #F3F1EE;font-size:clamp(5px,.7vw,11px)}
+.dash .row:last-child{border:0}
+.dash .row .a{width:clamp(10px,1.7vw,26px);aspect-ratio:1;border-radius:99px;display:grid;place-items:center;font-weight:800;font-size:.85em;background:#FFE6DF;color:#C23F1B}
+.dash .row b{font-weight:700}
+.dash .row em{font-style:normal;font-weight:700;border-radius:99px;padding:.4em .9em;font-size:.9em}
+.dash .row .ok{background:#E6F6EE;color:#0B7A4B}.dash .row .hot{background:#FFEDE7;color:#C23F1B}.dash .row .ai{background:#FFF3D6;color:#9A5B00}
+.dash .row .t{color:var(--muted)}
+
+/* the tunnel */
+.tunnel{position:absolute;inset:0;z-index:3;background:#0B0B0E;opacity:0;visibility:hidden;perspective:900px;overflow:hidden}
+.tunnel::before{content:"";position:absolute;inset:-20%;background:
+  radial-gradient(35% 35% at 50% 50%, rgba(232,8,58,.35), transparent 70%),
+  radial-gradient(60% 45% at 30% 70%, rgba(194,24,122,.22), transparent 70%),
+  radial-gradient(50% 40% at 75% 25%, rgba(255,178,28,.18), transparent 70%);animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.12) rotate(4deg)}}
+.world{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.tc{position:absolute;left:0;top:0;transform-style:preserve-3d;will-change:transform,opacity}
+.tc .c{display:flex;align-items:center;gap:10px;padding:12px 16px 12px 12px;border-radius:18px;background:rgba(255,255,255,.95);color:var(--ink);font:600 15px/1.25 var(--font);white-space:nowrap;box-shadow:0 20px 50px rgba(0,0,0,.4);transform:translate(-50%,-50%)}
+.tc .c small{display:block;font:400 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tc .ic2{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;flex:none}
+.tc .ic2 svg{width:18px;height:18px}
+.tc.glass .c{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.tc.glass .c small{color:rgba(255,255,255,.55)}
+.tc .bars3{display:flex;align-items:flex-end;gap:3px;height:22px}
+.tc .bars3 i{width:4px;border-radius:3px;background:var(--r);animation:wv .9s ease-in-out infinite}
+.tw{position:absolute;left:0;top:0;transform-style:preserve-3d}
+.tw span{display:block;transform:translate(-50%,-50%);font:800 clamp(64px,12vw,220px)/.9 var(--font);letter-spacing:-.06em;color:#fff;white-space:nowrap}
+.tw span.g{background:linear-gradient(95deg,var(--m),var(--r) 30%,var(--o) 65%,var(--y));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tlogo{position:absolute;left:50%;top:50%;width:min(26vw,260px);transform:translate(-50%,-50%);filter:drop-shadow(0 30px 60px rgba(232,8,58,.45));z-index:2;pointer-events:none}
+.tlogo img{width:100%;animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px) rotate(-3deg)}}
+.streaks{position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.0) 0deg 6deg, rgba(255,255,255,.035) 6deg 7deg);mask:radial-gradient(circle at 50% 50%, transparent 12%, #000 60%);-webkit-mask:radial-gradient(circle at 50% 50%, transparent 12%, #000 60%)}
+
+/* the exit: a phone */
+.exit{position:absolute;inset:0;z-index:4;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:48px;padding:0 var(--gutR) 0 var(--gutL);pointer-events:none;opacity:0}
+.exit .say{justify-self:end;max-width:360px;text-align:right}
+.exit .say2{max-width:340px}
+.exit h3{margin:0;font-weight:800;font-size:clamp(30px,3.4vw,56px);line-height:.95;letter-spacing:-.045em;color:var(--ink)}
+.exit p{margin:14px 0 0;color:var(--muted);font-size:17px}
+.phone{width:min(300px,64vw);aspect-ratio:9/19;border-radius:44px;background:#16171C;padding:10px;box-shadow:0 60px 100px rgba(20,21,25,.3);position:relative}
+.phone::before{content:"";position:absolute;top:18px;left:50%;width:84px;height:22px;margin-left:-42px;border-radius:99px;background:#000;z-index:2}
+.pscreen{height:100%;border-radius:36px;overflow:hidden;background:#F4F3F1;display:flex;flex-direction:column;padding:56px 16px 18px;gap:12px;font-family:var(--font)}
+.pscreen .ph{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:-.02em}
+.pscreen .ph img{width:26px}
+.notif{background:#fff;border-radius:20px;padding:14px;box-shadow:0 10px 24px rgba(20,21,25,.08)}
+.notif small{display:block;font:400 10px/1 var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.notif b{display:block;margin-top:8px;font-size:17px;letter-spacing:-.02em}
+.notif span{display:block;margin-top:4px;color:var(--muted);font-size:14px;font-weight:500}
+.notif.big{background:linear-gradient(135deg,#1B1C22,#0F1013);color:#fff}
+.notif.big small{color:rgba(255,255,255,.5)}
+.notif.big b{font-size:22px}
+.notif.big span{color:rgba(255,255,255,.7)}
+.notif .ok{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 10px;border-radius:99px;background:rgba(87,227,160,.15);color:#57E3A0;font:700 12px/1 var(--font)}
+
+/* ---------- section 4: vision ---------- */
+.vision{position:relative;z-index:4;background:#fff;padding:clamp(100px,16vh,180px) var(--gutR) clamp(80px,12vh,140px) var(--gutL)}
+.vision .eyebrow{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.statement{margin:26px 0 0;max-width:18ch;font-weight:800;font-size:clamp(40px,6.4vw,112px);line-height:.98;letter-spacing:-.055em}
+.statement .w{opacity:.12;transition:opacity .2s}
+.statement .w.g{background:linear-gradient(95deg,var(--m),var(--r) 30%,var(--o) 65%,var(--y));-webkit-background-clip:text;background-clip:text;color:transparent}
+.principles{margin-top:clamp(60px,10vh,120px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;border-top:1px solid var(--line);padding-top:36px}
+.pr .k{font:400 12px/1 var(--mono);letter-spacing:.14em;color:var(--muted)}
+.pr h4{margin:18px 0 10px;font-weight:700;font-size:26px;letter-spacing:-.03em}
+.pr p{margin:0;color:var(--muted);font-size:16.5px;line-height:1.6;max-width:34ch}
+.pr .bar{height:3px;margin-top:22px;border-radius:3px;background:linear-gradient(90deg,var(--m),var(--r),var(--o),var(--y));transform-origin:left;transform:scaleX(0)}
+
+/* ---------- section 5: roadmap ---------- */
+.road{position:relative;z-index:4;background:#fff;padding:20px var(--gutR) clamp(100px,16vh,180px) var(--gutL)}
+.road-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.road-head h2{margin:14px 0 0;font-weight:800;font-size:clamp(40px,5.6vw,96px);line-height:.94;letter-spacing:-.05em}
+.road-head p{margin:0;max-width:36ch;color:var(--muted);font-size:17px}
+.road-path{position:relative;margin-top:230px;height:min(46vw,520px)}
+.road-path svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.road-path .rtrack{fill:none;stroke:#EFEDEA;stroke-width:22;stroke-linecap:round}
+.road-path .rdraw{fill:none;stroke:url(#roadG);stroke-width:22;stroke-linecap:round}
+.stop{position:absolute;width:min(30vw,340px);transform:translate(-50%,0)}
+.stop .dotn{width:56px;height:56px;border-radius:999px;background:var(--ink);color:#fff;display:grid;place-items:center;font:500 14px/1 var(--mono);box-shadow:0 0 0 8px #fff,0 16px 30px rgba(20,21,25,.18);margin:0 auto 18px;transform:scale(0)}
+.stop .when{display:block;text-align:center;font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.stop h3{margin:10px 0 8px;text-align:center;font-weight:800;font-size:clamp(24px,2.2vw,34px);letter-spacing:-.035em;line-height:1}
+.stop p{margin:0 auto;text-align:center;color:var(--muted);max-width:30ch}
+.stop .chips{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.stop .chips span{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;background:#fff;border:1px solid var(--line);font:600 13px/1 var(--font)}
+.stop .chips img{width:24px}
+.stop .txt{opacity:0;transform:translateY(16px)}
+.stop.up{display:flex;flex-direction:column-reverse;transform:translate(-50%,-100%)}
+.stop.up .dotn{margin:18px auto 0}
+
+/* ---------- section 6: closing call + footer ---------- */
+.cta{position:relative;z-index:4;background:#0B0B0E;color:#fff;border-radius:40px 40px 0 0;overflow:hidden;min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding:140px var(--gutR) 120px var(--gutL);perspective:900px}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(45% 40% at 50% 55%, rgba(232,8,58,.30), transparent 70%),radial-gradient(40% 35% at 20% 20%, rgba(194,24,122,.18), transparent 70%),radial-gradient(40% 35% at 85% 80%, rgba(255,178,28,.16), transparent 70%)}
+.cta .inner{position:relative;z-index:2}
+.cta .eyebrow{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.cta h2{margin:22px 0 0;font-weight:800;font-size:clamp(52px,9.4vw,170px);line-height:.88;letter-spacing:-.06em}
+.cta h2 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.cta h2 .ln>span{display:inline-block}
+.cta h2 .g{background:linear-gradient(95deg,var(--m),var(--r) 30%,var(--o) 65%,var(--y));-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;padding-right:.08em}
+.cta p{margin:26px auto 0;max-width:46ch;color:rgba(255,255,255,.62);font-size:18px}
+.cta .row2{display:flex;justify-content:center;gap:12px;margin-top:36px;flex-wrap:wrap}
+.floaties{position:absolute;inset:0;z-index:1;pointer-events:none;transform-style:preserve-3d}
+.fl{position:absolute;left:var(--x);top:var(--y);will-change:transform}
+.fl>*{display:block;animation:bob var(--t,7s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes bob{50%{transform:translateY(-18px) rotate(var(--r2,6deg))}}
+.fl img{width:var(--s,120px);filter:drop-shadow(0 30px 40px rgba(0,0,0,.5))}
+.fl .bub{padding:14px 18px;border-radius:22px 22px 22px 6px;background:#fff;color:var(--ink);font:700 15px/1.2 var(--font);white-space:nowrap;box-shadow:0 30px 50px rgba(0,0,0,.4)}
+.fl .bub.dk{background:linear-gradient(135deg,var(--r),var(--o));color:#fff;border-radius:22px 22px 6px 22px}
+.fl .orb{width:var(--s,64px);height:var(--s,64px);border-radius:999px;display:grid;place-items:center;background:radial-gradient(circle at 30% 30%, #fff 0%, #FFD45C 18%, var(--o) 55%, var(--r) 100%);box-shadow:inset -8px -10px 24px rgba(94,10,30,.45),0 30px 40px rgba(0,0,0,.4);color:#fff;font:800 22px/1 var(--font)}
+.fl .orb.m{background:radial-gradient(circle at 30% 30%, #fff 0%, #FF8AC0 18%, var(--m) 60%, #4A0636 100%)}
+.fl .orb svg{width:45%;height:45%}
+
+.foot{position:relative;z-index:4;background:#0B0B0E;color:#fff;padding:0 var(--gutR) max(28px,env(safe-area-inset-bottom,0px)) var(--gutL)}
+.foot .grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:32px;padding:56px 0;border-top:1px solid rgba(255,255,255,.1)}
+.foot h5{margin:0 0 16px;font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.foot a{color:rgba(255,255,255,.82)}
+.foot a:hover{color:#fff}
+.foot .about p{margin:16px 0 0;color:rgba(255,255,255,.55);max-width:32ch}
+.foot .brand{color:#fff}
+.bigword{font-weight:900;font-size:clamp(80px,23vw,420px);line-height:.78;letter-spacing:-.07em;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0));-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;margin-top:10px}
+.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:rgba(255,255,255,.45);font-size:14px;padding-top:24px}
+
+@media (max-width: 900px){
+  .laptop{width:88vw;top:64%}
+  .exit{grid-template-columns:1fr;justify-items:center;align-content:center;gap:18px;text-align:center}
+  .exit .say,.exit .say2{justify-self:center;text-align:center}
+  .exit .say2{display:none}
+  .exit h3{font-size:30px}
+  .phone{width:min(190px,48vw)}
+  .exit h3{font-size:26px}
+  .exit p{font-size:15px;margin-top:8px}
+  .fl img{width:calc(var(--s,120px) * .5)}
+  .fl .bub{font-size:13px;padding:10px 13px}
+  .fl .orb{transform:scale(.7)}
+  .principles{grid-template-columns:1fr}
+  .road-path{height:auto;margin-top:40px;display:flex;flex-direction:column;gap:56px;padding-left:40px}
+  .road-path svg{display:none}
+  .road-path::before{content:"";position:absolute;left:12px;top:0;bottom:0;width:6px;border-radius:6px;background:linear-gradient(var(--m),var(--r),var(--o),var(--y))}
+  .stop,.stop.up{position:relative;left:auto!important;top:auto!important;width:auto;transform:none;display:block}
+  .stop.up .dotn{margin:0 0 14px -64px}
+  .stop .dotn{margin:0 0 14px -64px;width:44px;height:44px;transform:none!important}
+  .stop .when,.stop h3,.stop p{text-align:left;margin-left:0}
+  .stop .chips{justify-content:flex-start}
+  .stop .txt{opacity:1;transform:none}
+  .foot .grid{grid-template-columns:1fr 1fr}
+  .foot .about{grid-column:1/-1}
+  .fl.hm{display:none}
+}
+
+.nav.dark2 .brand{color:#fff}
+.nav.dark2 .menu{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}
+.nav.dark2 .menu a{color:rgba(255,255,255,.75)}
+.nav.dark2 .talk{background:#fff;color:var(--ink)}
+.nav.solid.dark2{background:rgba(13,14,17,.72)}
 </style>
 
 </head>
@@ -306,11 +487,11 @@ h1 .soft{color:var(--ink);opacity:.22}
     <a class="brand" href="#top" aria-label="Leogix home"><img src="assets/leogix-mark.png" alt="">Leogix</a>
     <nav class="menu" aria-label="Main">
       <a href="#family" data-cursor>Products</a>
-      <a href="#family" data-cursor>Vision</a>
-      <a href="#family" data-cursor>Roadmap</a>
+      <a href="#vision" data-cursor>Vision</a>
+      <a href="#roadmap" data-cursor>Roadmap</a>
       <a href="https://ask.leogix.com" target="_blank" rel="noopener" data-cursor>Ask Leo</a>
     </nav>
-    <a class="talk" href="#family" data-cursor><span>Talk to us</span><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a>
+    <a class="talk" href="#contact" data-cursor><span>Talk to us</span><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a>
   </div>
 </header>
 
@@ -445,8 +626,122 @@ h1 .soft{color:var(--ink);opacity:.22}
       <div class="fbar"><b id="fbar"></b></div>
     </div>
   </section>
-  <div class="after">Next section: vision and roadmap</div>
+
+  <!-- 3. Dive into the screen -->
+  <section class="dive" id="how" aria-labelledby="dive-title">
+    <div class="dive-pin" id="divePin">
+      <div class="dive-head" id="diveHead">
+        <div class="eyebrow">Behind the screen</div>
+        <h2 id="dive-title">See what Leogix does <span class="g">while you're busy.</span></h2>
+      </div>
+
+      <div class="laptop" id="laptop" aria-hidden="true">
+        <div class="lid"><div class="screen" id="screen">
+          <div class="dash">
+            <div class="side"><img src="assets/leogix-sales-logo-sm.png" alt=""><i class="on"></i><i></i><i></i><i></i><i></i></div>
+            <div class="main">
+              <div class="top"><b>Good morning, Sky Rise</b><span>+ Add lead</span></div>
+              <div class="stats">
+                <div class="stat"><small>New leads</small><b>24</b></div>
+                <div class="stat"><small>Calls by Leo</small><b>61</b></div>
+                <div class="stat"><small>Visits booked</small><b>9</b></div>
+                <div class="stat"><small>Follow-ups due</small><b>5</b></div>
+              </div>
+              <div class="rows">
+                <div class="row"><span class="a">TT</span><b>TSK Technologies</b><em class="ok">Visit booked</em><span class="t">2 min</span></div>
+                <div class="row"><span class="a">RS</span><b>Rahul Sharma</b><em class="ai">Leo calling</em><span class="t">now</span></div>
+                <div class="row"><span class="a">NG</span><b>Neha Gupta</b><em class="hot">Interested</em><span class="t">14 min</span></div>
+                <div class="row"><span class="a">AK</span><b>Amit Kumar</b><em class="ai">Follow-up 10/10</em><span class="t">1 h</span></div>
+                <div class="row"><span class="a">PV</span><b>Priya Verma</b><em class="ok">Visit booked</em><span class="t">3 h</span></div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+        <div class="lbase"></div>
+      </div>
+
+      <div class="tunnel" id="tunnel" aria-hidden="true">
+        <div class="streaks"></div>
+        <div class="world" id="world"></div>
+        <div class="tlogo" id="tlogo"><img src="assets/leogix-sales-logo.png" alt=""></div>
+      </div>
+
+      <div class="exit" id="exit">
+        <div class="say"><h3>Booked before your coffee went cold.</h3><p>Leo called the lead two minutes after they enquired, answered their questions and booked the visit.</p></div>
+        <div class="phone" aria-hidden="true"><div class="pscreen">
+          <div class="ph"><img src="assets/leogix-sales-logo-sm.png" alt="">Leogix Sales</div>
+          <div class="notif big"><small>Just now</small><b>Site visit booked</b><span>TSK Technologies · Shree Kunj Greens, 3 BHK</span><span class="ok">✓ Thu 08/10 · 11:00</span></div>
+          <div class="notif"><small>Leo · call summary</small><b>Interested, budget ₹45 L</b><span>Wants to see the sample flat first.</span></div>
+          <div class="notif"><small>Next</small><b>Reminder on WhatsApp</b><span>Sent automatically the day before</span></div>
+        </div></div>
+        <div class="say2"><h3>Your team just shows up.</h3><p>Every call, message and follow-up is logged, so nothing slips through.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Vision -->
+  <section class="vision" id="vision" aria-labelledby="vision-title">
+    <div class="eyebrow">Our vision</div>
+    <h2 class="statement" id="vision-title" data-split>AI should take work off your plate, <em>not add another tool to it.</em></h2>
+    <div class="principles">
+      <div class="pr"><div class="k">01</div><h4>One job, done properly</h4><p>Every Leogix product is built for a single job, so it can do that job well instead of doing everything halfway.</p><div class="bar"></div></div>
+      <div class="pr"><div class="k">02</div><h4>One family</h4><p>The same brand, design and standards run through every product. Learn one and the next feels familiar.</p><div class="bar"></div></div>
+      <div class="pr"><div class="k">03</div><h4>Growing together</h4><p>New products join over time, and later one Leogix account will connect them all.</p><div class="bar"></div></div>
+    </div>
+  </section>
+
+  <!-- 5. Roadmap -->
+  <section class="road" id="roadmap" aria-labelledby="road-title">
+    <div class="road-head">
+      <div><div class="eyebrow" style="font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Roadmap</div><h2 id="road-title">Where Leogix<br>is going.</h2></div>
+      <p>We're building the ecosystem one useful product at a time. Here's the road so far.</p>
+    </div>
+    <div class="road-path" id="roadPath">
+      <svg viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="roadG" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#C2187A"/><stop offset=".35" stop-color="#E8083A"/><stop offset=".7" stop-color="#F75831"/><stop offset="1" stop-color="#FFB21C"/></linearGradient></defs>
+        <path class="rtrack" d="M20,90 C220,90 160,300 360,300 S520,60 640,90 S860,330 1000,300 S1160,120 1180,110"/>
+        <path class="rdraw" id="roadDraw" pathLength="1" d="M20,90 C220,90 160,300 360,300 S520,60 640,90 S860,330 1000,300 S1160,120 1180,110"/>
+      </svg>
+      <div class="stop" style="left:30%;top:52%"><div class="dotn">01</div><div class="txt"><span class="when">Now</span><h3>Sales and Ask are live</h3><p>Teams follow up on every lead with Leogix Sales, and anyone can chat with Leo on Ask.</p><div class="chips"><span><img src="assets/leogix-sales-logo-sm.png" alt="">Sales</span><span><img src="assets/leogix-ask-logo-sm.png" alt="">Ask</span></div></div></div>
+      <div class="stop up" style="left:53%;top:calc(17% + 28px)"><div class="dotn">02</div><div class="txt"><span class="when">Next</span><h3>Support joins the family</h3><p>The calling engine behind Sales, rebuilt for customer support and helpdesk teams.</p><div class="chips"><span><img src="assets/leogix-support-logo-sm.png" alt="">Support</span></div></div></div>
+      <div class="stop" style="left:83%;top:57%"><div class="dotn">03</div><div class="txt"><span class="when">Later</span><h3>One Leogix account</h3><p>Sign in once and move between every Leogix product from one hub.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 6. Closing call -->
+  <section class="cta" id="contact" aria-labelledby="cta-title">
+    <div class="floaties" id="floaties" aria-hidden="true">
+      <div class="fl" data-d="1.4" style="--x:8%;--y:18%"><img src="assets/leogix-sales-logo.png" alt="" style="--s:150px"></div>
+      <div class="fl" data-d="0.8" style="--x:80%;--y:12%;--t:8s;--dl:-2s"><img src="assets/leogix-ask-logo.png" alt="" style="--s:130px"></div>
+      <div class="fl hm" data-d="1.1" style="--x:84%;--y:66%;--t:6s;--dl:-1s"><img src="assets/leogix-support-logo.png" alt="" style="--s:120px"></div>
+      <div class="fl" data-d="1.8" style="--x:6%;--y:72%;--t:9s"><div class="bub">Site visit booked ✓</div></div>
+      <div class="fl hm" data-d="0.6" style="--x:62%;--y:80%;--t:7s;--dl:-3s"><div class="bub dk">Calling Rahul…</div></div>
+      <div class="fl hm" data-d="1.2" style="--x:24%;--y:8%;--t:8s;--dl:-4s"><div class="bub">Ask Leo anything</div></div>
+      <div class="fl" data-d="2.2" style="--x:88%;--y:44%;--t:6.5s"><div class="orb" style="--s:58px">₹</div></div>
+      <div class="fl hm" data-d="1.6" style="--x:20%;--y:50%;--t:7.5s;--dl:-2s"><div class="orb m" style="--s:46px"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div></div>
+    </div>
+    <div class="inner">
+      <div class="eyebrow">Let's talk</div>
+      <h2 id="cta-title"><span class="ln"><span>Put AI to work</span></span><span class="ln"><span class="g">for you.</span></span></h2>
+      <p>Tell us what your team spends its day on. We'll show you which Leogix product takes it off their hands.</p>
+      <div class="row2">
+        <a class="btn btn-w" href="#contact" data-cursor>Book a demo <i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></i></a>
+        <a class="btn btn-line" href="https://ask.leogix.com" target="_blank" rel="noopener" data-cursor>Try Ask Leo</a>
+      </div>
+    </div>
+  </section>
 </main>
+
+  <footer class="foot">
+    <div class="grid">
+      <div class="about"><a class="brand" href="#top"><img src="assets/leogix-mark.png" alt="">Leogix</a><p>One parent brand. One growing ecosystem. Multiple specialised AI products.</p></div>
+      <div><h5>Products</h5><ul><li><a href="#family">Leogix Sales</a></li><li><a href="https://ask.leogix.com" target="_blank" rel="noopener">Leogix Ask</a></li><li><a href="#family">Leogix Support</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#vision">Vision</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h5>Sign in</h5><ul><li><a href="#family">sales.leogix.com</a></li><li><a href="https://ask.leogix.com" target="_blank" rel="noopener">ask.leogix.com</a></li></ul></div>
+    </div>
+    <div class="bigword" aria-hidden="true">Leogix</div>
+    <div class="legal"><span>© 2026 Leogix. All rights reserved.</span><span>Privacy · Terms</span></div>
+  </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -742,7 +1037,7 @@ intro
   .to('h1 .ln>span', { y: 0, duration: 1.3, stagger: 0.09 }, 'reveal+=0.15')
   .to('.lede, .actions', { opacity: 1, y: 0, duration: 1, stagger: 0.1 }, 'reveal+=0.6')
   .to('#hint', { opacity: 1, duration: 1 }, 'reveal+=1')
-  .add(() => { lenis && lenis.start(); document.getElementById('loader').style.display = 'none'; buildScroll(); buildFamily(); }, 'reveal+=1.2');
+  .add(() => { lenis && lenis.start(); document.getElementById('loader').style.display = 'none'; buildScroll(); buildFamily(); buildDive(); buildVision(); buildRoad(); buildCTA(); ST.refresh(); }, 'reveal+=1.2');
 
 if (reduce) intro.progress(1);
 
@@ -823,7 +1118,6 @@ function buildFamily() {
   const nav = document.querySelector('.nav');
   const solid = () => nav.classList.toggle('solid', scrollY > 40);
   addEventListener('scroll', solid, { passive: true }); solid();
-  ST.create({ trigger: '#family', start: 'top 60px', end: 'bottom 60px', onToggle: (s) => nav.classList.toggle('dark', s.isActive) });
   const track = document.getElementById('track');
   const tabs = [...document.querySelectorAll('.ftabs button')];
   const panels = [...track.querySelectorAll('.panel')];
@@ -869,6 +1163,149 @@ function buildFamily() {
     });
   });
   ST.refresh();
+}
+
+
+/* ---------- section 3: dive into the screen ---------- */
+function buildDive() {
+  const world = document.getElementById('world');
+  const ic = {
+    call: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
+    chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"/></svg>',
+    ok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+    cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+    user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+  };
+  const tint = { r: 'background:#FFE6DF;color:#C23F1B', y: 'background:#FFF3D6;color:#9A5B00', m: 'background:#F9E3EF;color:#9C1563', g: 'background:#E6F6EE;color:#0B7A4B' };
+  const cards = [
+    ['user', 'r', 'New enquiry', 'Rahul Sharma · 3 BHK'],
+    ['call', 'r', 'Leo is calling', 'Rahul Sharma · 0:42', 'wave'],
+    ['chat', 'g', 'WhatsApp', '"Can I visit on Saturday?"'],
+    ['cal', 'y', 'Follow-up set', '10/10 · 2:00 pm'],
+    ['ok', 'r', 'Interested', 'Shree Kunj Greens · ₹45 L'],
+    ['call', 'm', 'Missed call', 'Retried in 30 minutes'],
+    ['chat', 'y', 'Ask Leo', '"Write a follow-up for Neha"'],
+    ['ok', 'g', 'Ticket resolved', 'Order #4821 · 1:12'],
+    ['user', 'm', 'New enquiry', 'Neha Gupta · 2 BHK'],
+    ['call', 'r', 'Call summary', 'Budget ₹45 L · wants sample flat', 'wave'],
+    ['cal', 'g', 'Site visit booked', 'Thu 08/10 · 11:00'],
+    ['chat', 'r', 'Reminder sent', 'WhatsApp · day before visit'],
+    ['user', 'y', 'Lead assigned', 'Amit → Leo (AI)'],
+    ['ok', 'g', 'Visit confirmed', 'Priya Verma · 3:30 pm']
+  ];
+  const narrow = innerWidth < 900;
+  const spreadX = narrow ? 34 : 38, spreadY = narrow ? 34 : 30;
+  const items = [];
+  cards.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'tc' + (i % 4 === 3 ? ' glass' : '');
+    const ang = i * 2.39996, rad = 0.55 + (i % 3) * 0.22;
+    const x = Math.cos(ang) * spreadX * rad, y = Math.sin(ang) * spreadY * rad;
+    const z = -400 - i * 330;
+    const wave = c[4] ? `<span class="bars3">${Array.from({ length: 7 }, (_, k) => `<i style="height:${30 + (k * 37) % 70}%;animation-delay:${k * 0.08}s"></i>`).join('')}</span>` : '';
+    el.innerHTML = `<div class="c"><span class="ic2" style="${tint[c[1]]}">${ic[c[0]]}</span><div><small>${c[2]}</small>${c[3]}</div>${wave}</div>`;
+    world.appendChild(el);
+    items.push({ el, x, y, z, r: (i % 2 ? 1 : -1) * (8 + (i % 5) * 3) });
+  });
+  [['Every lead.', -1500, ''], ['Every call.', -2800, ''], ['Handled.', -4100, 'g']].forEach(([t, z, cls]) => {
+    const el = document.createElement('div'); el.className = 'tw';
+    el.innerHTML = `<span class="${cls}">${t}</span>`; world.appendChild(el);
+    items.push({ el, x: 0, y: -22, z, r: 0, word: true });
+  });
+  const cam = { z: 0 };
+  const P = 900;
+  function renderWorld() {
+    const vw = innerWidth / 100, vh = innerHeight / 100;
+    items.forEach((it) => {
+      const d = it.z + cam.z;                 // distance in front of the camera (negative is far)
+      let o = 1;
+      if (d > P - 260) o = Math.max(0, (P - 80 - d) / 180);      // fade as it passes the camera
+      else if (d < -3200) o = Math.max(0, 1 - (-3200 - d) / 900); // fade in from the distance
+      if (it.word && d > 120) o = Math.min(o, Math.max(0, (420 - d) / 300));
+      it.el.style.opacity = o.toFixed(3);
+      it.el.style.visibility = o < 0.01 ? 'hidden' : 'visible';
+      it.el.style.transform = `translate3d(${(it.x * vw).toFixed(1)}px, ${(it.y * vh).toFixed(1)}px, ${d.toFixed(1)}px) rotateY(${it.r}deg)`;
+    });
+  }
+  renderWorld();
+
+  const laptop = document.getElementById('laptop'), screen = document.getElementById('screen');
+  const fill = () => {
+    const r = screen.getBoundingClientRect(), lr = laptop.getBoundingClientRect();
+    gsap.set(laptop, { transformOrigin: `${(r.left + r.width / 2 - lr.left).toFixed(1)}px ${(r.top + r.height / 2 - lr.top).toFixed(1)}px` });
+    const s = Math.max(innerWidth / r.width, innerHeight / r.height) * 1.08;
+    // move the screen's centre to the viewport centre
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    return { s, dx: innerWidth / 2 - cx, dy: innerHeight / 2 - cy };
+  };
+  let F = null;
+  const tl = gsap.timeline({
+    scrollTrigger: { trigger: '#divePin', start: 'top top', end: () => '+=' + (innerHeight * 4.2), scrub: 1, pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+      onRefreshInit: () => { gsap.set(laptop, { clearProps: 'transform' }); laptop.style.transform = 'translate(-50%,-50%)'; F = null; },
+      onUpdate: (self) => { const tt = self.progress * tl.duration(); document.querySelector('.nav').classList.toggle('dark2', tt > 1.45 && tt < 4.75); } }
+  });
+  const getF = () => (F = F || fill());
+  tl.to('#diveHead', { opacity: 0, y: -60, duration: 0.6, ease: 'power2.in' }, 0.15)
+    .to(laptop, { x: () => getF().dx, y: () => getF().dy, scale: () => getF().s, duration: 1.4, ease: 'power3.in' }, 0.2)
+    .to('#tunnel', { autoAlpha: 1, duration: 0.35, ease: 'none' }, 1.3)
+    .fromTo('#tlogo', { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.45)
+    .to(cam, { z: 4700, duration: 3.2, ease: 'none', onUpdate: renderWorld }, 1.5)
+    .to('#tlogo', { rotate: 18, duration: 3.2, ease: 'none' }, 1.5)
+    // exit: the phone arrives and the lights come back on
+    .fromTo('#exit', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01 }, 4.45)
+    .fromTo('#exit .phone', { scale: 0.15, rotate: -8 }, { scale: 1, rotate: 0, duration: 0.9, ease: 'power3.out' }, 4.45)
+    .to('#tlogo', { scale: 3.5, opacity: 0, duration: 0.6, ease: 'power2.in' }, 4.4)
+    .to('#tunnel', { autoAlpha: 0, duration: 0.6, ease: 'none' }, 4.7)
+    .fromTo('#exit .say, #exit .say2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15 }, 5.1)
+    .to({}, { duration: 0.6 });
+}
+
+/* ---------- section 4: vision statement lights up word by word ---------- */
+function buildVision() {
+  const h = document.querySelector('[data-split]');
+  const parts = [];
+  h.childNodes.forEach((n) => {
+    const g = n.nodeType === 1;
+    (n.textContent || '').split(/(\s+)/).forEach((w) => { if (!w) return; parts.push(/\s+/.test(w) ? w : `<span class="w${g ? ' g' : ''}">${w}</span>`); });
+  });
+  h.innerHTML = parts.join('');
+  const words = h.querySelectorAll('.w');
+  gsap.to(words, { opacity: 1, stagger: 0.12, ease: 'none', scrollTrigger: { trigger: h, start: 'top 80%', end: 'bottom 40%', scrub: true } });
+  document.querySelectorAll('.pr .bar').forEach((b, i) => gsap.to(b, { scaleX: 1, duration: 1.2, ease: 'expo.out', delay: i * 0.12, scrollTrigger: { trigger: b, start: 'top 90%' } }));
+  gsap.from('.pr', { y: 40, opacity: 0, duration: 1, stagger: 0.12, ease: 'expo.out', scrollTrigger: { trigger: '.principles', start: 'top 85%' } });
+}
+
+/* ---------- section 5: roadmap path draws as you scroll ---------- */
+function buildRoad() {
+  const path = document.getElementById('roadDraw');
+  if (innerWidth >= 900) {
+    gsap.set(path, { strokeDasharray: 1, strokeDashoffset: 1 });
+    const stops = document.querySelectorAll('.stop');
+    const tl = gsap.timeline({ scrollTrigger: { trigger: '#roadPath', start: 'top 75%', end: 'bottom 55%', scrub: 1 } });
+    tl.to(path, { strokeDashoffset: 0, duration: 3, ease: 'none' }, 0);
+    stops.forEach((s, i) => {
+      tl.to(s.querySelector('.dotn'), { scale: 1, duration: 0.35, ease: 'back.out(2.5)' }, 0.6 + i * 0.95)
+        .to(s.querySelector('.txt'), { opacity: 1, y: 0, duration: 0.4 }, 0.7 + i * 0.95);
+    });
+  } else {
+    gsap.utils.toArray('.stop').forEach((s) => gsap.from(s, { x: 30, opacity: 0, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: s, start: 'top 85%' } }));
+  }
+}
+
+/* ---------- section 6: closing call, floating objects follow pointer and phone tilt ---------- */
+function buildCTA() {
+  const fls = [...document.querySelectorAll('.fl')];
+  const qs = fls.map((el) => ({ x: gsap.quickTo(el, 'x', { duration: 1.1, ease: 'power3.out' }), y: gsap.quickTo(el, 'y', { duration: 1.1, ease: 'power3.out' }), d: +el.dataset.d }));
+  gsap.ticker.add(() => {
+    qs.forEach((q) => { q.x(ptr.x * 40 * q.d); q.y(ptr.y * 30 * q.d); });
+  });
+  gsap.from('.cta h2 .ln>span', { yPercent: 110, duration: 1.2, stagger: 0.1, ease: 'expo.out', scrollTrigger: { trigger: '.cta', start: 'top 60%' } });
+  gsap.from(fls, { scale: 0, opacity: 0, duration: 1.2, stagger: 0.06, ease: 'back.out(1.8)', scrollTrigger: { trigger: '.cta', start: 'top 60%' } });
+  // nav colour triggers are created last so they measure after every pinned section
+  const nav = document.querySelector('.nav');
+  ST.create({ trigger: '#family', start: 'top 60px', end: 'bottom 60px', onToggle: (s) => nav.classList.toggle('dark', s.isActive) });
+  ST.create({ trigger: '#contact', start: 'top 60px', endTrigger: '.foot', end: 'bottom top', onToggle: (s) => nav.classList.toggle('dark', s.isActive) });
+  gsap.from('.bigword', { yPercent: 40, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.bigword', start: 'top 95%' } });
 }
 </script>
 </body>
