@@ -1363,7 +1363,7 @@ function buildDive() {
     items.forEach((it) => {
       const d = it.z + cam.z;                 // distance in front of the camera (negative is far)
       let o = 1;
-      if (d > P - 260) o = Math.max(0, (P - 80 - d) / 180);      // fade as it passes the camera
+      if (d > P - 480) o = Math.max(0, (P - 180 - d) / 300);     // fade well before it reaches the camera
       else if (d < -3200) o = Math.max(0, 1 - (-3200 - d) / 900); // fade in from the distance
       if (it.word && d > 120) o = Math.min(o, Math.max(0, (420 - d) / 300));
       it.el.style.opacity = o.toFixed(3);
@@ -1403,41 +1403,29 @@ function buildDive() {
     .fromTo('#toast', { yPercent: -140, opacity: 0, scale: 0.96 }, { yPercent: 0, opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.4)' }, 5.0)
     .fromTo('#exit .say, #exit .say2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15 }, 5.1);
 
-  const BASE = 0.95;          // about 6 seconds end to end
-  let locked = false, jumping = false;
+  // Scroll drives the dive (like Lusion), but it can't be skipped: the animation follows the scroll
+  // at a capped speed, and if you scroll faster than that, the page is held inside the section
+  // until the animation catches up.
+  let jumping = false;
   document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => { jumping = true; setTimeout(() => (jumping = false), 1600); }));
-  const jumpTo = (y) => { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); window.scrollTo(0, y); };
-  let lockY = 0;
-  const lock = (y) => { locked = true; lockY = y; lenis && lenis.stop(); document.documentElement.classList.add('dive-lock'); jumpTo(y); };
-  const hold = (e) => { if (locked) e.preventDefault(); };
-  addEventListener('touchmove', hold, { passive: false });
-  addEventListener('wheel', hold, { passive: false });
-  addEventListener('keydown', (e) => { if (locked && ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Home', 'End'].includes(e.key)) e.preventDefault(); });
-  addEventListener('scroll', () => { if (locked && Math.abs(scrollY - lockY) > 2) window.scrollTo(0, lockY); }, { passive: true });
-  const unlock = () => { locked = false; document.documentElement.classList.remove('dive-lock'); lenis && lenis.start(); };
-  const pin = ST.create({ trigger: '#divePin', start: 'top top', end: () => '+=' + Math.round(innerHeight * 0.9), pin: true, anticipatePin: 1, invalidateOnRefresh: true,
-    onRefreshInit: () => { if (!tl.progress()) { gsap.set(laptop, { clearProps: 'transform' }); laptop.style.transform = 'translate(-50%,-50%)'; } F = null; },
-    onEnter: (self) => {
-      if (reduce || jumping) { tl.progress(1); return; }
-      if (tl.progress() > 0.99) return;
-      lock(self.start + 1);
-      tl.timeScale(BASE).play();
-      tl.eventCallback('onComplete', () => { unlock(); });
-    },
-    onLeaveBack: () => {
-      // going back up: no lock, just reset quietly so the laptop is waiting when you come back down
-      if (locked) return;
-      tl.pause().progress(0);
-      gsap.fromTo([laptop, '#diveHead'], { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power1.out' });
-    } });
-  // scrolling during the sequence makes it go faster, never skip it
-  let speedT = null;
-  ST.observe({ target: window, type: 'wheel,touch', onChangeY: () => {
-    if (!locked) return;
-    const fwd = !tl.reversed();
-    gsap.to(tl, { timeScale: fwd ? 2.2 : 3.6, duration: 0.25, overwrite: true });
-    clearTimeout(speedT); speedT = setTimeout(() => gsap.to(tl, { timeScale: fwd ? BASE : 2.6, duration: 0.6, overwrite: true }), 450);
-  } });
+  const jumpTo = (y) => { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); };
+  let target = 0, shown = 0;
+  const pin = ST.create({ trigger: '#divePin', start: 'top top', end: () => '+=' + Math.round(innerHeight * 4), pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+    onRefreshInit: () => { if (!shown) { gsap.set(laptop, { clearProps: 'transform' }); laptop.style.transform = 'translate(-50%,-50%)'; } F = null; },
+    onUpdate: (self) => { target = self.progress; if (jumping || reduce) { shown = target; tl.progress(shown); } } });
+  const MAX = 0.3;           // the full dive takes at least ~3.3 s, however fast you scroll
+  const AHEAD = 0.1;         // how far the scroll may run ahead of the animation before it's held
+  gsap.ticker.add((time, dt) => {
+    if (jumping || reduce) return;
+    const diff = target - shown;
+    if (Math.abs(diff) < 0.0005) return;
+    const step = Math.sign(diff) * Math.min(Math.abs(diff) * 0.14 + 0.002, MAX * Math.min(dt, 34) / 1000);
+    shown = Math.min(1, Math.max(0, shown + step));
+    tl.progress(shown);
+    const len = pin.end - pin.start;
+    if (target - shown > AHEAD && scrollY > pin.start + (shown + AHEAD) * len) jumpTo(pin.start + (shown + AHEAD) * len);
+    else if (shown - target > AHEAD && scrollY < pin.start + (shown - AHEAD) * len && scrollY > pin.start - 2) jumpTo(pin.start + (shown - AHEAD) * len);
+  });
   if (reduce) tl.progress(1);
 }
 
