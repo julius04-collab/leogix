@@ -286,8 +286,8 @@ h1 .soft{color:var(--ink);opacity:.22}
 
 /* ---------- section 3: dive into the screen ---------- */
 .dive{position:relative;z-index:4;background:#fff;margin-top:-40px}
-.dive-pin{position:relative;height:100vh;height:100svh;overflow:hidden;background:#fff}
-.dive-head{position:absolute;z-index:3;left:0;right:0;top:clamp(96px,14vh,140px);text-align:center;padding-left:var(--gutL);padding-right:var(--gutR)}
+.dive-pin{position:relative;height:calc(100vh + 40px);height:calc(100svh + 40px);overflow:hidden;background:#fff}
+.dive-head{position:absolute;z-index:3;left:0;right:0;top:calc(clamp(96px,14vh,140px) + 40px);text-align:center;padding-left:var(--gutL);padding-right:var(--gutR)}
 .dive-head .eyebrow{font:400 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .dive-head h2{margin:16px auto 0;max-width:15ch;font-weight:800;font-size:clamp(38px,5.2vw,88px);line-height:.94;letter-spacing:-.05em}
 .dive-head h2 .g{background:linear-gradient(95deg,var(--m),var(--r) 30%,var(--o) 65%,var(--y));-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -575,6 +575,9 @@ h1 .soft{color:var(--ink);opacity:.22}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-stopped{overflow:hidden}
 html.dive-lock,html.dive-lock body{overflow:hidden;touch-action:none;overscroll-behavior:none}
+
+/* the pinned dive sits 40px above the window top (under the rounded edge of the section before it) */
+.dive-pin .tunnel,.dive-pin .exit{top:40px}
 </style>
 
 </head>
@@ -1381,7 +1384,8 @@ function buildDive() {
     // move the screen's centre to the viewport centre
     const pr = document.getElementById('divePin').getBoundingClientRect();
     const cx = r.left - pr.left + r.width / 2, cy = r.top - pr.top + r.height / 2;
-    return { s, dx: innerWidth / 2 - cx, dy: innerHeight / 2 - cy };
+    // aim at the centre of what you see (the pinned section sits 40px above the top of the window)
+    return { s, dx: innerWidth / 2 - cx, dy: innerHeight / 2 + 40 - cy };
   };
   // keep the laptop below the headline and inside the screen, whatever the window shape
   const head = document.getElementById('diveHead');
@@ -1403,11 +1407,11 @@ function buildDive() {
   // scrolling while it plays only speeds it up.
   const tl = gsap.timeline({ paused: true, onUpdate: () => { const tt = tl.time(); navEl.classList.toggle('dark2', tt > 1.45 && tt < 4.75); } });
   tl.to('#diveHead', { opacity: 0, y: -60, duration: 0.6, ease: 'power2.in' }, 0.15)
-    .to(laptop, { x: () => getF().dx, y: () => getF().dy, scale: () => getF().s, duration: 1.4, ease: 'power3.in' }, 0.2)
-    .to('#tunnel', { autoAlpha: 1, duration: 0.35, ease: 'none' }, 1.3)
-    .to(laptop, { autoAlpha: 0, duration: 0.01 }, 1.7)
-    .fromTo('#tlogo', { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.45)
-    .to(cam, { z: 4700, duration: 3.2, ease: 'none', onUpdate: renderWorld }, 1.5)
+    .to(laptop, { x: () => getF().dx, y: () => getF().dy, scale: () => getF().s, duration: 1.4, ease: 'power2.inOut' }, 0.2)
+    .to('#tunnel', { autoAlpha: 1, duration: 0.2, ease: 'none' }, 1.62)
+    .to(laptop, { autoAlpha: 0, duration: 0.01 }, 1.84)
+    .fromTo('#tlogo', { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.6)
+    .to(cam, { z: 4700, duration: 3.1, ease: 'none', onUpdate: renderWorld }, 1.6)
     .to('#tlogo', { rotate: 18, duration: 3.2, ease: 'none' }, 1.5)
     .fromTo('#exit', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01 }, 4.45)
     .fromTo('#exit .phone', { scale: 0.15, rotate: -8 }, { scale: 1, rotate: 0, duration: 0.9, ease: 'power3.out' }, 4.45)
@@ -1416,28 +1420,51 @@ function buildDive() {
     .fromTo('#toast', { yPercent: -140, opacity: 0, scale: 0.96 }, { yPercent: 0, opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.4)' }, 5.0)
     .fromTo('#exit .say, #exit .say2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15 }, 5.1);
 
-  // Scroll drives the dive (like Lusion), but it can't be skipped: the animation follows the scroll
-  // at a capped speed, and if you scroll faster than that, the page is held inside the section
-  // until the animation catches up.
+  // Scroll drives the dive, like Lusion: when the section reaches the top, the page stops moving and
+  // your scrolling moves the animation instead. Nothing can be skipped, there's no snapping, and at
+  // either end the page simply carries on scrolling.
   let jumping = false;
   document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => { jumping = true; setTimeout(() => (jumping = false), 1600); }));
-  const jumpTo = (y) => { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); };
-  let target = 0, shown = 0;
-  const pin = ST.create({ trigger: '#divePin', start: 'top top', end: () => '+=' + Math.round(innerHeight * 4), pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+  const jumpTo = (y) => { if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); window.scrollTo(0, y); };
+  let cap = false, capY = 0, prog = 0, shown = 0;
+  const DIST = () => innerHeight * (innerWidth < 900 ? 2.6 : 3.2);   // scroll distance for the whole dive
+  const capture = (y) => { cap = true; capY = y; lenis && lenis.stop(); jumpTo(y); };
+  const release = () => { cap = false; lenis && lenis.start(); };
+  const pin = ST.create({ trigger: '#divePin', start: 'top+=40 top', end: () => '+=' + Math.round(innerHeight * 0.7), pin: true, anticipatePin: 1, invalidateOnRefresh: true,
     onRefreshInit: () => { if (!shown) { gsap.set(laptop, { clearProps: 'transform' }); laptop.style.transform = 'translate(-50%,0)'; placeLaptop(); } F = null; },
-    onUpdate: (self) => { target = self.progress; if (jumping || reduce) { shown = target; tl.progress(shown); } } });
-  const MAX = 0.3;           // the full dive takes at least ~3.3 s, however fast you scroll
-  const AHEAD = 0.1;         // how far the scroll may run ahead of the animation before it's held
+    onEnter: (self) => { if (reduce || jumping) { prog = shown = 1; tl.progress(1); return; } if (prog < 1) capture(self.start + 1); },
+    onLeaveBack: (self) => { if (reduce || jumping) { prog = shown = 0; tl.progress(0); return; } if (prog > 0) capture(self.start + 1); } });
+  const feed = (d) => {
+    d = Math.max(-150, Math.min(150, d));
+    if (d > 0 && prog >= 1 && shown > 0.995) { release(); return false; }
+    if (d < 0 && prog <= 0 && shown < 0.005) { release(); return false; }
+    prog = Math.max(0, Math.min(1, prog + d / DIST()));
+    return true;
+  };
+  addEventListener('wheel', (e) => {
+    if (!cap) return;
+    const d = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaMode === 2 ? e.deltaY * innerHeight : e.deltaY;
+    if (feed(d)) e.preventDefault();
+  }, { passive: false, capture: true });
+  let ty = null;
+  addEventListener('touchstart', (e) => { ty = e.touches[0].clientY; }, { passive: true, capture: true });
+  addEventListener('touchmove', (e) => {
+    if (!cap || ty == null) return;
+    const y = e.touches[0].clientY, d = (ty - y) * 1.6; ty = y;
+    if (feed(d)) e.preventDefault();
+  }, { passive: false, capture: true });
+  addEventListener('keydown', (e) => {
+    if (!cap) return;
+    const m = { ArrowDown: 90, ArrowUp: -90, PageDown: innerHeight * 0.8, PageUp: -innerHeight * 0.8, ' ': innerHeight * 0.8 }[e.key];
+    if (m != null && feed(e.shiftKey && e.key === ' ' ? -m : m)) e.preventDefault();
+  });
+  addEventListener('scroll', () => { if (cap && Math.abs(scrollY - capY) > 2) window.scrollTo(0, capY); }, { passive: true });
   gsap.ticker.add((time, dt) => {
-    if (jumping || reduce) return;
-    const diff = target - shown;
-    if (Math.abs(diff) < 0.0005) return;
-    const step = Math.sign(diff) * Math.min(Math.abs(diff) * 0.14 + 0.002, MAX * Math.min(dt, 34) / 1000);
-    shown = Math.min(1, Math.max(0, shown + step));
+    const diff = prog - shown;
+    if (Math.abs(diff) < 0.0003) return;
+    const step = Math.sign(diff) * Math.min(Math.abs(diff) * 0.12 + 0.0008, 0.5 * Math.min(dt, 34) / 1000);
+    shown = Math.max(0, Math.min(1, shown + step));
     tl.progress(shown);
-    const len = pin.end - pin.start;
-    if (target - shown > AHEAD && scrollY > pin.start + (shown + AHEAD) * len) jumpTo(pin.start + (shown + AHEAD) * len);
-    else if (shown - target > AHEAD && scrollY < pin.start + (shown - AHEAD) * len && scrollY > pin.start - 2) jumpTo(pin.start + (shown - AHEAD) * len);
   });
   if (reduce) tl.progress(1);
 }
