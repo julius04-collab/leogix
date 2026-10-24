@@ -109,6 +109,11 @@ h1 .soft{color:var(--ink);opacity:.22}
 
 /* numbered markers sit on the 3D bars; the product cards live in a dock at the bottom */
 .tags{position:absolute;inset:0;z-index:4;pointer-events:none}
+.link{position:absolute;inset:0;width:100%;height:100%;overflow:visible;opacity:0;transition:opacity .4s}
+.tags.show .link{opacity:1}
+.link .ln-bg{fill:none;stroke:rgba(20,21,25,.10);stroke-width:1.5}
+.link .ln{fill:none;stroke:url(#lg);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.link .ln-end{fill:#fff;stroke:#E8083A;stroke-width:2}
 .marker{position:absolute;left:0;top:0;width:30px;height:30px;margin:-46px 0 0 -15px;border-radius:999px;background:#fff;color:var(--ink);font:500 11px/30px var(--mono);text-align:center;box-shadow:0 8px 20px rgba(20,21,25,.14);opacity:0;scale:.6;transition:opacity .4s,scale .5s var(--ease),background .4s,color .4s}
 .tags.show .marker{opacity:1;scale:1}
 .tags.show .marker.on{background:var(--ink);color:#fff;scale:1.2}
@@ -210,13 +215,14 @@ h1 .soft{color:var(--ink);opacity:.22}
     </div>
 
     <div class="tags" id="tags" aria-hidden="true">
-      <span class="marker" data-bar="0">03</span><span class="marker" data-bar="1">02</span><span class="marker" data-bar="2">01</span>
+      <svg class="link" id="link"><defs><linearGradient id="lg" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#141519"/><stop offset="1" stop-color="#E8083A"/></linearGradient></defs><path class="ln-bg" id="linkBg" d=""/><path class="ln" id="linkPath" pathLength="1" d=""/><circle class="ln-end" id="linkEnd" r="4"/></svg>
+      <span class="marker" data-bar="0">01</span><span class="marker" data-bar="1">02</span><span class="marker" data-bar="2">03</span>
     </div>
 
     <div class="dock" id="dock">
-      <a class="dcard" data-bar="2" href="#family"><img src="assets/leogix-sales-logo-sm.png" alt=""><div class="tx"><div class="n">01 · SALES.LEOGIX.COM</div><div class="t">Leogix Sales <span class="pill">Live</span></div><div class="s">AI that calls and follows up on every lead</div></div></a>
+      <a class="dcard" data-bar="0" href="#family"><img src="assets/leogix-support-logo-sm.png" alt=""><div class="tx"><div class="n">01 · SUPPORT.LEOGIX.COM</div><div class="t">Leogix Support <span class="pill soon">Soon</span></div><div class="s">AI that answers your helpdesk calls</div></div></a>
       <a class="dcard" data-bar="1" href="https://ask.leogix.com" target="_blank" rel="noopener"><img src="assets/leogix-ask-logo-sm.png" alt=""><div class="tx"><div class="n">02 · ASK.LEOGIX.COM</div><div class="t">Leogix Ask <span class="pill">Live</span></div><div class="s">Chat with Leo, your AI assistant</div></div></a>
-      <a class="dcard" data-bar="0" href="#family"><img src="assets/leogix-support-logo-sm.png" alt=""><div class="tx"><div class="n">03 · SUPPORT.LEOGIX.COM</div><div class="t">Leogix Support <span class="pill soon">Soon</span></div><div class="s">AI that answers your helpdesk calls</div></div></a>
+      <a class="dcard" data-bar="2" href="#family"><img src="assets/leogix-sales-logo-sm.png" alt=""><div class="tx"><div class="n">03 · SALES.LEOGIX.COM</div><div class="t">Leogix Sales <span class="pill">Live</span></div><div class="s">AI that calls and follows up on every lead</div></div></a>
 </div>
 
     <div class="copy" id="copy">
@@ -452,12 +458,31 @@ function placeTags() {
     el.style.translate = `${(v3.x * 0.5 + 0.5) * innerWidth}px ${(-v3.y * 0.5 + 0.5) * innerHeight}px`;
   });
 }
+const heroEl = document.getElementById('hero');
+const linkBg = document.getElementById('linkBg'), linkPath = document.getElementById('linkPath'), linkEnd = document.getElementById('linkEnd'), lg = document.getElementById('lg');
+const draw = { v: 1 };
+function placeLink() {
+  if (!showProducts || active < 0) return;
+  const m = markers.find((x) => +x.dataset.bar === active), c = dockCards.find((x) => +x.dataset.bar === active);
+  if (!m || !c) return;
+  const hr = heroEl.getBoundingClientRect(), mr = m.getBoundingClientRect(), cr = c.getBoundingClientRect();
+  const x1 = mr.left + mr.width / 2 - hr.left, y1 = mr.top + mr.height - hr.top + 2;
+  const x2 = cr.left + Math.min(cr.width / 2, 70) - hr.left, y2 = cr.top - hr.top - 2;
+  const dy = Math.max(40, (y2 - y1) * 0.55);
+  const d = `M${x1.toFixed(1)},${y1.toFixed(1)} C${x1.toFixed(1)},${(y1 + dy).toFixed(1)} ${x2.toFixed(1)},${(y2 - dy).toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
+  linkBg.setAttribute('d', d); linkPath.setAttribute('d', d);
+  linkPath.style.strokeDashoffset = draw.v;
+  linkEnd.setAttribute('cx', x2.toFixed(1)); linkEnd.setAttribute('cy', y2.toFixed(1));
+  linkEnd.style.opacity = draw.v < 0.05 ? 1 : 0;
+  lg.setAttribute('x1', x1); lg.setAttribute('y1', y1); lg.setAttribute('x2', x2); lg.setAttribute('y2', y2);
+}
 function setActive(show, a) {
   if (show === showProducts && a === active) return;
   showProducts = show; active = a;
   tagsEl.classList.toggle('show', show); dockEl.classList.toggle('show', show);
   markers.forEach((m) => m.classList.toggle('on', +m.dataset.bar === a));
   dockCards.forEach((c) => c.classList.toggle('on', +c.dataset.bar === a));
+  if (show && a >= 0) { draw.v = 1; gsap.to(draw, { v: 0, duration: 0.7, ease: 'power2.out', overwrite: true }); }
 }
 
 const clock = new THREE.Clock();
@@ -475,6 +500,7 @@ function frame() {
     });
     renderer.render(scene, camera);
     placeTags();
+    placeLink();
   }
   requestAnimationFrame(frame);
 }
@@ -516,7 +542,7 @@ function buildScroll() {
       onUpdate: (self) => {
         const tt = self.progress * tl.duration();
         const show = tt >= 1.15 && tt < 3.0;
-        setActive(show, !show ? -1 : tt < 1.75 ? 2 : tt < 2.35 ? 1 : 0);
+        setActive(show, !show ? -1 : tt < 1.75 ? 0 : tt < 2.35 ? 1 : 2);
       } }
   });
   const isNarrow = innerWidth < 900, isShort = innerHeight < 720;
@@ -529,7 +555,7 @@ function buildScroll() {
       .to(logo.rotation, { y: -0.12, x: 0.06, duration: 1.4, ease: 'power2.inOut' }, 0)
       .to(camera.position, { y: 1.1, duration: 1.4, ease: 'power2.inOut', onUpdate: () => camera.lookAt(0, 0.2, 0) }, 0);
   }
-  // products, one by one (Sales, Ask, Support) are driven by onUpdate above
+  // products, one by one, left to right (Support, Ask, Sales), are driven by onUpdate above
   tl.to({}, { duration: 1.6 }, 1.3);
   // the thesis appears behind the object
   tl.to('#storyA', { opacity: 1, duration: 0.6 }, 3.0)
