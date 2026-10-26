@@ -47,6 +47,8 @@ nav ul a:hover,nav ul a:focus-visible{background:rgba(255,255,255,.65);color:var
 nav ul a.on{background:var(--ink);color:#fff}
 nav.solid{background:rgba(255,255,255,.78)}
 .sheet{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));top:calc(78px + env(safe-area-inset-top,0px));z-index:39;display:grid;gap:4px;padding:10px;border-radius:24px;background:rgba(255,255,255,.86)}
+.sheet[hidden]{display:none}
+.menu .x{display:none}.menu[aria-expanded="true"] .x{display:block}.menu[aria-expanded="true"] .bars{display:none}
 .sheet a{display:block;padding:14px 16px;border-radius:14px;font-size:18px;font-weight:600;text-decoration:none;color:var(--ink)}
 .sheet a:hover,.sheet a:focus-visible{background:var(--paper-2);outline:none}
 .menu{display:none;width:42px;height:42px;border-radius:50%;border:none;background:var(--ink);color:#fff;place-items:center;cursor:pointer}
@@ -259,7 +261,7 @@ footer .brand img{height:20px}
       <li><a href="#products">Products</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="menu" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg></button>
+    <button class="menu" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="bars" d="M4 8h16M4 16h16"/><path class="x" d="M6 6l12 12M18 6 6 18"/></svg></button>
   </nav>
 </div>
 
@@ -598,7 +600,10 @@ void main(){
   const tick = () => nav.classList.toggle('solid', scrollY > innerHeight * .6);
   addEventListener('scroll', tick, { passive: true }); tick();
   const set = (open) => { sheet.hidden = !open; btn.setAttribute('aria-expanded', open); btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); };
-  btn.addEventListener('click', () => set(sheet.hidden));
+  btn.addEventListener('click', (e) => { e.stopPropagation(); set(sheet.hidden); });
+  document.addEventListener('click', (e) => { if (!sheet.hidden && !sheet.contains(e.target)) set(false); });
+  addEventListener('scroll', () => { if (!sheet.hidden) set(false); }, { passive: true });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
   sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
 })();
 
