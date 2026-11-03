@@ -357,6 +357,9 @@ footer .brand img{height:20px}
 .ghead h2{margin:18px 0 0}
 .ghead p{margin:0;font-size:18px;line-height:1.6;color:var(--ink-2);max-width:44ch;justify-self:end}
 .curve{position:relative;perspective:1100px;perspective-origin:50% 50%;height:clamp(300px,34vw,420px);margin-inline:calc(-1 * max(16px,4vw))}
+.curve{touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.curve.grabbing{cursor:grabbing}
+.curve video{pointer-events:none}
 .curve .track{position:absolute;left:0;top:0;height:100%;display:flex;gap:18px;transform-style:preserve-3d;will-change:transform}
 .tile{position:relative;flex-shrink:0;width:clamp(210px,22vw,290px);height:100%;border-radius:28px;overflow:hidden;background:var(--night);transform-style:preserve-3d;box-shadow:0 30px 50px -34px rgba(80,20,10,.5)}
 .tile video,.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -908,20 +911,42 @@ void main(){
   if (reduce) setBtn(fb, true);
   /* curved gallery drifts sideways and bends at the edges */
   const curve = document.getElementById('curve'), track = curve.querySelector('.track'), tiles = [...track.children];
-  let x = 0, cvis = false, drag = null;
-  watch(curve, (on) => { cvis = on; tiles.forEach((t) => { const v = t.querySelector('video'); if (on && v.preload === 'none') v.preload = 'auto'; playIf(v, on); }); });
-  curve.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, start: x }; curve.setPointerCapture(e.pointerId); });
-  curve.addEventListener('pointermove', (e) => { if (drag) x = drag.start + (e.clientX - drag.x); });
-  const endDrag = () => { drag = null; };
+  let x = 0, cvis = false, drag = null, vel = 0, last = performance.now();
+  const AUTO = reduce ? 0 : -(innerWidth < 700 ? 60 : 90); /* px per second */
+  curve.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, start: x, lx: e.clientX, lt: performance.now() }; vel = 0; curve.classList.add('grabbing'); curve.setPointerCapture(e.pointerId); });
+  curve.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const now = performance.now(), dt = Math.max(1, now - drag.lt);
+    vel = (e.clientX - drag.lx) / dt * 1000 * .8 + vel * .2;
+    drag.lx = e.clientX; drag.lt = now;
+    x = drag.start + (e.clientX - drag.x);
+  });
+  const endDrag = () => { if (!drag) return; drag = null; curve.classList.remove('grabbing'); };
   curve.addEventListener('pointerup', endDrag); curve.addEventListener('pointercancel', endDrag);
+  curve.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); x -= e.deltaX; vel = 0; } }, { passive: false });
+  curve.addEventListener('dragstart', (e) => e.preventDefault());
   const bend = () => {
     const half = track.scrollWidth / 2, cw = curve.clientWidth;
-    if (x <= -half) x += half; if (x > 0) x -= half;
+    while (x <= -half) x += half; while (x > 0) x -= half;
+    if (drag) drag.start = x - (drag.lx - drag.x);
     track.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
     tiles.forEach((t) => { const c = t.offsetLeft + x + t.offsetWidth / 2; const a = Math.max(-1.2, Math.min(1.2, (c - cw / 2) / (cw / 2))); t.style.transform = 'rotateY(' + (-a * 26).toFixed(2) + 'deg) translateZ(' + (Math.abs(a) * 70).toFixed(1) + 'px)'; });
   };
-  const gloop = () => { if (cvis || drag) { if (!drag && !reduce) x -= .4; bend(); } requestAnimationFrame(gloop); };
-  bend(); requestAnimationFrame(gloop);
+  const gloop = (now) => {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    const cr = curve.getBoundingClientRect(), onScreen = cr.bottom > 0 && cr.top < innerHeight;
+    if (onScreen !== cvis) { cvis = onScreen; tiles.forEach((t) => { const v = t.querySelector('video'); if (cvis && v.preload === 'none') v.preload = 'auto'; playIf(v, cvis); }); }
+    if (cvis || drag) {
+      if (!drag) {
+        /* after a flick, glide and ease back into the auto drift */
+        vel += (AUTO - vel) * Math.min(1, dt * 1.6);
+        x += vel * dt;
+      }
+      bend();
+    }
+    requestAnimationFrame(gloop);
+  };
+  vel = AUTO; bend(); requestAnimationFrame(gloop);
   /* belief band: the world in the background */
   const wv = document.getElementById('worldVid');
   watch(wv.parentElement, (on) => { if (on && wv.preload === 'none') wv.preload = 'auto'; playIf(wv, on); });
