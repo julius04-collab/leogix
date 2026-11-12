@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Leogix | Real Intelligence</title>
+<meta name="description" content="Leogix builds AI products that do real work: Leogix Sales calls and follows up every lead, Leogix Ask answers everyday questions, and Leogix Support is on the way.">
+<meta property="og:title" content="Leogix | Real Intelligence">
+<meta property="og:description" content="A family of AI products built carefully, so you can trust anything with the Leogix name on it.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="media/hero.jpg">
+<meta name="theme-color" content="#FBF8F6">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* v5: the product does the talking. One voice ribbon and one live call carry the page; everything else stays quiet on paper. */
+:root{
+  --paper:#FBF8F6; --paper-2:#F3EEEA; --ink:#16131A; --ink-2:#5E5660; --ink-3:#8A8088; --line:rgba(22,19,26,.12);
+  --ember:#F2552C; --ember-deep:#C23F1B; --crimson:#D91845; --amber:#FFB01F; --magenta:#C8247E;
+  --night:#1A171C; --night-2:#252128; --night-line:rgba(255,255,255,.1); --on-night:#F6F1EE; --on-night-2:#B4AAB0;
+  --grad:linear-gradient(100deg,#D91845 0%,#F2552C 45%,#FFB01F 100%);
+  --font:'Urbanist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --w:1200px; --gut:max(20px,env(safe-area-inset-left,0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video,canvas{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ember-deep);outline-offset:3px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.wrap{width:min(var(--w),100% - 2*var(--gut));margin-inline:auto}
+h1,h2,h3,p{margin:0}
+h2{font-weight:700;letter-spacing:-.035em;line-height:1.02;font-size:clamp(38px,5.4vw,76px);text-wrap:balance}
+.lede{font-size:clamp(18px,1.5vw,21px);color:var(--ink-2);max-width:56ch;text-wrap:pretty}
+.band{padding-block:clamp(72px,10vw,140px)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 26px;border-radius:999px;border:1px solid transparent;font-weight:600;font-size:17px;text-decoration:none;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.btn.solid{background:var(--ink);color:#fff}
+.btn.solid:hover{background:var(--ember-deep)}
+.btn.line{border-color:var(--line);background:transparent}
+.btn.line:hover{border-color:var(--ink)}
+
+/* nav */
+.top{position:fixed;inset:0 0 auto 0;z-index:40;padding:calc(12px + env(safe-area-inset-top,0px)) var(--gut) 12px;transition:background .3s,box-shadow .3s}
+.top.solid{background:rgba(251,248,246,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.top nav{width:min(var(--w),100%);margin:0 auto;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-.02em;text-decoration:none;margin-right:auto}
+.brand img{height:30px;width:auto}
+.top ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.top ul a{display:block;padding:10px 14px;border-radius:999px;font-size:16px;font-weight:500;color:var(--ink-2);text-decoration:none}
+.top ul a:hover{color:var(--ink);background:var(--paper-2)}
+.top .btn{min-height:44px;padding:0 20px;font-size:16px}
+.menu{display:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--paper);place-items:center;cursor:pointer}
+.menu svg{width:20px;height:20px}
+.menu .x,.menu[aria-expanded="true"] .bars{display:none}
+.menu[aria-expanded="true"] .x{display:block}
+.sheet{position:fixed;z-index:39;left:var(--gut);right:var(--gut);top:calc(72px + env(safe-area-inset-top,0px));padding:10px;border-radius:22px;background:#fff;box-shadow:0 24px 60px -20px rgba(22,19,26,.35);display:grid;gap:2px}
+.sheet[hidden]{display:none}
+.sheet a{display:block;padding:14px 16px;border-radius:14px;font-size:19px;font-weight:600;text-decoration:none}
+.sheet a:hover{background:var(--paper-2)}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding-block:120px 150px;overflow:hidden}
+#ribbon{position:absolute;left:0;right:0;bottom:0;width:100%;height:min(440px,52%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(32px,5vw,80px);align-items:center}
+h1{font-weight:800;letter-spacing:-.05em;line-height:.9;font-size:clamp(52px,7.2vw,104px)}
+h1 del{display:block;font-weight:300;color:var(--ink-3);text-decoration:none;position:relative;width:max-content;letter-spacing:-.04em}
+h1 del::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:.07em;border-radius:1em;background:var(--grad);transform-origin:left;animation:strike .9s .5s cubic-bezier(.7,0,.2,1) both}
+@keyframes strike{from{transform:scaleX(0)}}
+.hero .lede{margin-top:28px}
+.hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+/* the stage: a live product panel */
+.stage{--acc:var(--ember);position:relative;background:var(--night);color:var(--on-night);border-radius:28px;padding:10px;box-shadow:0 40px 90px -40px rgba(120,30,20,.55),0 0 0 1px rgba(255,255,255,.06) inset}
+.stage[data-p="ask"]{--acc:var(--amber)}
+.stage[data-p="support"]{--acc:#E2469A}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:20px;background:rgba(255,255,255,.05)}
+.tabs button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border:0;border-radius:16px;background:transparent;color:var(--on-night-2);font-weight:600;font-size:16px;cursor:pointer;transition:background .2s,color .2s}
+.tabs button img{height:20px;width:auto}
+.tabs button:hover{color:var(--on-night)}
+.tabs button[aria-selected="true"]{background:var(--night-2);color:var(--on-night);box-shadow:0 0 0 1px var(--night-line) inset}
+.panel{padding:22px clamp(14px,2vw,22px) 16px}
+.who{display:flex;align-items:center;gap:14px}
+.who .av{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--acc) 22%,var(--night-2));color:var(--on-night);font-weight:700;font-size:16px}
+.who b{display:block;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.who span{display:block;font-size:15px;color:var(--on-night-2)}
+.who .live{margin-left:auto;text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:17px}
+.who .live i{display:block;font-style:normal;font-size:13px;font-weight:700;color:var(--acc)}
+.who .live i::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:1px}
+.stage.playing .who .live i::before{animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.bar{height:3px;border-radius:3px;background:var(--night-line);margin-top:18px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);border-radius:3px}
+.log{height:clamp(260px,38vh,360px);-webkit-mask-image:linear-gradient(transparent,#000 30px);mask-image:linear-gradient(transparent,#000 30px);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:30px 2px 6px;scrollbar-width:none}
+.log::-webkit-scrollbar{display:none}
+.msg{max-width:86%;font-size:16.5px;line-height:1.4}
+.msg small{display:block;font-size:13px;font-weight:600;color:var(--on-night-2);margin-bottom:4px}
+.msg p{padding:11px 15px;border-radius:16px;background:var(--night-2)}
+.msg.leo small{color:var(--acc)}
+.msg.them{align-self:flex-end;text-align:right}
+.msg.them p{background:color-mix(in srgb,var(--acc) 16%,var(--night-2));text-align:left}
+.msg.in{animation:msgin .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes msgin{from{opacity:0;transform:translateY(8px)}}
+.done{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;min-height:98px;padding-top:12px;border-top:1px solid var(--night-line)}
+.done span{display:inline-flex;align-items:center;gap:7px;padding:8px 13px 8px 10px;border-radius:999px;background:rgba(255,255,255,.06);font-size:14.5px;font-weight:600;opacity:0;transform:scale(.94);transition:opacity .3s,transform .3s}
+.done span.on{opacity:1;transform:none}
+.done svg{width:16px;height:16px;color:#5FD08A}
+.foot{display:flex;align-items:center;gap:12px;padding-top:12px;font-size:13.5px;color:var(--on-night-2)}
+.foot p{margin-right:auto}
+.foot a{color:var(--on-night);font-weight:600}
+.ctl{flex:none;display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--night-line);background:transparent;color:var(--on-night);font-size:14.5px;font-weight:600;cursor:pointer}
+.ctl:hover{background:rgba(255,255,255,.07)}
+.ctl svg{width:14px;height:14px}
+
+/* about */
+.about .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:clamp(32px,6vw,96px);align-items:end}
+.about h2{font-size:clamp(34px,4.6vw,64px);line-height:1.06}
+.about h2 span{color:var(--ink-3)}
+.about .lede{margin-top:28px;max-width:52ch}
+.clip{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5;background:var(--paper-2)}
+.clip video,.clip img{width:100%;height:100%;object-fit:cover}
+.clip figcaption{position:absolute;left:14px;bottom:14px;right:14px;color:#fff;font-size:15px;font-weight:600;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+figure{margin:0}
+
+/* two ways */
+.ways{background:var(--paper-2)}
+.ways .head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:end;margin-bottom:clamp(36px,5vw,64px)}
+.ways table{width:100%;border-collapse:collapse}
+.ways th{font-size:15px;font-weight:600;color:var(--ink-2);text-align:left;padding:0 20px 14px 0}
+.ways td{vertical-align:top;padding:26px 20px 26px 0;border-top:1px solid var(--line)}
+.ways td.art{width:30%;font-size:clamp(19px,1.9vw,26px);font-weight:400;color:var(--ink-3)}
+.ways td.art span{background:linear-gradient(var(--ink-3),var(--ink-3)) no-repeat left 56%/0 1.5px;transition:background-size .7s cubic-bezier(.7,0,.2,1)}
+.ways tr.seen td.art span{background-size:100% 1.5px}
+.ways td.real{width:36%;font-size:clamp(22px,2.5vw,36px);font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.ways td.why{font-size:17px;color:var(--ink-2);padding-right:0}
+
+/* process */
+.made .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,96px);align-items:start}
+.made .still{position:sticky;top:104px}
+.made .frame{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:4/5;background:var(--paper-2)}
+.made .frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+.made .frame video.on{opacity:1}
+.made .count{margin-top:14px;font-size:15px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.made h2{margin-bottom:20px}
+.made ol{list-style:none;margin:clamp(28px,4vw,56px) 0 0;padding:0;counter-reset:s}
+.made li{counter-increment:s;display:grid;grid-template-columns:56px 1fr;padding:clamp(28px,5vh,56px) 0;border-top:1px solid var(--line);transition:opacity .4s}
+.made li::before{content:counter(s);font-size:20px;font-weight:700;color:var(--ember-deep);font-variant-numeric:tabular-nums;line-height:1.5}
+.made li h3{font-size:clamp(26px,2.8vw,38px);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.made li p{grid-column:2;margin-top:10px;color:var(--ink-2);max-width:46ch}
+.made li img{display:none;grid-column:1/-1;margin-top:20px;border-radius:18px;aspect-ratio:16/10;object-fit:cover;width:100%}
+.made.js li{opacity:.38}
+.made.js li.on{opacity:1}
+
+/* people */
+.people .lede{margin-top:20px}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);gap:12px;margin-top:clamp(32px,4vw,56px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:max(var(--gut),(100vw - var(--w))/2);padding:0 max(var(--gut),(100vw - var(--w))/2) 8px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip figure{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/5;scroll-snap-align:start;background:var(--paper-2)}
+.strip img,.strip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.strip video{opacity:0;transition:opacity .3s}
+.strip figure.live video{opacity:1}
+.strip figcaption{position:absolute;left:14px;right:14px;bottom:12px;color:#fff;font-weight:600;font-size:17px;text-shadow:0 1px 14px rgba(0,0,0,.7)}
+.strip figure::after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.5));pointer-events:none}
+.strip figcaption{z-index:1}
+
+/* products */
+.family .lede{margin-top:20px}
+.prod{--acc:var(--ember-deep);display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,5vw,80px);align-items:center;padding-block:clamp(40px,6vw,80px);border-top:1px solid var(--line)}
+.prod:first-of-type{margin-top:clamp(40px,5vw,72px)}
+.prod.ask{--acc:#B36A00}
+.prod.support{--acc:var(--magenta)}
+.prod:nth-of-type(even) .show{order:-1}
+.prod .name{display:flex;align-items:center;gap:14px}
+.prod .name img{height:44px;width:auto}
+.prod h3{font-size:clamp(30px,3.6vw,50px);font-weight:700;letter-spacing:-.035em;line-height:1}
+.state{display:inline-flex;align-items:center;gap:7px;margin-top:18px;font-size:15px;font-weight:600;color:var(--acc)}
+.state::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.state.soon::before{background:transparent;box-shadow:0 0 0 1.5px currentColor inset}
+.prod p.what{margin-top:14px;font-size:clamp(18px,1.6vw,21px);color:var(--ink-2);max-width:44ch}
+.prod ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}
+.prod li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:17px}
+.prod li svg{width:20px;height:20px;margin-top:3px;color:var(--acc)}
+.prod .btn{margin-top:28px}
+.show{border-radius:26px;background:var(--paper-2);padding:clamp(18px,3vw,36px);min-height:340px;display:grid;place-items:center;overflow:hidden}
+.phone{width:min(270px,78%);border-radius:34px;padding:8px;background:var(--ink);box-shadow:0 30px 60px -30px rgba(22,19,26,.6);margin-bottom:calc(-1*clamp(18px,3vw,36px) - 40px)}
+.phone img{border-radius:27px;width:100%;aspect-ratio:780/1300;object-fit:cover;object-position:top}
+.chat{width:min(400px,100%);display:grid;gap:12px;font-size:16.5px;line-height:1.45}
+.chat .q{justify-self:end;max-width:85%;padding:12px 16px;border-radius:18px 18px 4px 18px;background:var(--ink);color:#fff}
+.chat .a{padding:16px 18px;border-radius:18px 18px 18px 4px;background:#fff;box-shadow:0 1px 0 var(--line)}
+.chat .a b{display:flex;align-items:center;gap:8px;font-size:14.5px;margin-bottom:6px}
+.chat .a b img{height:18px;width:auto}
+.ticket{width:min(400px,100%);background:#fff;border-radius:18px;padding:20px;box-shadow:0 1px 0 var(--line)}
+.ticket small{font-size:14px;font-weight:600;color:var(--magenta)}
+.ticket h4{margin:6px 0 14px;font-size:21px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.ticket dl{margin:0;display:grid;gap:0}
+.ticket dl div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid var(--line);font-size:15.5px}
+.ticket dt{color:var(--ink-2)}
+.ticket dd{margin:0;font-weight:600;text-align:right}
+
+/* contact */
+.contact{background:var(--night);color:var(--on-night)}
+.contact .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,96px)}
+.contact .lede{color:var(--on-night-2);margin-top:20px}
+.contact .direct{margin-top:32px;font-size:17px;color:var(--on-night-2)}
+.contact .direct a{display:block;width:max-content;margin-top:4px;font-size:clamp(22px,2.4vw,30px);font-weight:700;letter-spacing:-.02em;color:var(--on-night);text-decoration-color:var(--ember);text-underline-offset:6px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+form label{display:grid;gap:7px;font-size:15px;font-weight:600;color:var(--on-night-2)}
+form .full{grid-column:1/-1}
+form input,form select,form textarea{width:100%;min-height:54px;padding:14px 16px;border-radius:14px;border:1px solid var(--night-line);background:var(--night-2);color:var(--on-night);font-size:17px}
+form textarea{min-height:130px;resize:vertical}
+form select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B4AAB0' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:20px}
+form input:focus-visible,form select:focus-visible,form textarea:focus-visible{outline:2px solid var(--amber);outline-offset:1px;border-radius:14px}
+form .btn{justify-self:start;background:var(--on-night);color:var(--ink)}
+form .btn:hover{background:var(--amber)}
+form .note{grid-column:1/-1;font-size:15px;color:var(--on-night-2);min-height:1.5em}
+
+/* footer */
+footer{background:var(--night);color:var(--on-night-2);padding:0 0 calc(28px + env(safe-area-inset-bottom,0px))}
+footer .wrap{border-top:1px solid var(--night-line);padding-top:40px}
+footer .cols{display:flex;flex-wrap:wrap;gap:32px 72px}
+footer .cols p{margin-right:auto;max-width:26ch;font-size:19px;color:var(--on-night)}
+footer .cols div{display:grid;gap:8px;align-content:start;font-size:16px}
+footer .cols b{color:var(--on-night);font-size:15px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--on-night)}
+.word{margin-top:clamp(32px,6vw,72px);font-weight:800;letter-spacing:-.06em;line-height:.8;font-size:clamp(88px,25vw,360px);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none}
+footer .base{margin-top:28px;font-size:15px}
+
+@media (max-width:900px){
+  .top ul,.top nav>.btn{display:none}
+  .menu{display:grid}
+  .hero{padding-block:104px 120px;align-items:flex-start}
+  .hero .wrap,.about .wrap,.made .wrap,.contact .wrap,.prod,.ways .head{grid-template-columns:minmax(0,1fr)}
+  #ribbon{height:300px}
+  .clip{aspect-ratio:16/10}
+  .made .still{display:none}
+  .made li img{display:block}
+  .made.js li{opacity:1}
+  .prod:nth-of-type(even) .show{order:0}
+  .show{min-height:0}
+  .ways table,.ways tbody,.ways tr,.ways td{display:block;width:auto}
+  .ways thead{display:none}
+  .ways tr{padding:22px 0;border-top:1px solid var(--line)}
+  .ways td,.ways td.art,.ways td.real{width:auto;padding:0;border:0}
+  .ways td.real{margin:6px 0 10px}
+  form{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  body{font-size:17px}
+  .tabs button{font-size:15px;gap:6px}
+  .tabs button img{height:17px}
+  .who .live{font-size:15px}
+  .foot{flex-wrap:wrap}
+  .btn{width:100%}
+  .top .btn,form .btn{width:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .ways td.art span{background-size:100% 1.5px}
+  .done span{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="topbar">
+  <nav aria-label="Main">
+    <a class="brand" href="#top"><img src="../assets/leogix-logo-sm.png" alt="" width="160" height="152">Leogix</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#beliefs">What we believe</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+    <a class="btn solid" href="#contact">Talk to us</a>
+    <button class="menu" id="menu" aria-expanded="false" aria-controls="sheet" aria-label="Menu">
+      <svg class="bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </nav>
+</header>
+<div class="sheet" id="sheet" hidden>
+  <a href="#about">About</a>
+  <a href="#beliefs">What we believe</a>
+  <a href="#products">Products</a>
+  <a href="#contact">Talk to us</a>
+</div>
+
+<main>
+<section class="hero" id="top">
+  <canvas id="ribbon" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <h1><del aria-hidden="true">Artificial</del><span class="sr">Not artificial. </span>Real Intelligence.</h1>
+      <p class="lede">Leogix is a family of AI products that do real work for real businesses. Watch one of them handle a call, start to finish.</p>
+      <div class="acts">
+        <a class="btn solid" href="#products">See the products</a>
+        <a class="btn line" href="#contact">Talk to us</a>
+      </div>
+    </div>
+
+    <div class="stage" id="stage" data-p="sales">
+      <div class="tabs" role="tablist" aria-label="Leogix products">
+        <button role="tab" id="tab-sales" aria-selected="true" aria-controls="panel" data-p="sales"><img src="../assets/leogix-sales-logo-sm.png" alt="" width="120" height="114">Sales</button>
+        <button role="tab" id="tab-ask" aria-selected="false" aria-controls="panel" data-p="ask" tabindex="-1"><img src="../assets/leogix-ask-logo-sm.png" alt="" width="120" height="114">Ask</button>
+        <button role="tab" id="tab-support" aria-selected="false" aria-controls="panel" data-p="support" tabindex="-1"><img src="../assets/leogix-support-logo-sm.png" alt="" width="120" height="114">Support</button>
+      </div>
+      <div class="panel" role="tabpanel" id="panel" aria-labelledby="tab-sales">
+        <div class="who">
+          <span class="av" id="s-av" aria-hidden="true">RM</span>
+          <div><b id="s-name">Rahul Mehta</b><span id="s-sub">Follow-up call, Green Meadows</span></div>
+          <div class="live"><i id="s-state">Live</i><span id="s-time">0:00</span></div>
+        </div>
+        <div class="bar" aria-hidden="true"><i id="s-bar"></i></div>
+        <div class="log" id="s-log" tabindex="0" aria-label="Conversation"></div>
+        <div class="done" id="s-done"></div>
+        <div class="foot">
+          <p id="s-note">Sample call, replayed as text.</p>
+          <button class="ctl" id="s-ctl" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about band" id="about">
+  <div class="wrap">
+    <div>
+      <h2>AI is everywhere now. <span>Most of it was built in a few months and left for people to figure out.</span></h2>
+      <p class="lede">We think people deserve better. So we take the time to understand real problems, sweat the details and build things you can rely on. We call it Real Intelligence.</p>
+    </div>
+    <figure class="clip">
+      <video class="lazy" muted loop playsinline preload="none" poster="media/hero.jpg" data-src="media/hero.mp4" aria-label="A Leogix team member thinking through a problem at his desk"></video>
+      <figcaption>It starts with people who think before they build.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="ways band" id="beliefs">
+  <div class="wrap">
+    <div class="head">
+      <h2>Two ways to build with AI.</h2>
+      <p class="lede">Most of the market chose speed. We chose care, because trust is the one thing you can't ship in a hurry.</p>
+    </div>
+    <table>
+      <thead><tr><th scope="col">Artificial</th><th scope="col">Real</th><th scope="col">What that means at Leogix</th></tr></thead>
+      <tbody>
+        <tr><td class="art"><span>Ship first, understand later</span></td><td class="real">Understand the problem first</td><td class="why">We study the industry before we design anything. Its rules, habits and edge cases decide what we build.</td></tr>
+        <tr><td class="art"><span>Built around a model</span></td><td class="real">Built around the people using it</td><td class="why">The technology is how we build. The people using it every day are who we build for.</td></tr>
+        <tr><td class="art"><span>Looks great in a demo</span></td><td class="real">Works on an ordinary Tuesday</td><td class="why">We ship when a product holds up in real work, then keep improving it with the people using it.</td></tr>
+        <tr><td class="art"><span>Trust is an afterthought</span></td><td class="real">Trust is the product</td><td class="why">A missed follow-up, a confusing answer or a clumsy screen costs trust. We sweat the parts most teams skip.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="made band" id="made">
+  <div class="wrap">
+    <div class="still" aria-hidden="true">
+      <div class="frame">
+        <video class="on" muted loop playsinline preload="none" poster="media/b1.jpg" data-src="media/b1.mp4"></video>
+        <video muted loop playsinline preload="none" poster="media/b2.jpg" data-src="media/b2.mp4"></video>
+        <video muted loop playsinline preload="none" poster="media/b3.jpg" data-src="media/b3.mp4"></video>
+        <video muted loop playsinline preload="none" poster="media/b4.jpg" data-src="media/b4.mp4"></video>
+      </div>
+      <p class="count"><span id="m-n">1</span> of 4</p>
+    </div>
+    <div>
+      <h2>Careful on purpose.</h2>
+      <p class="lede">Every Leogix product goes through the same four steps before it carries our name.</p>
+      <ol>
+        <li class="on"><h3>Listen</h3><p>Every product starts with the people who'll use it every day: what slows them down, what they've stopped trusting, what they wish just worked.</p><img src="media/b1.jpg" alt="Three colleagues talking through a problem around a laptop" loading="lazy" width="720" height="900"></li>
+        <li><h3>Research</h3><p>We study the industry before we design anything. The rules, the habits and the edge cases decide what we build.</p><img src="media/b2.jpg" alt="A monitor filled with open documents and spreadsheets" loading="lazy" width="720" height="900"></li>
+        <li><h3>Design the details</h3><p>Every screen, call script and answer is worked on until it feels obvious. The details are where trust is won or lost.</p><img src="media/b3.jpg" alt="Hands refining a design on a laptop" loading="lazy" width="720" height="900"></li>
+        <li><h3>Earn trust</h3><p>We ship when it holds up in real work, not when the demo looks good. Then we keep improving it with the people using it.</p><img src="media/b4.jpg" alt="A support agent on a headset, working at her desk" loading="lazy" width="720" height="900"></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="people band" aria-labelledby="people-h" style="padding-top:0">
+  <div class="wrap">
+    <h2 id="people-h">For the people doing the work.</h2>
+    <p class="lede">Sales teams on the phone all day. Customers with a question at midnight. Offices that never really stop.</p>
+  </div>
+  <div class="strip" id="strip" tabindex="0" aria-label="Who Leogix products are made for">
+    <figure><img src="media/t1.jpg" alt="An open-plan office with people at their desks" loading="lazy" width="480" height="600"><video muted loop playsinline preload="none" data-src="media/t1.mp4" aria-hidden="true"></video><figcaption>Busy offices</figcaption></figure>
+    <figure><img src="media/t2.jpg" alt="Apartment towers along a road at sunset" loading="lazy" width="480" height="600"><video muted loop playsinline preload="none" data-src="media/t2.mp4" aria-hidden="true"></video><figcaption>Growing cities</figcaption></figure>
+    <figure><img src="media/t3.jpg" alt="Two colleagues planning together at a table" loading="lazy" width="480" height="600"><video muted loop playsinline preload="none" data-src="media/t3.mp4" aria-hidden="true"></video><figcaption>Teams that plan together</figcaption></figure>
+    <figure><img src="media/t4.jpg" alt="A salesman on a phone call at his desk" loading="lazy" width="480" height="600"><video muted loop playsinline preload="none" data-src="media/t4.mp4" aria-hidden="true"></video><figcaption>Every sales call</figcaption></figure>
+    <figure><img src="media/t5.jpg" alt="A woman reading a message on her phone" loading="lazy" width="480" height="600"><video muted loop playsinline preload="none" data-src="media/t5.mp4" aria-hidden="true"></video><figcaption>Every customer question</figcaption></figure>
+    <figure><img src="media/t6.jpg" alt="A city and its highways lit up at dusk" loading="lazy" width="480" height="600"><video muted loop playsinline preload="none" data-src="media/t6.mp4" aria-hidden="true"></video><figcaption>Long after hours</figcaption></figure>
+  </div>
+</section>
+
+<section class="family band" id="products" style="padding-top:0">
+  <div class="wrap">
+    <h2>One root. Many products.</h2>
+    <p class="lede">Each product solves one real problem for one kind of business. They share the same roots, and connect to each other only where it helps.</p>
+
+    <article class="prod sales" id="sales">
+      <div>
+        <div class="name"><img src="../assets/leogix-sales-logo-sm.png" alt="" width="120" height="114"><h3>Leogix Sales</h3></div>
+        <span class="state">Live</span>
+        <p class="what">An AI calling CRM. It calls every new lead, follows up on time and books site visits, so no enquiry goes cold.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Leo makes the first call and every follow-up</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Each call comes back with a transcript, a summary and a quality score</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Your team can take over a live call at any moment</li>
+        </ul>
+        <a class="btn solid" href="#contact" data-interest="A Leogix Sales demo">Book a Sales demo</a>
+      </div>
+      <div class="show"><div class="phone"><img src="../assets/screens/sales-dashboard-mobile.jpg" alt="The Leogix Sales dashboard on a phone: today's calls, total leads and a live call with its transcript" loading="lazy" width="780" height="1688"></div></div>
+    </article>
+
+    <article class="prod ask" id="ask">
+      <div>
+        <div class="name"><img src="../assets/leogix-ask-logo-sm.png" alt="" width="120" height="114"><h3>Leogix Ask</h3></div>
+        <span class="state">Live at ask.leogix.com</span>
+        <p class="what">Ask Leo anything. A thoughtful assistant for everyday questions and work, built to give answers you can rely on.</p>
+        <a class="btn solid" href="https://ask.leogix.com" target="_blank" rel="noopener">Open Ask Leo<span class="sr"> (opens in a new tab)</span></a>
+      </div>
+      <div class="show" aria-hidden="true">
+        <div class="chat">
+          <p class="q">Write a polite reminder for an invoice that's two weeks overdue.</p>
+          <div class="a"><b><img src="../assets/leogix-ask-logo-sm.png" alt="" width="120" height="114">Leo</b>Hi Priya, a quick note that invoice 1042 was due on the 1st. Could you let me know when we can expect payment? Happy to resend it if that helps.</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="prod support" id="support">
+      <div>
+        <div class="name"><img src="../assets/leogix-support-logo-sm.png" alt="" width="120" height="114"><h3>Leogix Support</h3></div>
+        <span class="state soon">Coming soon</span>
+        <p class="what">AI that answers helpdesk calls, solves common issues on the spot and hands the rest to your team with full context.</p>
+        <a class="btn line" href="#contact" data-interest="Early access to Leogix Support">Ask for early access</a>
+      </div>
+      <div class="show" aria-hidden="true">
+        <div class="ticket">
+          <small>Preview of a handover</small>
+          <h4>Charged twice for the March invoice</h4>
+          <dl>
+            <div><dt>Caller</dt><dd>Verified by Leo</dd></div>
+            <div><dt>Solved on the call</dt><dd>No, needs a refund</dd></div>
+            <div><dt>Handed to</dt><dd>Billing team, with the full call</dd></div>
+          </dl>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="contact band" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Tell us what you need done.</h2>
+      <p class="lede">Book a Leogix Sales demo, ask for early access to Support, or tell us about a problem you'd like solved properly.</p>
+      <p class="direct">Or write to us directly<a id="mail" href="mailto:hello@leogix.com">hello@leogix.com</a></p>
+    </div>
+    <form id="form" novalidate>
+      <label>Your name<input name="name" autocomplete="name" required></label>
+      <label>Work email<input name="email" type="email" autocomplete="email" required></label>
+      <label class="full">What you're interested in
+        <select name="interest" id="interest">
+          <option>A Leogix Sales demo</option>
+          <option>Leogix Ask</option>
+          <option>Early access to Leogix Support</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label class="full">Message<textarea name="message" placeholder="What does your team spend too much time on?"></textarea></label>
+      <button class="btn" type="submit">Open email draft</button>
+      <p class="note" id="note" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <p>Built carefully, so you can trust anything with our name on it.</p>
+      <div><b>Company</b><a href="#about">About</a><a href="#beliefs">What we believe</a><a href="#contact">Contact</a></div>
+      <div><b>Products</b><a href="#sales">Leogix Sales</a><a href="https://ask.leogix.com" target="_blank" rel="noopener">Leogix Ask</a><a href="#support">Leogix Support</a></div>
+    </div>
+    <p class="word" aria-hidden="true">Leogix</p>
+    <p class="base">© 2026 Leogix. Real Intelligence.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var CONTACT_EMAIL='hello@leogix.com';
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $=function(id){return document.getElementById(id)};
+
+  /* nav */
+  var topbar=$('topbar'),menu=$('menu'),sheet=$('sheet');
+  function onScroll(){topbar.classList.toggle('solid',scrollY>24)}
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  function setMenu(open){menu.setAttribute('aria-expanded',open);sheet.hidden=!open}
+  menu.addEventListener('click',function(){setMenu(menu.getAttribute('aria-expanded')!=='true')});
+  sheet.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false)});
+  addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false)});
+
+  /* stage: three scripted product moments. t = seconds each line stays before the next. */
+  var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+  var SCENES={
+    sales:{av:'RM',name:'Rahul Mehta',sub:'Follow-up call, Green Meadows',live:'Live',end:'Call ended',them:'Rahul',note:'Sample call, replayed as text.',
+      lines:[
+        ['leo',"Hello, this is Leo calling about Green Meadows. Am I speaking with Rahul?",3.4],
+        ['them',"Yes, speaking.",1.6],
+        ['leo',"You asked about the 3-bedroom units last week. Do you have two minutes?",3.4],
+        ['them',"Sure. Does it come with parking?",2.2],
+        ['leo',"Yes, every 3-bedroom has one reserved spot. Would you like to see it in person?",3.8],
+        ['them',"Saturday morning works for me.",2.2],
+        ['leo',"Done. Saturday at 11:00 am. I'll send the location on WhatsApp.",3.2]
+      ],
+      done:['Site visit booked, Sat 11:00 am','Summary written','Location sent on WhatsApp']},
+    ask:{av:'You',name:'Ask Leo',sub:'A question from an ordinary workday',live:'Answering',end:'Answered',them:'You',note:'Sample question. <a href="https://ask.leogix.com" target="_blank" rel="noopener">Try your own at ask.leogix.com</a>',
+      lines:[
+        ['them',"Summarise this 14-page supplier contract. What should I worry about?",2.8],
+        ['leo',"Three things stand out. Payment is due in 15 days, not the usual 30.",3.4],
+        ['leo',"The contract renews by itself each year unless you cancel 60 days ahead.",3.4],
+        ['leo',"And late delivery has no penalty for the supplier. I'd ask for one before signing.",3.6],
+        ['them',"Draft that request for me.",1.8],
+        ['leo',"Here's a short, polite version you can send today.",2.6]
+      ],
+      done:['3 risks found','Request drafted']},
+    support:{av:'AK',name:'Anita Kapoor',sub:'Helpdesk call, billing question',live:'Preview',end:'Preview',them:'Anita',note:'Leogix Support is in development. This is how a call will go.',
+      lines:[
+        ['leo',"Thanks for calling. This is Leo. How can I help?",2.6],
+        ['them',"I think I've been charged twice for March.",2.4],
+        ['leo',"Let me check. Yes, I can see two payments on the 3rd for the same invoice.",3.6],
+        ['them',"Can you refund one?",1.8],
+        ['leo',"Refunds need a person, so I've passed this to billing with everything we just covered. You'll hear back by email today.",4.4]
+      ],
+      done:['Issue confirmed on the call','Handed to billing with full context']}
+  };
+  var stage=$('stage'),log=$('s-log'),done=$('s-done'),ctl=$('s-ctl'),bar=$('s-bar'),clock=$('s-time');
+  var tabs=[].slice.call(stage.querySelectorAll('[role=tab]'));
+  var cur='sales',scene=SCENES.sales,idx=0,elapsed=0,lineT=0,playing=false,finished=false,last=0,visible=false,userPaused=false;
+  var voice={who:null,level:0}; /* read by the ribbon */
+  var ICON={play:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>',pause:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>',again:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v5h5"/></svg>'};
+  function total(){return scene.lines.reduce(function(a,l){return a+l[2]},0)}
+  function fmt(s){s=Math.floor(s);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  function setCtl(){
+    var k=finished?'again':playing?'pause':'play';
+    ctl.innerHTML=ICON[k]+(k==='again'?'Replay':k==='pause'?'Pause':'Play');
+    stage.classList.toggle('playing',playing);
+  }
+  function addLine(l,animate){
+    var d=document.createElement('div');d.className='msg '+l[0]+(animate?' in':'');
+    var s=document.createElement('small');s.textContent=l[0]==='leo'?'Leo':scene.them;
+    var p=document.createElement('p');p.textContent=l[1];
+    d.appendChild(s);d.appendChild(p);log.appendChild(d);
+    log.scrollTo({top:log.scrollHeight,behavior:animate?'smooth':'auto'});
+  }
+  function showDone(animate){
+    done.innerHTML='';
+    scene.done.forEach(function(t,i){
+      var s=document.createElement('span');s.innerHTML=CHECK;s.appendChild(document.createTextNode(t));done.appendChild(s);
+      if(animate)setTimeout(function(){s.classList.add('on')},120+i*260);else s.classList.add('on');
+    });
+  }
+  function finish(){$('s-state').textContent=scene.end;finished=true;playing=false;voice.who=null;bar.style.width='100%';clock.textContent=fmt(total());showDone(!reduce);setCtl()}
+  function load(p,autoplay){
+    cur=p;scene=SCENES[p];idx=0;elapsed=0;lineT=0;finished=false;
+    stage.dataset.p=p;
+    tabs.forEach(function(t){var on=t.dataset.p===p;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1});
+    $('panel').setAttribute('aria-labelledby','tab-'+p);
+    $('s-av').textContent=scene.av;$('s-name').textContent=scene.name;$('s-sub').textContent=scene.sub;
+    $('s-state').textContent=scene.live;$('s-note').innerHTML=scene.note;
+    log.innerHTML='';done.innerHTML='';bar.style.width='0';clock.textContent='0:00';
+    if(reduce){scene.lines.forEach(function(l){addLine(l,false)});log.scrollTop=0;finish();ctl.hidden=true;return}
+    playing=!!autoplay;setCtl();
+    if(playing){addLine(scene.lines[0],true);voice.who=scene.lines[0][0]}
+  }
+  function tick(now){
+    var dt=Math.min(.1,(now-last)/1000);last=now;
+    if(playing&&visible){
+      elapsed+=dt;lineT+=dt;
+      if(lineT>=scene.lines[idx][2]){
+        idx++;lineT=0;
+        if(idx>=scene.lines.length){finish()}
+        else{addLine(scene.lines[idx],true);voice.who=scene.lines[idx][0]}
+      }
+      if(!finished){bar.style.width=(elapsed/total()*100)+'%';clock.textContent=fmt(elapsed)}
+    }
+    var target=(playing&&visible)?(voice.who==='leo'?1:.5):0.08;
+    voice.level+=(target-voice.level)*Math.min(1,dt*4);
+    requestAnimationFrame(tick);
+  }
+  ctl.addEventListener('click',function(){
+    if(finished){load(cur,true);userPaused=false;return}
+    playing=!playing;userPaused=!playing;
+    if(playing&&!log.children.length){addLine(scene.lines[0],true);voice.who=scene.lines[0][0]}
+    setCtl();
+  });
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){userPaused=false;load(t.dataset.p,true)});
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!d)return;
+      var n=tabs[(i+d+tabs.length)%tabs.length];n.focus();n.click();
+    });
+  });
+  load('sales',false);
+  if(!reduce){
+    new IntersectionObserver(function(es){
+      visible=es[0].isIntersecting;
+      if(visible&&!playing&&!finished&&!userPaused&&!log.children.length){playing=true;addLine(scene.lines[0],true);voice.who='leo';setCtl()}
+    },{threshold:.35}).observe(stage);
+    requestAnimationFrame(function(n){last=n;tick(n)});
+  }
+
+  /* ribbon: a band of strands in the logo's colours that swells when someone speaks */
+  (function(){
+    var c=$('ribbon'),x=c.getContext('2d'),W=0,H=0,dpr=1,t=0,on=true,N=44,grad;
+    function size(){
+      dpr=Math.min(2,devicePixelRatio||1);W=c.clientWidth;H=c.clientHeight;
+      c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+      grad=x.createLinearGradient(0,0,W,0);
+      grad.addColorStop(0,'#C8247E');grad.addColorStop(.3,'#D91845');grad.addColorStop(.62,'#F2552C');grad.addColorStop(1,'#FFB01F');
+      draw(0);
+    }
+    function draw(dt){
+      t+=dt;x.clearRect(0,0,W,H);
+      var lv=voice.level,cy=H*.56,amp=H*(.06+.15*lv),thick=H*(.2+.12*lv),k=Math.PI*2/Math.max(W,700);
+      x.strokeStyle=grad;x.lineWidth=1.2;x.globalAlpha=.7;
+      var n=W<600?24:N;
+      for(var i=0;i<n;i++){
+        var u=i/(n-1)-.5;
+        x.beginPath();
+        for(var px=-10;px<=W+10;px+=10){
+          var a=px*k,
+              mid=Math.sin(a*1.15+t*.5)*amp+Math.sin(a*2.7-t*.8)*amp*.35*lv,
+              twist=Math.cos(a*1.6+t*.35+1.2),
+              fine=Math.sin(a*9+t*2.4+u*6)*lv*H*.012,
+              y=cy+mid+u*thick*twist+fine;
+          if(px===-10)x.moveTo(px,y);else x.lineTo(px,y);
+        }
+        x.stroke();
+      }
+      x.globalAlpha=1;
+    }
+    var prev=0;
+    function loop(n){
+      if(on&&!document.hidden){draw(Math.min(.05,(n-prev)/1000))}
+      prev=n;requestAnimationFrame(loop);
+    }
+    new ResizeObserver(size).observe(c);
+    if(!reduce){
+      new IntersectionObserver(function(es){on=es[0].isIntersecting},{threshold:0}).observe(c);
+      requestAnimationFrame(function(n){prev=n;loop(n)});
+    }
+  })();
+
+  /* video: nothing downloads until it is needed, and only what is on screen plays */
+  function arm(v){if(!v.src&&v.dataset.src){v.src=v.dataset.src}}
+  function play(v){arm(v);var p=v.play();if(p&&p.catch)p.catch(function(){})}
+  if(!reduce){
+    var lazyIO=new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?play(e.target):e.target.pause()})},{threshold:.3});
+    document.querySelectorAll('video.lazy').forEach(function(v){lazyIO.observe(v)});
+  }
+
+  /* process: the step nearest the middle of the screen is the active one */
+  (function(){
+    var sec=$('made'),steps=[].slice.call(sec.querySelectorAll('ol li')),vids=[].slice.call(sec.querySelectorAll('.frame video')),n=$('m-n'),act=0,inView=false;
+    var desk=matchMedia('(min-width:901px)');
+    sec.classList.add('js');
+    function set(i){
+      act=i;steps.forEach(function(s,j){s.classList.toggle('on',j===i)});
+      vids.forEach(function(v,j){v.classList.toggle('on',j===i);if(j!==i)v.pause()});
+      n.textContent=i+1;
+      if(!reduce&&desk.matches&&inView)play(vids[i]);
+    }
+    var stepIO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)set(steps.indexOf(e.target))})},{rootMargin:'-45% 0px -45% 0px'});
+    steps.forEach(function(s){stepIO.observe(s)});
+    new IntersectionObserver(function(es){inView=es[0].isIntersecting;if(inView)set(act);else vids.forEach(function(v){v.pause()})},{threshold:.1}).observe(sec);
+  })();
+
+  /* people: a still by default, the clip plays while you point at it */
+  if(!reduce&&matchMedia('(hover:hover)').matches){
+    document.querySelectorAll('#strip figure').forEach(function(f){
+      var v=f.querySelector('video');
+      f.addEventListener('pointerenter',function(){play(v);f.classList.add('live')});
+      f.addEventListener('pointerleave',function(){v.pause();f.classList.remove('live')});
+    });
+  }
+
+  /* two ways: the artificial column is struck through as each row arrives */
+  var rowIO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('seen');rowIO.unobserve(e.target)}})},{threshold:.6});
+  document.querySelectorAll('.ways tbody tr').forEach(function(r){rowIO.observe(r)});
+
+  /* contact: product buttons preselect the topic; the form opens a ready-written email */
+  var form=$('form'),interest=$('interest'),note=$('note');
+  $('mail').href='mailto:'+CONTACT_EMAIL;$('mail').textContent=CONTACT_EMAIL;
+  document.querySelectorAll('[data-interest]').forEach(function(a){
+    a.addEventListener('click',function(){interest.value=a.dataset.interest});
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=form.elements,name=f.name.value.trim(),email=f.email.value.trim();
+    if(!name){note.textContent='Add your name so we know who to reply to.';f.name.focus();return}
+    if(!/^\S+@\S+\.\S+$/.test(email)){note.textContent='Add a work email we can reply to, like name@company.com.';f.email.focus();return}
+    var body=f.message.value.trim()+'\n\n'+name+'\n'+email;
+    location.href='mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(interest.value+' | '+name)+'&body='+encodeURIComponent(body);
+    note.textContent='Your email app should open with the message ready to send. If it does not, write to '+CONTACT_EMAIL+'.';
+  });
+})();
+</script>
+</body>
+</html>
