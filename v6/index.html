@@ -80,48 +80,117 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 .dock button.live .eq i{animation:lb .7s ease-in-out infinite}
 .dock button.live .eq i:nth-child(2){animation-delay:-.2s}.dock button.live .eq i:nth-child(3){animation-delay:-.4s}
 
-/* hero */
-.hero{position:relative;min-height:100svh;display:grid;align-items:center;padding-top:110px;padding-bottom:60px;overflow:hidden}
-.hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:24px;align-items:center}
-.hero h1{margin:18px 0 0;font-size:clamp(68px,10.5vw,170px);font-weight:700;letter-spacing:-.055em;line-height:.86}
-.hero h1 .w{display:inline-block;opacity:0;transform:translateY(40%) rotate(4deg);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+/* hero: layered, not split. Headline across the page, Leo's 3D bars inside it, phone over it */
+.hero{position:relative;min-height:max(100svh,680px);overflow:hidden;padding-top:calc(84px + env(safe-area-inset-top,0px));padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+.hero::before{content:"";position:absolute;right:-12%;top:18%;width:70vw;height:70vw;max-width:1100px;max-height:1100px;border-radius:50%;background:radial-gradient(circle,rgba(255,176,31,.22),rgba(242,85,44,.12) 40%,transparent 68%);filter:blur(20px);pointer-events:none}
+.hero .wrap{position:relative;width:min(1440px,100%);margin:0 auto;min-height:calc(max(100svh,680px) - 194px);display:grid;grid-template-rows:auto 1fr auto}
+.hero h1{position:relative;z-index:1;margin:0;font-size:clamp(76px,min(18vw,27svh),272px);font-weight:600;letter-spacing:-.06em;line-height:.84}
+.hero h1 .ln{display:block}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(40%) rotate(3deg);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
 .ready .hero h1 .w{opacity:1;transform:none}
-.ready .hero h1 .w:nth-child(2){transition-delay:.12s}
-.hero .lede{margin:28px 0 0;font-size:clamp(22px,2.3vw,32px);font-weight:500;line-height:1.22;letter-spacing:-.02em;color:var(--ink-2);max-width:20ch}
+.ready .hero h1 .ln:nth-child(2) .w{transition-delay:.12s}
+.hero h1 .slot{display:inline-block;position:relative;width:1.05em;height:.8em;vertical-align:-.02em;margin:0 .06em 0 -.02em}
+.hero h1 .slot canvas{position:absolute;left:50%;top:50%;width:2em;height:2em;transform:translate(-50%,-50%);pointer-events:none}
+.hero h1 .slot .ph{position:absolute;inset:0;display:none}
+.chip.status{position:relative;display:inline-flex;margin-bottom:18px;box-shadow:0 8px 24px -14px rgba(80,20,10,.35)}
+.hero .base{position:relative;z-index:3;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.hero .lede{margin:0;font-size:clamp(19px,1.7vw,24px);font-weight:500;line-height:1.38;letter-spacing:-.01em;color:var(--ink-2);max-width:30ch}
 .hero .lede b{color:var(--ink);font-weight:700}
-.hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
-.hero .hint{margin:16px 0 0;font-size:14px;color:var(--ink-3)}
-.stage{position:relative;aspect-ratio:1/1;width:100%;max-width:680px;justify-self:end}
-.stage canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2}
-.stage .glow{position:absolute;inset:16%;border-radius:50%;background:radial-gradient(circle,rgba(242,85,44,.42),rgba(255,176,31,.16) 45%,transparent 70%);filter:blur(30px);z-index:1;transition:transform .4s}
-.stage .floor{position:absolute;left:24%;right:24%;bottom:5%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(110,30,20,.28),transparent);z-index:1;transform:scaleX(var(--fs,1))}
-.chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:9px 14px 9px 10px;border-radius:999px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 30px -14px rgba(80,20,10,.35);font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap}
+.hero .acts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:26px}
+.hero .hint{margin:14px 0 0;font-size:14px;color:var(--ink-3)}
+.minis{display:flex;gap:12px;align-items:stretch}
+.mini{width:250px;padding:20px;border-radius:28px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 20px 40px -26px rgba(80,20,10,.35);display:flex;flex-direction:column;justify-content:space-between;gap:16px;text-decoration:none;color:var(--ink)}
+.mini p{margin:0;font-size:16px;font-weight:600;line-height:1.35}
+.mini .logos{display:flex;gap:8px}
+.mini .logos img{width:40px;height:40px;object-fit:contain;padding:7px;border-radius:12px;background:#fff}
+.mini.dark{width:180px;padding-bottom:58px;background:var(--ink);color:#fff;position:relative}
+.mini.dark small{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.mini.dark b{display:block;font-size:44px;font-weight:300;letter-spacing:-.04em;line-height:1;margin-top:8px}
+.mini.dark span{font-size:14px;color:rgba(255,255,255,.66)}
+.mini .go{position:absolute;right:12px;bottom:12px;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center}
+.mini .go svg{width:16px;height:16px}
+.chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:9px 14px 9px 10px;border-radius:999px;background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 30px -14px rgba(80,20,10,.35);font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap}
 .chip i{width:9px;height:9px;border-radius:50%;background:var(--ink-3)}
 .chip.talk i{background:var(--ember);box-shadow:0 0 0 4px rgba(242,85,44,.2)}
 .chip.listen i{background:#16A34A;box-shadow:0 0 0 4px rgba(22,163,74,.2)}
-.status{top:8%;left:2%}
-.callcard{position:absolute;z-index:3;right:0;bottom:4%;width:min(330px,62%);display:grid;gap:8px;pointer-events:none}
-.msg{padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.42;box-shadow:0 14px 30px -18px rgba(80,20,10,.4);animation:msgin .5s cubic-bezier(.2,.7,.2,1) both}
-.msg small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;opacity:.6}
-.msg.leo{background:var(--ink);color:#fff;border-bottom-left-radius:6px}
-.msg.cust{background:#fff;color:var(--ink);justify-self:end;border-bottom-right-radius:6px;max-width:85%}
-.msg.done{background:#fff;color:var(--ink)}
-.msg.done .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.msg.done .tags span{padding:5px 10px;border-radius:999px;background:#E7F7EC;color:#15803D;font-size:13px;font-weight:700}
 @keyframes msgin{from{opacity:0;transform:translateY(12px) scale(.98)}}
+/* the phone leans into the headline */
+.hphone{position:absolute;z-index:2;left:49%;top:14%;width:clamp(220px,min(21vw,31svh),310px);aspect-ratio:9/18.6;border-radius:46px;transform-style:preserve-3d;transform:perspective(1600px) translate3d(var(--px,0px),var(--py,0px),0) rotateZ(var(--rz,11deg)) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));filter:drop-shadow(0 50px 50px rgba(40,10,10,.28))}
+.hphone .pface{background:#1B171E;padding:10px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.08)}
+.hphone .scr{position:relative;height:100%;border-radius:38px;background:#100D12;color:#fff;overflow:hidden;padding:46px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.hphone .scr::before{content:"";position:absolute;top:12px;left:50%;width:80px;height:22px;border-radius:12px;background:#000;transform:translateX(-50%)}
+.hphone .clock{position:absolute;top:13px;left:22px;font-size:12px;font-weight:700}
+.hphone .who{display:flex;align-items:center;gap:10px}
+.hphone .who .av{width:38px;height:38px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-weight:800;font-size:14px}
+.hphone .who b{display:block;font-size:15px}
+.hphone .who small{font-size:12px;color:rgba(255,255,255,.55);font-weight:600}
+.hphone .big{margin:10px 0 2px;font-size:30px;font-weight:600;line-height:1.02;letter-spacing:-.035em}
+.hphone .big span{color:rgba(255,255,255,.4)}
+.hphone .eqz{display:flex;align-items:center;gap:3px;height:34px}
+.hphone .eqz i{flex:1;border-radius:3px;background:rgba(255,255,255,.18);height:6px;transition:height .12s}
+.hphone .eqz.on i{background:linear-gradient(#FFB01F,#F2552C)}
+.hphone .lines{display:grid;gap:7px;margin-top:auto}
+.hphone .ln2{padding:9px 11px;border-radius:14px;font-size:12.5px;line-height:1.38;background:rgba(255,255,255,.08);animation:msgin .45s cubic-bezier(.2,.7,.2,1) both}
+.hphone .ln2 small{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:2px}
+.hphone .ln2.leo{background:rgba(242,85,44,.2)}
+.hphone .ln2.done{background:#fff;color:var(--ink)}
+.hphone .ln2.done small{color:var(--ink-3)}
+.hphone .ln2.done .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.hphone .ln2.done .tags span{padding:4px 8px;border-radius:999px;background:#E7F7EC;color:#15803D;font-size:11px;font-weight:700}
+.hphone .row3{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;border-radius:14px;background:rgba(255,255,255,.06);font-size:12.5px}
+.hphone .row3 em{font-style:normal;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(22,163,74,.2);color:#6EE7A0}
+.hphone .row3 em.w{background:rgba(255,176,31,.18);color:#FFC861}
+.hphone .endb{display:flex;justify-content:center;margin-top:6px}
+.hphone .endb span{width:46px;height:46px;border-radius:50%;background:#E5484D;display:grid;place-items:center}
+.hphone .endb svg{width:20px;height:20px}
+@media (max-width:1360px){.mini:not(.dark){display:none}}
+@media (max-width:1180px){.minis{display:none}}
+@media (max-width:900px){
+  .hero{padding-top:84px;padding-bottom:110px}
+  .hero .wrap{min-height:0;display:block}
+  .hero h1{font-size:clamp(76px,23vw,160px)}
+  .hphone{position:relative;left:auto;top:auto;margin:-20px 4% 10px auto;width:min(240px,58vw)}
+  .hero .base{flex-direction:column;align-items:flex-start;margin-top:30px}
+  .minis{display:none}
+}
 
-/* reel (grows on scroll) */
-.reel{position:relative;height:190vh}
-.reel-pin{position:sticky;top:0;height:100svh;display:grid;place-items:center;padding:16px}
-.reel-frame{position:relative;width:min(calc(var(--rw,58)*1%),100%);height:calc(var(--rh,58)*1svh);border-radius:var(--rr,44px);overflow:hidden;background:var(--night);box-shadow:0 40px 80px -40px rgba(80,20,10,.45)}
+/* reel: a card inside a headline grows into the full-screen film */
+.reel{position:relative;height:240vh}
+.reel-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+.reel-row{display:flex;align-items:center;justify-content:center;gap:.22em;font-size:clamp(52px,9vw,150px);font-weight:600;letter-spacing:-.055em;line-height:1;white-space:nowrap}
+.reel-row .rw{display:inline-block;opacity:var(--wo,1);transition:none}
+.reel-row .rw.r .g{padding-right:.04em}
+.reel-frame{position:relative;flex-shrink:0;width:var(--fw,2.2em);height:var(--fh,1.1em);border-radius:var(--rr,999px);overflow:hidden;background:var(--night);box-shadow:0 40px 80px -40px rgba(80,20,10,.45)}
 .reel-frame video,.reel-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.reel-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,14,20,0) 40%,rgba(18,14,20,.78) 100%)}
-.reel-cap{position:absolute;z-index:1;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(20px,4vw,52px);display:flex;align-items:flex-end;justify-content:space-between;gap:24px;color:#fff;opacity:var(--ro,0);transform:translateY(calc((1 - var(--ro,0)) * 24px))}
+.reel-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,14,20,0) 40%,rgba(18,14,20,.78) 100%);opacity:var(--ro,0)}
+.reel-cap{position:absolute;z-index:1;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(90px,10vw,120px);display:flex;align-items:flex-end;justify-content:space-between;gap:24px;color:#fff;font-size:16px;letter-spacing:0;line-height:1.4;white-space:normal;opacity:var(--ro,0);transform:translateY(calc((1 - var(--ro,0)) * 24px))}
 .reel-cap .label{color:rgba(255,255,255,.7)}
 .reel-cap p{margin:14px 0 0;font-size:clamp(30px,4.8vw,72px);font-weight:600;line-height:1.02;letter-spacing:-.04em;max-width:15ch}
 .vbtn{flex-shrink:0;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.14);color:#fff;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .vbtn svg{width:16px;height:16px}
 .vbtn .pl{display:none}.vbtn.paused .pl{display:block}.vbtn.paused .pa{display:none}
+
+/* marquee band */
+.marq{padding-block:clamp(40px,7vw,100px);overflow:hidden;display:grid;gap:6px}
+.mrow{display:flex;gap:.3em;white-space:nowrap;font-size:clamp(56px,9vw,150px);font-weight:600;letter-spacing:-.05em;line-height:1.02;will-change:transform}
+.mrow span{display:inline-flex;align-items:center;gap:.3em}
+.mrow svg{width:.5em;height:.5em;flex-shrink:0}
+.mrow.b{color:transparent;-webkit-text-stroke:1.5px rgba(22,19,26,.28)}
+
+/* Leo's layer and the empty places he sits in */
+#field{position:fixed;inset:0;width:100vw;height:100vh;z-index:30;pointer-events:none;transition:opacity .3s}
+.anchor{display:block;flex-shrink:0}
+#leadAnchor{width:clamp(110px,10vw,150px);height:clamp(110px,10vw,150px)}
+.lead-head .side{display:flex;align-items:flex-end;gap:28px}
+#prodAnchor{position:absolute;inset:0;z-index:2}
+
+/* phones that turn: front face and a back with the mark */
+.pface{position:absolute;inset:0;border-radius:inherit;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.pback{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(150deg,#2A2430,#141116 60%);transform:rotateY(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.07)}
+.pback .cam{position:absolute;top:5%;left:8%;width:38%;aspect-ratio:1;border-radius:24%;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.pback .cam i{position:absolute;width:34%;aspect-ratio:1;border-radius:50%;background:#0B090C;box-shadow:inset 0 0 0 3px #2B2530}
+.pback .cam i:nth-child(1){top:10%;left:10%}.pback .cam i:nth-child(2){bottom:10%;left:10%}.pback .cam i:nth-child(3){top:33%;right:10%}
+.pback img{position:absolute;left:50%;top:50%;width:22%;transform:translate(-50%,-50%);opacity:.9}
 
 /* statement: words light up */
 .state{padding-block:clamp(90px,12vw,170px) clamp(40px,6vw,80px)}
@@ -200,7 +269,8 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 .after .in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(30px,6vw,90px);align-items:center}
 .photo{position:relative;aspect-ratio:4/5;border-radius:40px;overflow:visible}
 .photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:40px}
-.phone{position:absolute;right:-8%;bottom:-6%;width:clamp(230px,58%,300px);aspect-ratio:9/18.5;border-radius:44px;background:var(--ink);padding:10px;box-shadow:0 50px 90px -40px rgba(40,10,10,.7);transform:translateY(var(--py,0px)) rotate(-3deg)}
+.phone{position:absolute;right:-8%;bottom:-6%;width:clamp(230px,58%,300px);aspect-ratio:9/18.5;border-radius:44px;transform-style:preserve-3d;transform:perspective(1600px) translateY(var(--py,0px)) rotateZ(-3deg) rotateY(var(--ry,0deg));filter:drop-shadow(0 40px 40px rgba(40,10,10,.35))}
+.phone .pface{background:var(--ink);padding:10px}
 .screen{position:relative;height:100%;border-radius:36px;background:var(--paper);overflow:hidden;padding:34px 14px 14px;display:flex;flex-direction:column;gap:9px;font-size:13px}
 .screen::before{content:"";position:absolute;top:10px;left:50%;width:76px;height:20px;border-radius:12px;background:var(--ink);transform:translateX(-50%)}
 .screen .s-h{display:flex;align-items:center;gap:9px}
@@ -285,9 +355,11 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 .cform .note{margin:0;align-self:center;font-size:15px;color:var(--ink-2)}
 .cform .bad{border-color:var(--crimson)}
 
-/* footer */
-footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hidden}
-.ftop{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;padding-top:40px;border-top:1px solid var(--line)}
+/* footer: revealed from behind the page */
+main{position:relative;z-index:1;display:block;background:var(--paper);border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px);box-shadow:0 40px 60px -40px rgba(40,10,10,.28)}
+footer{position:sticky;bottom:0;z-index:0;background:var(--paper-2);padding-top:clamp(70px,9vw,120px);padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hidden}
+footer .word{transform:translateY(var(--fy,0px))}
+.ftop{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
 .ftop p{margin:0;font-size:clamp(22px,2.4vw,32px);font-weight:600;letter-spacing:-.03em;max-width:20ch}
 .fcols{display:flex;gap:clamp(30px,6vw,80px)}
 .fcols div{display:grid;gap:10px;align-content:start}
@@ -299,15 +371,13 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
 .fbase{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:26px;font-size:14px;color:var(--ink-3)}
 
 @media (max-width:900px){
-  .hero{padding-top:90px}
-  .hero .in{grid-template-columns:1fr}
-  .stage{justify-self:center;max-width:520px;margin-top:-10px}
-  .callcard{width:min(300px,78%)}
-  .reel{height:150vh}
+  .reel{height:190vh}
   .reel-cap{flex-direction:column;align-items:flex-start}
+  .reel-row{font-size:clamp(40px,11vw,90px)}
   .lead{height:auto}
   .lead-pin{position:relative;height:auto;padding-block:80px 40px}
   .lead-head .prog{display:none}
+  #leadAnchor{width:90px;height:90px}
   .ltrack{flex-direction:column;padding-right:max(16px,env(safe-area-inset-right,0px))}
   .lcard{width:100%;min-height:0}
   .prods .grid{grid-template-columns:1fr}
@@ -331,9 +401,9 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
   .top .ext{display:none}
 }
 @media (prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none}
   .hero h1 .w{opacity:1;transform:none}
-  .reel{height:auto}.reel-pin{position:relative;height:auto;padding-block:40px}.reel-frame{width:100%;height:70svh}.reel-cap{opacity:1;transform:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  .reel{height:auto}.reel-pin{position:relative;height:auto;padding-block:40px}.reel-row{flex-direction:column;white-space:normal}.reel-frame{width:92vw;height:70svh;border-radius:32px}.reel-cap{opacity:1;transform:none}.reel-frame::after{opacity:1}
   .lead{height:auto}.lead-pin{position:relative;height:auto;padding-block:80px}.ltrack{flex-wrap:wrap}
   .screen .blk{opacity:1;transform:none}
   .state p .wd{color:var(--ink)}
@@ -349,6 +419,7 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
   </defs>
 </svg>
 
+<canvas id="field" aria-hidden="true"></canvas>
 <div id="loader" aria-hidden="true">
   <div class="lw">Leogix <span>Leo is getting ready</span></div>
   <div class="lbars"><i></i><i></i><i></i></div>
@@ -356,7 +427,7 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
 </div>
 
 <header class="top gut">
-  <div class="in">
+  <div class="in" style="width:min(1440px,100%)">
     <a class="brand" href="#leo"><img src="../assets/leogix-mark.png" alt="">Leogix</a>
     <a class="ext" href="https://ask.leogix.com" target="_blank" rel="noopener">Try Leogix Ask <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">(opens in a new tab)</span></a>
   </div>
@@ -373,35 +444,60 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
 
 <main>
   <section class="hero gut" id="leo">
-    <div class="in">
-      <div>
-        <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>Leogix</span>
-        <h1><span class="w">Meet</span> <span class="w g">Leo.</span></h1>
-        <p class="lede">He calls your leads, answers your customers and picks up your helpdesk. <b>Leogix builds him.</b></p>
-        <div class="acts">
-          <button class="btn hot" type="button" id="playCall"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="playTxt">Hear Leo on a call</span></button>
-          <a class="btn line" href="#products">See what Leo does</a>
-        </div>
-        <p class="hint" id="hint">A one-minute sales call. Sound on.</p>
+    <div class="wrap">
+      <h1 aria-label="Meet Leo."><span class="ln"><span class="w">Meet</span></span><span class="ln"><span class="w slot" id="slot" aria-hidden="true"></span><span class="w g">Leo.</span></span></h1>
+      <div class="hphone" id="hphone" aria-label="Leo's phone">
+        <div class="pback" aria-hidden="true"><span class="cam"><i></i><i></i><i></i></span><img src="../assets/leogix-mark.png" alt=""></div>
+        <div class="pface"><div class="scr">
+          <span class="clock">11:02</span>
+          <div id="pidle" style="display:contents">
+            <div class="who"><span class="av">L</span><div><b>Leo</b><small>Sky Rise · sales line</small></div></div>
+            <p class="big">Tonight, <span>while your office was closed.</span></p>
+            <div class="row3"><span>Priya Sharma</span><em>Visit booked</em></div>
+            <div class="row3"><span>Rohan Mehta</span><em class="w">Call back 10 am</em></div>
+            <div class="row3"><span>Kavya Nair</span><em>Interested</em></div>
+            <div class="row3"><span>Amit Khanna</span><em>Visit booked</em></div>
+            <div class="ln2 leo" style="margin-top:auto"><small>9:00 am</small>Summaries for all 4 calls are waiting for your team.</div>
+          </div>
+          <div id="plive" style="display:none;flex-direction:column;gap:10px;height:100%">
+            <div class="who"><span class="av">PS</span><div><b>Priya Sharma</b><small id="ptime">Leo is calling…</small></div></div>
+            <div class="eqz" id="eqz" aria-hidden="true"></div>
+            <div class="lines" id="lines" aria-live="polite"></div>
+            <div class="endb" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85a1 1 0 0 1-1.41-.02L.29 13.08a1 1 0 0 1 0-1.41C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67a1 1 0 0 1 0 1.41l-2.48 2.48a1 1 0 0 1-1.41.02 11.3 11.3 0 0 0-2.67-1.85 1 1 0 0 1-.56-.9v-3.1A15 15 0 0 0 12 9z"/></svg></span></div>
+          </div>
+        </div></div>
       </div>
-      <div class="stage" id="stage">
-        <div class="glow" id="glow"></div>
-        <div class="floor" id="floor"></div>
-        <canvas id="leoc" aria-hidden="true"></canvas>
-        <span class="chip status" id="status" role="status"><i></i><span id="statusTxt">Leo is waiting for a call</span></span>
-        <div class="callcard" id="callcard" aria-live="polite"></div>
+      <span aria-hidden="true"></span>
+      <div class="base">
+        <div>
+          <span class="chip status" id="status" role="status"><i></i><span id="statusTxt">Leo is waiting for a call</span></span>
+          <p class="lede">Leo calls your leads, answers your customers and picks up your helpdesk, in Hindi and English, at any hour. <b>Leogix builds him.</b></p>
+          <div class="acts">
+            <button class="btn dark" type="button" id="playCall"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="playTxt">Hear Leo on a call</span></button>
+            <a class="btn line" href="#products">See what Leo does</a>
+          </div>
+          <p class="hint" id="hint">A one-minute sales call. Sound on.</p>
+        </div>
+        <div class="minis">
+          <a class="mini" href="#products"><p>One Leo, working across sales, questions and support.</p><span class="logos"><img src="../assets/leogix-sales-logo-sm.png" alt="Leogix Sales"><img src="../assets/leogix-ask-logo-sm.png" alt="Leogix Ask"><img src="../assets/leogix-support-logo-sm.png" alt="Leogix Support"></span></a>
+          <a class="mini dark" href="#lead"><small>Last night</small><b>4</b><span>leads called after hours</span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="reel" id="reel" aria-label="Leo at work">
     <div class="reel-pin">
-      <div class="reel-frame" id="reelFrame">
-        <video id="reelVid" src="../v5/media/hero.mp4" poster="../v5/media/hero.jpg" muted loop playsinline preload="metadata"></video>
-        <div class="reel-cap">
-          <div><span class="label">11:02 pm, somewhere in Pune</span><p>A lead just filled a form. Leo is already dialling.</p></div>
-          <button class="vbtn" type="button" data-vid="reelVid" aria-label="Pause video"><svg class="pa" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+      <div class="reel-row">
+        <span class="rw l">Leo is on</span>
+        <div class="reel-frame" id="reelFrame">
+          <video id="reelVid" src="../v5/media/hero.mp4" poster="../v5/media/hero.jpg" muted loop playsinline preload="metadata"></video>
+          <div class="reel-cap">
+            <div><span class="label">11:02 pm, somewhere in Pune</span><p>A lead just filled a form. Leo is already dialling.</p></div>
+            <button class="vbtn" type="button" data-vid="reelVid" aria-label="Pause video"><svg class="pa" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+          </div>
         </div>
+        <span class="rw r"><span class="g">every call.</span></span>
       </div>
     </div>
   </section>
@@ -420,7 +516,7 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
           <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>How Leo works</span>
           <h2 style="margin-top:16px">One lead, <span class="g">start to finish.</span></h2>
         </div>
-        <div class="prog" id="prog" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+        <div class="side"><div class="prog" id="prog" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div><span class="anchor" id="leadAnchor" aria-hidden="true"></span></div>
       </div>
       <div class="ltrack" id="ltrack">
         <article class="lcard">
@@ -472,10 +568,8 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
       <div class="grid">
         <div class="stick">
           <div class="pstage">
-            <div class="glow"></div>
-            <canvas id="prodc" aria-hidden="true"></canvas>
-            <div class="orbit wave on" data-o="0" aria-hidden="true"></div>
-            <div class="orbit spin" data-o="1" aria-hidden="true"><svg viewBox="0 0 400 400"><defs><path id="circ" d="M200,200 m-176,0 a176,176 0 1,1 352,0 a176,176 0 1,1 -352,0"/></defs><text><textPath href="#circ">Ask anything · Draft a reply · Check a number · Think it through · Ask anything · Draft a reply ·</textPath></text></svg></div>
+            <span class="anchor" id="prodAnchor" aria-hidden="true"></span>
+                        <div class="orbit spin" data-o="1" aria-hidden="true"><svg viewBox="0 0 400 400"><defs><path id="circ" d="M200,200 m-176,0 a176,176 0 1,1 352,0 a176,176 0 1,1 -352,0"/></defs><text><textPath href="#circ">Ask anything · Draft a reply · Check a number · Think it through · Ask anything · Draft a reply ·</textPath></text></svg></div>
             <div class="orbit pulse" data-o="2" aria-hidden="true"><span></span><span></span><span></span></div>
             <span class="pname" id="pname">Leogix Sales</span>
           </div>
@@ -522,19 +616,25 @@ footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hid
     </div>
   </section>
 
+  <section class="marq" aria-hidden="true">
+    <div class="mrow" data-d="1"><span>Leads in <svg><use href="#glyph"/></svg></span><span class="g">Visits out</span><span><svg><use href="#glyph"/></svg> Leads in <svg><use href="#glyph"/></svg></span><span class="g">Visits out</span><span><svg><use href="#glyph"/></svg> Leads in <svg><use href="#glyph"/></svg></span><span class="g">Visits out</span></div>
+    <div class="mrow b" data-d="-1"><span>Questions answered · Helpdesk picked up · Questions answered · Helpdesk picked up · Questions answered ·</span></div>
+  </section>
+
   <section class="after gut" id="after">
     <div class="in">
       <div class="photo reveal">
         <img src="../v5/media/t5.jpg" alt="A sales manager checking her phone" loading="lazy">
         <div class="phone" id="phone" aria-label="Call summary in Leogix Sales">
-          <div class="screen">
+          <div class="pback" aria-hidden="true"><span class="cam"><i></i><i></i><i></i></span><img src="../assets/leogix-mark.png" alt=""></div>
+          <div class="pface"><div class="screen">
             <div class="s-h"><span class="av">PS</span><div><b>Priya Sharma</b><small>Call by Leo · 4:12</small></div><span class="st">Interested</span></div>
             <div class="blk"><small>Summary</small>Wants a 2 BHK under ₹80 L near a school. Moving by June. Comparing two other projects.</div>
             <div class="blk"><small>Next step</small><b>Site visit · Sat 11:00 am</b><br>Location sent on WhatsApp</div>
             <div class="blk"><div class="qa"><small style="margin:0">Call quality</small><b>8.6</b></div><div class="bar"><i></i></div></div>
             <div class="blk play"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>Play the recording</div>
           </div>
-        </div>
+        </div></div>
       </div>
       <div class="copy reveal">
         <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>After every call</span>
@@ -659,7 +759,7 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 })();
 
-/* the call: Leo speaks (browser voice as a stand-in), the form reacts, the transcript builds */
+/* the call: Leo speaks (browser voice as a stand-in), the bars move, the phone shows the call */
 (() => {
   const S = [
     ['leo', 'Hi Priya, this is Leo from Sky Rise. You asked about Shree Kunj Greens last night. Is now a good time?'],
@@ -670,50 +770,59 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
     ['cust', 'Saturday works.'],
     ['leo', 'Done. I have booked Saturday at eleven and sent the location on WhatsApp. See you there, Priya.', 'Done. I’ve booked Saturday at 11 and sent the location on WhatsApp. See you there, Priya.']
   ];
-  const card = document.getElementById('callcard'), status = document.getElementById('status'), stTxt = document.getElementById('statusTxt');
+  const lines = document.getElementById('lines'), pidle = document.getElementById('pidle'), plive = document.getElementById('plive'), ptime = document.getElementById('ptime'), eqz = document.getElementById('eqz');
+  const status = document.getElementById('status'), stTxt = document.getElementById('statusTxt');
   const btn = document.getElementById('playCall'), btnTxt = document.getElementById('playTxt'), dockBtn = document.getElementById('dockPlay'), dockTxt = document.getElementById('dockTxt'), hint = document.getElementById('hint');
+  for (let i = 0; i < 22; i++) eqz.appendChild(document.createElement('i'));
+  const eqb = [...eqz.children];
   const synth = window.speechSynthesis;
-  let playing = false, run = 0, timers = [];
+  let playing = false, run = 0, timers = [], t0 = 0, clockT = null;
   const setStatus = (cls, t) => { status.className = 'chip status ' + cls; stTxt.textContent = t; };
+  const live = (on) => { pidle.style.display = on ? 'none' : 'contents'; plive.style.display = on ? 'flex' : 'none'; };
   const pickVoices = () => {
     const vs = synth ? synth.getVoices() : [];
-    const en = vs.filter((v) => /^en/i.test(v.lang));
-    const inV = en.filter((v) => /IN/i.test(v.lang));
-    const male = /(rishi|ravi|prabhat|male|daniel|alex|aaron|google uk english male)/i, fem = /(veena|lekha|heera|neerja|female|samantha|karen|zira|google uk english female)/i;
+    const en = vs.filter((v) => /^en/i.test(v.lang)), inV = en.filter((v) => /IN/i.test(v.lang));
+    const male = /(rishi|ravi|prabhat|male|daniel|alex|aaron)/i, fem = /(veena|lekha|heera|neerja|female|samantha|karen|zira)/i;
     const leo = inV.find((v) => male.test(v.name)) || en.find((v) => male.test(v.name)) || inV[0] || en[0] || vs[0];
     const cust = inV.find((v) => fem.test(v.name) && v !== leo) || en.find((v) => fem.test(v.name) && v !== leo) || inV.find((v) => v !== leo) || leo;
     return { leo, cust };
   };
   if (synth) synth.getVoices();
+  const eqLoop = () => { const a = LEO.speaking ? LEO.amp : (LEO.listen ? .25 : 0); eqb.forEach((b, i) => { b.style.height = (6 + a * 28 * Math.abs(Math.sin(performance.now() / 120 + i * 1.3))).toFixed(1) + 'px'; }); eqz.classList.toggle('on', !!LEO.speaking); if (playing) requestAnimationFrame(eqLoop); else eqb.forEach((b) => b.style.height = '6px'); };
   const add = (who, text) => {
     const m = document.createElement('div');
-    m.className = 'msg ' + who;
+    m.className = 'ln2 ' + who;
     m.innerHTML = '<small>' + (who === 'leo' ? 'Leo' : 'Priya') + '</small>';
     m.appendChild(document.createTextNode(text));
-    card.appendChild(m);
-    while (card.children.length > 3) card.removeChild(card.firstChild);
+    lines.appendChild(m);
+    while (lines.children.length > 3) lines.removeChild(lines.firstChild);
   };
+  const resetUi = () => { btnTxt.textContent = 'Hear Leo on a call'; dockTxt.textContent = 'Hear Leo'; dockBtn.classList.remove('live'); clearInterval(clockT); };
   const finish = (my) => {
     if (my !== run) return;
-    playing = false; LEO.amp = 0; LEO.listen = 0; LEO.speaking = false;
-    card.innerHTML = '';
-    const d = document.createElement('div'); d.className = 'msg done';
-    d.innerHTML = '<small>Call ended · 0:58</small><b>Site visit booked, Sat 11 am</b><div class="tags"><span>₹80 L budget</span><span>2 BHK</span><span>Near a school</span></div>';
-    card.appendChild(d);
-    setStatus('', 'Call done. Summary sent to your team');
-    btnTxt.textContent = 'Hear it again'; dockTxt.textContent = 'Hear Leo'; dockBtn.classList.remove('live');
+    playing = false; LEO.amp = 0; LEO.listen = 0; LEO.speaking = false; clearInterval(clockT);
+    lines.innerHTML = '';
+    const d = document.createElement('div'); d.className = 'ln2 done';
+    d.innerHTML = '<small>Call ended</small><b>Site visit booked, Sat 11 am</b><div class="tags"><span>₹80 L</span><span>2 BHK</span><span>Near a school</span></div>';
+    lines.appendChild(d);
+    ptime.textContent = 'Call ended · summary sent';
+    setStatus('', 'Call done. Your team has the summary');
+    resetUi(); btnTxt.textContent = 'Hear it again';
     hint.textContent = 'Leo’s voice here is a stand-in. The real one is warmer.';
   };
   const stop = () => {
     run++; playing = false; timers.forEach(clearTimeout); timers = [];
     if (synth) synth.cancel();
     LEO.amp = 0; LEO.listen = 0; LEO.speaking = false;
-    setStatus('', 'Call paused'); btnTxt.textContent = 'Hear Leo on a call'; dockTxt.textContent = 'Hear Leo'; dockBtn.classList.remove('live');
+    setStatus('', 'Call paused'); resetUi();
   };
   const start = () => {
-    const my = ++run; playing = true; card.innerHTML = '';
+    const my = ++run; playing = true; lines.innerHTML = ''; live(true);
     btnTxt.textContent = 'Stop the call'; dockTxt.textContent = 'Stop'; dockBtn.classList.add('live');
     hint.textContent = 'Playing a sample call. Sound on.';
+    t0 = Date.now(); ptime.textContent = 'On a call · 0:00';
+    clockT = setInterval(() => { const s = Math.floor((Date.now() - t0) / 1000); ptime.textContent = 'On a call · ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }, 500);
+    requestAnimationFrame(eqLoop);
     const V = pickVoices();
     let i = 0;
     const next = () => {
@@ -723,7 +832,7 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
       add(who, show || say);
       if (who === 'leo') { setStatus('talk', 'Leo is talking'); LEO.speaking = true; LEO.listen = 0; }
       else { setStatus('listen', 'Leo is listening'); LEO.speaking = false; LEO.listen = 1; }
-      const words = say.split(/\s+/).length, est = Math.max(1200, words * 380);
+      const est = Math.max(1200, say.split(/\s+/).length * 380);
       if (synth && V.leo) {
         const u = new SpeechSynthesisUtterance(say);
         u.voice = who === 'leo' ? V.leo : V.cust;
@@ -736,9 +845,7 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
         u.onend = go; u.onerror = go;
         timers.push(setTimeout(go, est * 2.2 + 2500));
         synth.speak(u);
-      } else {
-        timers.push(setTimeout(next, est));
-      }
+      } else timers.push(setTimeout(next, est));
     };
     next();
   };
@@ -753,16 +860,43 @@ const watch = (el, fn) => new IntersectionObserver((es) => es.forEach((e) => fn(
 const setBtn = (b, paused) => { b.classList.toggle('paused', paused); b.setAttribute('aria-label', paused ? 'Play video' : 'Pause video'); };
 (() => {
   const reel = document.getElementById('reel'), frame = document.getElementById('reelFrame'), rv = document.getElementById('reelVid'), rb = document.querySelector('.vbtn[data-vid="reelVid"]');
+  const row = reel.querySelector('.reel-row'), ws = [...reel.querySelectorAll('.rw')];
   watch(reel, (on) => playIf(rv, on));
   rb.addEventListener('click', () => { if (rv.paused) { delete rv.dataset.user; rv.play().catch(() => {}); setBtn(rb, false); } else { rv.dataset.user = '1'; rv.pause(); setBtn(rb, true); } });
   if (reduce) { setBtn(rb, true); return; }
   const tick = () => {
     const r = reel.getBoundingClientRect(), span = r.height - innerHeight;
-    const p = Math.min(1, Math.max(0, -r.top / (span * .7))), e = 1 - Math.pow(1 - p, 3);
-    frame.style.setProperty('--rw', (58 + 42 * e).toFixed(2));
-    frame.style.setProperty('--rh', (58 + 42 * e).toFixed(2));
-    frame.style.setProperty('--rr', (44 - 44 * e).toFixed(1) + 'px');
-    frame.style.setProperty('--ro', Math.min(1, Math.max(0, (p - .35) / .4)).toFixed(3));
+    const p = Math.min(1, Math.max(0, -r.top / (span * .75))), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    const fs = parseFloat(getComputedStyle(row).fontSize), w0 = fs * 2.2, h0 = fs * 1.05;
+    frame.style.setProperty('--fw', (w0 + (innerWidth - w0) * e).toFixed(1) + 'px');
+    frame.style.setProperty('--fh', (h0 + (innerHeight - h0) * e).toFixed(1) + 'px');
+    frame.style.setProperty('--rr', (fs * .55 * (1 - e)).toFixed(1) + 'px');
+    ws.forEach((w) => w.style.setProperty('--wo', Math.max(0, 1 - e * 2.2).toFixed(3)));
+    frame.style.setProperty('--ro', Math.min(1, Math.max(0, (p - .7) / .25)).toFixed(3));
+  };
+  addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); tick();
+})();
+
+/* marquee: the rows slide with the scroll */
+(() => {
+  const rows = [...document.querySelectorAll('.mrow')];
+  if (reduce) return;
+  const tick = () => rows.forEach((m) => { const b = m.getBoundingClientRect(); if (b.bottom < -200 || b.top > innerHeight + 200) return; const off = (innerHeight - b.top) * .45 * +m.dataset.d; m.style.transform = 'translate3d(' + ((+m.dataset.d > 0 ? -innerWidth * .6 : -innerWidth * 1.2) + off).toFixed(1) + 'px,0,0)'; });
+  addEventListener('scroll', tick, { passive: true }); tick();
+})();
+
+/* hero phone turns over as you leave the hero */
+(() => {
+  const hp = document.getElementById('hphone'), hero = document.getElementById('leo');
+  if (reduce) return;
+  const mq = matchMedia('(max-width:900px)');
+  const tick = () => {
+    const p = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight * .85))), e = p * p * (3 - 2 * p);
+    hp.style.setProperty('--ry', (-178 * e).toFixed(1) + 'deg');
+    hp.style.setProperty('--rx', (12 * Math.sin(Math.PI * e)).toFixed(1) + 'deg');
+    hp.style.setProperty('--rz', ((mq.matches ? 6 : 11) - 8 * e).toFixed(1) + 'deg');
+    hp.style.setProperty('--py', (e * (mq.matches ? 60 : 220)).toFixed(1) + 'px');
+    hp.style.setProperty('--px', (e * (mq.matches ? 0 : -60)).toFixed(1) + 'px');
   };
   addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); tick();
 })();
@@ -792,15 +926,18 @@ const setBtn = (b, paused) => { b.classList.toggle('paused', paused); b.setAttri
     const max = Math.max(0, track.scrollWidth - innerWidth);
     track.style.transform = 'translate3d(' + (-p * max).toFixed(1) + 'px,0,0)';
     bars.forEach((b, i) => b.style.setProperty('--p', Math.min(1, Math.max(0, p * bars.length - i)).toFixed(3)));
+    LEO.leadStep = Math.min(5, Math.floor(p * 6));
   };
   addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); tick();
+  /* on phones the cards stack, so the card in the middle of the screen sets the step */
+  const cards = [...document.querySelectorAll('.lcard')];
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && mq.matches) LEO.leadStep = cards.indexOf(e.target); }), { rootMargin: '-45% 0px -45% 0px' });
+  cards.forEach((c) => io.observe(c));
 })();
 
 /* products: the panel in view sets Leo's mode */
 (() => {
   const panels = [...document.querySelectorAll('.panel')], orbits = [...document.querySelectorAll('.orbit')], pname = document.getElementById('pname');
-  const wave = document.querySelector('.orbit.wave');
-  for (let i = 0; i < 26; i++) { const b = document.createElement('i'); b.style.setProperty('--h', (14 + Math.abs(Math.sin(i * 1.7)) * 46).toFixed(0) + 'px'); b.style.setProperty('--d', (-i * .09).toFixed(2) + 's'); wave.appendChild(b); }
   const set = (m) => { LEO.mode = m; orbits.forEach((o) => o.classList.toggle('on', +o.dataset.o === m)); pname.textContent = panels[m].dataset.name; };
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) set(+e.target.dataset.mode); }), { rootMargin: '-45% 0px -45% 0px' });
   panels.forEach((p) => io.observe(p));
@@ -813,7 +950,7 @@ const setBtn = (b, paused) => { b.classList.toggle('paused', paused); b.setAttri
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { blks.forEach((b, i) => setTimeout(() => b.classList.add('on'), 250 + i * 380)); io.disconnect(); } }), { threshold: .35 });
   io.observe(sec);
   if (reduce) return;
-  const tick = () => { const r = sec.getBoundingClientRect(); const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; phone.style.setProperty('--py', (p * 60).toFixed(1) + 'px'); };
+  const tick = () => { const r = sec.getBoundingClientRect(); const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; phone.style.setProperty('--py', (p * 60).toFixed(1) + 'px'); const q = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * .75))), e = q * q * (3 - 2 * q); phone.style.setProperty('--ry', (180 * (1 - e)).toFixed(1) + 'deg'); };
   addEventListener('scroll', tick, { passive: true }); tick();
 })();
 
@@ -859,6 +996,14 @@ const setBtn = (b, paused) => { b.classList.toggle('paused', paused); b.setAttri
   vel = AUTO; bend(); requestAnimationFrame(loop);
 })();
 
+/* footer wordmark rises as the page lifts away */
+(() => {
+  const f = document.querySelector('footer'), w = f.querySelector('.word');
+  if (reduce) return;
+  const tick = () => { const b = f.getBoundingClientRect(); const p = Math.min(1, Math.max(0, (innerHeight - b.top) / b.height)); w.style.setProperty('--fy', ((1 - p) * 120).toFixed(1) + 'px'); };
+  addEventListener('scroll', tick, { passive: true }); tick();
+})();
+
 /* dock highlights the section in view */
 (() => {
   const links = [...document.querySelectorAll('.dock .lk')];
@@ -882,150 +1027,140 @@ const setBtn = (b, paused) => { b.classList.toggle('paused', paused); b.setAttri
 </script>
 
 <script type="module">
-/* Leo's body: a living form in the Leogix colours. It breathes, leans toward the cursor,
-   moves with Leo's voice, and changes shape for each product. */
+/* One Leo for the whole page: the three voice bars in 3D, drawn on a fixed layer.
+   They sit in the headline, fly to "One lead" and react to each step, become the product stage,
+   and park in the dock's Hear Leo button in between. */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-const NOISE = `
-vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
-vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
-float snoise(vec3 v){
-  const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);
-  vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);
-  vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);
-  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;
-  i=mod289(i);
-  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
-  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;
-  vec4 j=p-49.0*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);
-  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);
-  vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);
-  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));
-  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
-  vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);
-  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
-  p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
-  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;
-  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
-}`;
-
-const VERT = NOISE + `
-uniform float uTime,uAmp,uListen,uM0,uM1,uM2,uPull;
-uniform vec3 uDir;
-varying vec3 vN; varying vec3 vW; varying float vD;
-float disp(vec3 p){
-  float t=uTime;
-  float base=snoise(p*.85+vec3(0.0,t*.2,t*.07))*.11+snoise(p*1.9+vec3(t*.15))*.025;
-  float sales=sin(p.y*7.0-t*2.6)*.028*(.5+uAmp*1.2);
-  float ask=snoise(p*2.0+vec3(t*.3))*.05+sin(atan(p.z,p.x)*6.0+t*.8)*.02;
-  float sup=snoise(p*.75+vec3(t*.12))*.1+sin(t*1.1)*.025;
-  float voice=snoise(p*2.8+vec3(t*2.4))*uAmp*.16;
-  float listen=sin(length(p.xz)*12.0-t*7.0)*.03*uListen;
-  float pull=pow(max(dot(p,uDir),0.0),6.0)*.12*uPull;
-  return base*(.7+.3*uM2)+sales*uM0+ask*uM1+sup*uM2*.6+voice+listen+pull;
-}
+const VERT = `
+uniform float uLen;
+varying vec3 vN; varying vec3 vL;
 void main(){
-  vec3 p=normalize(position);
-  vec3 t1=normalize(abs(p.y)<.95?cross(p,vec3(0.0,1.0,0.0)):cross(p,vec3(1.0,0.0,0.0)));
-  vec3 t2=normalize(cross(p,t1));
-  float e=.012;
-  vec3 a=normalize(p+t1*e), b=normalize(p+t2*e);
-  float d=disp(p);
-  vec3 P=p*(1.0+d), A=a*(1.0+disp(a)), B=b*(1.0+disp(b));
-  vec3 n=normalize(cross(A-P,B-P));
-  if(dot(n,p)<0.0) n=-n;
-  vD=d;
-  vec4 w=modelMatrix*vec4(P,1.0);
-  vW=w.xyz; vN=normalize(mat3(modelMatrix)*n);
-  gl_Position=projectionMatrix*viewMatrix*w;
+  vec3 p=position;
+  p.y+=sign(p.y)*uLen*.5;
+  vL=p;
+  vN=normalize(mat3(modelMatrix)*normal);
+  gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);
 }`;
-
 const FRAG = `
-uniform float uTime,uAmp,uM1,uListen;
-varying vec3 vN; varying vec3 vW; varying float vD;
+uniform float uGlow,uX,uA;
+varying vec3 vN; varying vec3 vL;
 void main(){
-  vec3 N=normalize(vN), V=normalize(cameraPosition-vW);
-  vec3 crimson=vec3(.85,.09,.27), ember=vec3(.95,.33,.17), amber=vec3(1.0,.69,.12), deep=vec3(.42,.04,.12);
-  float g=.5+.5*(N.y*.65+N.x*.35)+vD*1.6+sin(uTime*.3)*.05;
-  vec3 col=mix(crimson,ember,smoothstep(.15,.55,g));
-  col=mix(col,amber,smoothstep(.62,1.0,g));
-  col=mix(deep,col,smoothstep(-.2,.35,g));
-  vec3 L=normalize(vec3(.45,.85,.6));
-  float diff=(dot(N,L)+.35)/1.35;
-  col*=.62+.55*clamp(diff,0.0,1.0);
-  float spec=pow(max(dot(reflect(-L,N),V),0.0),48.0);
-  vec3 L2=normalize(vec3(-.7,.1,.5));
-  float spec2=pow(max(dot(reflect(-L2,N),V),0.0),22.0)*.35;
-  float fr=pow(1.0-max(dot(N,V),0.0),2.6);
-  col=mix(col,vec3(1.0,.94,.9),fr*.6);
-  col+=vec3(1.0,.97,.92)*(spec*.85+spec2);
-  col+=vec3(1.0,.8,.5)*uAmp*.08;
-  col+=.05*uM1*sin(vW.y*38.0+uTime*2.0)*fr;
-  gl_FragColor=vec4(col,1.0);
+  vec3 N=normalize(vN), V=vec3(0.0,0.0,1.0);
+  vec3 crimson=vec3(.85,.09,.27), ember=vec3(.95,.33,.17), amber=vec3(1.0,.69,.12);
+  float g=clamp(.5+vL.y*.3+(vL.x+uX)*.24+N.x*.1,0.0,1.0);
+  vec3 col=mix(crimson,ember,smoothstep(.0,.55,g));
+  col=mix(col,amber,smoothstep(.55,1.0,g));
+  vec3 L=normalize(vec3(.4,.9,.7));
+  float diff=clamp((dot(N,L)+.5)/1.5,0.0,1.0);
+  col*=.72+.38*diff;
+  float spec=pow(max(dot(reflect(-L,N),V),0.0),60.0);
+  vec3 L2=normalize(vec3(-.8,.2,.5));
+  float spec2=pow(max(dot(reflect(-L2,N),V),0.0),18.0)*.25;
+  float fr=pow(1.0-max(dot(N,V),0.0),3.0);
+  col=mix(col,vec3(1.0,.92,.86),fr*.5);
+  col+=vec3(1.0,.97,.92)*(spec*.9+spec2);
+  col+=vec3(1.0,.75,.4)*uGlow*.12;
+  gl_FragColor=vec4(col,uA);
 }`;
-
-class Leo {
-  constructor(canvas, opts) {
-    this.c = canvas; this.o = opts || {};
-    this.r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-    this.r.setPixelRatio(Math.min(2, devicePixelRatio || 1));
-    this.r.setClearColor(0x000000, 0);
-    this.s = new THREE.Scene();
-    this.cam = new THREE.PerspectiveCamera(32, 1, .1, 50); this.cam.position.set(0, 0, 4.6);
-    this.u = { uTime: { value: 0 }, uAmp: { value: 0 }, uListen: { value: 0 }, uM0: { value: 1 }, uM1: { value: 0 }, uM2: { value: 0 }, uPull: { value: 0 }, uDir: { value: new THREE.Vector3(0, 0, 1) } };
-    const geo = new THREE.IcosahedronGeometry(1, innerWidth < 700 ? 64 : 96);
-    this.m = new THREE.Mesh(geo, new THREE.ShaderMaterial({ uniforms: this.u, vertexShader: VERT, fragmentShader: FRAG }));
-    this.s.add(this.m);
-    this.ptr = { x: 0, y: 0, on: 0 }; this.rot = { x: 0, y: 0 }; this.vis = true; this.t = 0;
-    canvas.parentElement.addEventListener('pointermove', (e) => { const b = canvas.getBoundingClientRect(); this.ptr.x = ((e.clientX - b.left) / b.width) * 2 - 1; this.ptr.y = -(((e.clientY - b.top) / b.height) * 2 - 1); this.ptr.on = 1; });
-    canvas.parentElement.addEventListener('pointerleave', () => { this.ptr.on = 0; });
-    new ResizeObserver(() => this.size()).observe(canvas);
-    new IntersectionObserver((es) => { this.vis = es[0].isIntersecting; }).observe(canvas);
-    this.size();
-  }
-  size() { const w = this.c.clientWidth, h = this.c.clientHeight; if (!w || !h) return; this.r.setSize(w, h, false); this.cam.aspect = w / h; this.cam.updateProjectionMatrix(); }
-  frame(dt, mode) {
-    if (!this.vis) return;
-    const u = this.u, k = Math.min(1, dt * 3);
-    this.t += dt * (reduceM ? .25 : 1);
-    u.uTime.value = this.t;
-    const tgt = [0, 0, 0]; tgt[mode] = 1;
-    u.uM0.value += (tgt[0] - u.uM0.value) * k; u.uM1.value += (tgt[1] - u.uM1.value) * k; u.uM2.value += (tgt[2] - u.uM2.value) * k;
-    if (this.o.voice) {
-      if (LEO.speaking) { LEO.amp = Math.max(LEO.amp * .9, .38 + .3 * Math.abs(Math.sin(this.t * 7.3) * Math.sin(this.t * 3.1))); }
-      else LEO.amp *= .9;
-      u.uAmp.value += (LEO.amp - u.uAmp.value) * Math.min(1, dt * 10);
-      u.uListen.value += ((LEO.listen || 0) - u.uListen.value) * k;
-    } else { u.uAmp.value += ((mode === 0 ? .12 + .08 * Math.sin(this.t * 2.2) : 0) - u.uAmp.value) * k; }
-    u.uPull.value += (this.ptr.on - u.uPull.value) * Math.min(1, dt * 2.5);
-    u.uDir.value.set(this.ptr.x, this.ptr.y, .9).normalize();
-    this.rot.y += ((this.ptr.on ? this.ptr.x * .35 : 0) - this.rot.y) * k * .6;
-    this.rot.x += ((this.ptr.on ? -this.ptr.y * .25 : 0) - this.rot.x) * k * .6;
-    this.m.rotation.y = this.t * .12 + this.rot.y;
-    this.m.rotation.x = Math.sin(this.t * .2) * .1 + this.rot.x;
-    const br = 1 + Math.sin(this.t * 1.3) * .015 + u.uAmp.value * .03;
-    this.m.scale.setScalar(br);
-    if (this.o.onFrame) this.o.onFrame(br, u.uAmp.value);
-    this.r.render(this.s, this.cam);
-  }
-}
 
 const reduceM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let hero, prod;
+const BASE = [.42, 1.62, .9], XS = [-.86, 0, .86], R = .3, TALL = BASE[1] + 2 * R;
+const $ = (id) => document.getElementById(id);
+
 try {
-  const glow = document.getElementById('glow'), floor = document.getElementById('floor');
-  hero = new Leo(document.getElementById('leoc'), { voice: true, onFrame: (br, a) => { floor.style.setProperty('--fs', (br * (1 - a * .08)).toFixed(3)); glow.style.transform = 'scale(' + (1 + a * .18).toFixed(3) + ')'; } });
-  prod = new Leo(document.getElementById('prodc'), {});
-  prod.cam.position.z = 4.9;
-  let last = performance.now();
-  const loop = (now) => { const dt = Math.min(.05, (now - last) / 1000); last = now; hero.frame(dt, 0); prod.frame(dt, LEO.mode || 0); requestAnimationFrame(loop); };
+  const canvas = $('field');
+  const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  r.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+  const scene = new THREE.Scene();
+  const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -2000, 2000); cam.position.z = 500;
+  const grp = new THREE.Group(); scene.add(grp);
+  const geo = new THREE.SphereGeometry(R, 64, 48);
+  const bars = BASE.map((b, i) => {
+    const u = { uLen: { value: b }, uGlow: { value: 0 }, uX: { value: XS[i] }, uA: { value: 1 } };
+    const m = new THREE.Mesh(geo, new THREE.ShaderMaterial({ uniforms: u, vertexShader: VERT, fragmentShader: FRAG, transparent: true }));
+    m.position.x = XS[i]; grp.add(m);
+    return { m, u, len: b, y: 0, s: 1 };
+  });
+  const size = () => { const w = innerWidth, h = innerHeight; r.setSize(w, h, false); cam.left = -w / 2; cam.right = w / 2; cam.top = h / 2; cam.bottom = -h / 2; cam.updateProjectionMatrix(); };
+  addEventListener('resize', size); size();
+
+  const ptr = { x: 0, y: 0 };
+  addEventListener('pointermove', (e) => { ptr.x = e.clientX / innerWidth * 2 - 1; ptr.y = -(e.clientY / innerHeight * 2 - 1); }, { passive: true });
+
+  const slot = $('slot'), heroS = $('leo'), leadS = $('lead'), leadA = $('leadAnchor'), prodS = $('products'), prodA = $('prodAnchor'), dockB = $('dockPlay');
+  const mid = (el) => { const b = el.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2, w: b.width, h: b.height, top: b.top, bottom: b.bottom }; };
+  const inMid = (el, f) => { const b = el.getBoundingClientRect(); return b.top < innerHeight * f && b.bottom > innerHeight * (1 - f); };
+  const st = { x: innerWidth * .2, y: innerHeight * .4, h: 200, a: 1, where: 'hero', since: 0, vx: 0, vy: 0 };
+  let first = true, t = 0, last = performance.now(), rotY = 0, rotX = 0, rotZ = 0;
+
+  const loop = (now) => {
+    const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt * (reduceM ? .3 : 1);
+    /* where should Leo be? */
+    let where = 'park', tg;
+    const hb = heroS.getBoundingClientRect();
+    if (hb.bottom > innerHeight * .42) { where = 'hero'; const m = mid(slot); tg = { x: m.x, y: m.y, h: m.h * 1.08, a: 1 }; }
+    else if (inMid(leadS, .62)) { where = 'lead'; const m = mid(leadA); tg = { x: m.x, y: m.y, h: m.h, a: 1 }; }
+    else if (inMid(prodS, .62)) { where = 'prod'; const m = mid(prodA); tg = { x: m.x, y: m.y, h: m.h * .62, a: 1 }; }
+    if (where === 'park') { const m = mid(dockB); tg = { x: m.x - m.w / 2 + 22, y: m.y, h: 14, a: 0 }; }
+    if (where !== st.where) { st.where = where; st.since = 0; }
+    st.since += dt;
+    const travelling = st.since < 1.1;
+    const kp = first ? 1 : Math.min(1, dt * (travelling ? 4.2 : 16));
+    first = false;
+    const ox = st.x, oy = st.y;
+    st.x += (tg.x - st.x) * kp; st.y += (tg.y - st.y) * kp; st.h += (tg.h - st.h) * kp;
+    const ka = Math.min(1, dt * (tg.a ? 6 : (st.since > .5 ? 5 : 0)));
+    st.a += (tg.a - st.a) * ka;
+    st.vx = (st.x - ox) / Math.max(dt, .001); st.vy = (st.y - oy) / Math.max(dt, .001);
+
+    /* how should the bars move? */
+    let amp = 0;
+    if (where === 'hero') { if (LEO.speaking) LEO.amp = Math.max(LEO.amp * .9, .35 + .35 * Math.abs(Math.sin(t * 6.1) * Math.sin(t * 2.7))); else LEO.amp *= .9; amp = LEO.amp; }
+    const step = LEO.leadStep || 0, mode = LEO.mode || 0;
+    bars.forEach((b, i) => {
+      let len = BASE[i] * (1 + .07 * Math.sin(t * 1.4 + i * 1.1)), y = 0, s = 1, glow = 0;
+      if (where === 'hero') {
+        if (LEO.speaking) len = BASE[i] * (.45 + amp * (.7 + .55 * Math.abs(Math.sin(t * (7.3 + i * 2.1) + i * 1.7))));
+        else if (LEO.listen) len = BASE[i] * (.8 + .18 * Math.sin(t * 3 - i * .9));
+        glow = amp;
+      } else if (where === 'lead') {
+        if (step === 1) { len = BASE[i] * (.55 + .45 * Math.abs(Math.sin(t * 8))); glow = .5; }
+        else if (step === 2) len = BASE[i] * (.45 + .7 * Math.abs(Math.sin(t * (6.3 + i * 2.3) + i * 1.9)) * Math.abs(Math.sin(t * 2.1 + i)));
+        else if (step === 3) { len = 1.0; glow = 1; }
+        else if (step >= 4) len = BASE[i] * (.9 + .1 * Math.sin(t * 1.1 + i));
+      } else if (where === 'prod') {
+        if (mode === 0) len = BASE[i] * (.5 + .55 * Math.abs(Math.sin(t * (2.6 + i * .9) + i * 1.3)));
+        else if (mode === 1) { len = 0; s = .95; y = .24 * Math.max(0, Math.sin(t * 5 - i * .9)); }
+        else len = BASE[i] * (.88 + .14 * Math.sin(t * 1.2));
+      } else len = BASE[i] * (.5 + .5 * Math.abs(Math.sin(t * 6 + i)));
+      const k = Math.min(1, dt * 9), ks = Math.min(1, dt * 5);
+      b.len += (len - b.len) * (len === 0 ? ks : k); b.y += (y - b.y) * k; b.s += (s - b.s) * ks;
+      b.u.uLen.value = Math.max(0, b.len); b.u.uGlow.value += (glow - b.u.uGlow.value) * k; b.u.uA.value = st.a;
+      b.m.position.y = b.y; b.m.scale.setScalar(b.s);
+    });
+
+    /* pose: lean toward the cursor, spin while flying */
+    const kr = Math.min(1, dt * 3);
+    const spin = Math.max(-1.2, Math.min(1.2, st.vy * .0016));
+    rotY += ((ptr.x * .5 + Math.sin(t * .4) * .2 + (travelling ? spin * 1.6 : 0)) - rotY) * kr;
+    rotX += ((-ptr.y * .3 + Math.sin(t * .3) * .08) - rotX) * kr;
+    rotZ += ((Math.max(-.5, Math.min(.5, -st.vx * .0008))) - rotZ) * kr;
+    const sc = st.h / TALL;
+    grp.scale.setScalar(sc);
+    grp.position.set(st.x - innerWidth / 2, innerHeight / 2 - st.y + Math.sin(t * 1.1) * sc * .04, 0);
+    grp.rotation.set(rotX, rotY, rotZ);
+    canvas.style.opacity = st.a < .02 ? 0 : 1;
+    r.render(scene, cam);
+    requestAnimationFrame(loop);
+  };
   requestAnimationFrame(loop);
-  LEO.ready = true;
 } catch (e) {
-  document.querySelectorAll('#leoc,#prodc').forEach((c) => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFB01F,#F2552C 45%,#D91845 80%);z-index:2'; c.replaceWith(d); });
+  const c = $('field'); if (c) c.remove();
+  document.querySelectorAll('#slot,#leadAnchor,#prodAnchor').forEach((el) => { el.innerHTML = '<svg viewBox="0 0 24 24" style="width:100%;height:100%"><use href="#glyph"/></svg>'; });
 }
 </script>
+
+
 </body>
 </html>
