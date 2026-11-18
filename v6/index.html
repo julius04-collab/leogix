@@ -231,6 +231,38 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 }
 @media (prefers-reduced-motion:reduce){.words span{transition:none}}
 
+/* hero v4: headline top-left, words and buttons bottom-left, product cards bottom-right */
+.hero.h4{padding-top:calc(92px + env(safe-area-inset-top,0px));padding-bottom:calc(104px + env(safe-area-inset-bottom,0px));min-height:max(100svh,680px);display:flex}
+.hero.h4::before{right:-10%;left:auto;top:10%;transform:none;width:70vw;height:70vw}
+.h4in{position:relative;z-index:2;width:min(1440px,100%);margin:0 auto;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.hero.h4 h1{display:flex;align-items:center;gap:.05em;margin:0;padding-block:.3em .12em;font-size:clamp(72px,min(15.5vw,30svh),250px);font-weight:600;letter-spacing:-.06em;line-height:.88}
+.hero.h4 h1 .slot{width:1.72em;height:.86em;margin:0 .03em}
+.h4base{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.h4left{max-width:620px}
+.hero.h4 .lede{margin:0;max-width:none;font-size:clamp(18px,1.55vw,23px);font-weight:500;line-height:1.42;color:var(--ink-2)}
+.hero.h4 .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.hero.h4 .caption{min-height:0;margin:0 0 14px;text-align:left;font-size:17px;max-width:40ch}
+.hero.h4 .caption:empty{display:none}
+.h4right{display:flex;gap:12px;align-items:stretch}
+.icard{position:relative;width:270px;padding:22px;border-radius:28px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 20px 40px -26px rgba(80,20,10,.35);display:flex;flex-direction:column;justify-content:space-between;gap:22px;text-decoration:none;color:var(--ink)}
+.icard p{margin:0;font-size:16.5px;font-weight:600;line-height:1.35}
+.icard .logos{display:flex;gap:8px}
+.icard .logos img{width:44px;height:44px;object-fit:contain;padding:8px;border-radius:14px;background:#fff}
+.icard.dark{width:190px;background:var(--ink);color:#fff;padding-bottom:62px}
+.icard.dark small{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6EE7A0}
+.icard.dark b{display:block;font-size:24px;font-weight:700;letter-spacing:-.02em;margin-top:6px}
+.icard.dark span{font-size:14px;color:rgba(255,255,255,.6)}
+.icard .go{position:absolute;right:14px;bottom:14px;width:38px;height:38px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center}
+.icard .go svg{width:16px;height:16px}
+.icard:hover{transform:translateY(-2px)}
+.icard{transition:transform .3s}
+@media (max-width:1100px){.icard:not(.dark){display:none}}
+@media (max-width:760px){
+  .h4base{flex-direction:column;align-items:flex-start}
+  .hero.h4 h1{font-size:16.5vw}
+  .h4right{display:none}
+}
+
 /* reel: a card inside a headline grows into the full-screen film */
 .reel{position:relative;height:240vh}
 .reel-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
@@ -528,24 +560,32 @@ footer .word{transform:translateY(var(--fy,0px))}
 </nav>
 
 <main>
-  <section class="hero h3 gut" id="leo">
-    <div class="h3in">
-      <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>Leogix · one AI, three jobs</span>
+  <section class="hero h4 gut" id="leo">
+    <div class="h4in">
       <h1 aria-label="Meet Leo."><span class="w">Meet</span><span class="w slot" id="slot" aria-hidden="true"></span><span class="w g">Leo.</span></h1>
-      <div class="plabels" id="plabels" aria-label="Leo's three jobs">
-        <button type="button" class="pl" data-i="0"><b>Sales</b><span>I call your leads and book the visits.</span></button>
-        <button type="button" class="pl" data-i="1"><b>Ask</b><span>Ask me anything. I answer like I’ve done the reading.</span></button>
-        <button type="button" class="pl" data-i="2"><b>Support</b><span>I pick up your helpdesk, day and night.</span></button>
+      <div class="h4base">
+        <div class="h4left">
+          <p class="caption" id="caption" aria-live="polite"></p>
+          <p class="lede">Leo is the AI behind Leogix. He calls your leads, answers questions and picks up your helpdesk, at any hour.</p>
+          <div class="acts">
+            <button class="btn dark" type="button" id="playCall"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="playTxt">Hear Leo on a call</span></button>
+            <a class="btn line" href="#products">Meet the products</a>
+          </div>
+        </div>
+        <div class="h4right">
+          <a class="icard" href="#products">
+            <p>One Leo, three products. Built for teams that live on the phone.</p>
+            <span class="logos"><img src="../assets/leogix-sales-logo-sm.png" alt="Leogix Sales"><img src="../assets/leogix-ask-logo-sm.png" alt="Leogix Ask"><img src="../assets/leogix-support-logo-sm.png" alt="Leogix Support"></span>
+          </a>
+          <a class="icard dark" href="https://ask.leogix.com" target="_blank" rel="noopener">
+            <small>Live now</small>
+            <b>Leogix Ask</b>
+            <span>ask.leogix.com</span>
+            <i class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></i>
+          </a>
+        </div>
       </div>
-      <p class="caption" id="caption" aria-live="polite"></p>
-      <p class="lede">Leo is the AI behind Leogix. He calls your leads, answers your questions and picks up your helpdesk, in Hindi and English, at any hour.</p>
-      <div class="acts">
-        <button class="btn dark" type="button" id="playCall"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="playTxt">Hear Leo on a call</span></button>
-        <a class="btn line" href="#products">Meet the products</a>
-      </div>
-      <p class="hint" id="hint"><span class="chip status" id="status" role="status"><i></i><span id="statusTxt">Leo is listening</span></span> <span class="hh">Hover or tap a bar to hear what it does.</span></p>
     </div>
-    <div class="words" id="words3" aria-hidden="true"></div>
   </section>
 
   <section class="reel" id="reel" aria-label="Leo at work">
@@ -826,11 +866,11 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
     ['leo', 'Of course. Shivam from our team will show you the Tower B sample flat.'],
     ['cust', 'Okay, perfect. Please send the location.']
   ];
-  const cap = document.getElementById('caption'), status = document.getElementById('status'), stTxt = document.getElementById('statusTxt');
+  const cap = document.getElementById('caption');
   const btn = document.getElementById('playCall'), btnTxt = document.getElementById('playTxt'), dockBtn = document.getElementById('dockPlay'), dockTxt = document.getElementById('dockTxt');
   const synth = window.speechSynthesis;
   let playing = false, run = 0, timers = [];
-  const setStatus = (cls, t) => { status.className = 'chip status ' + cls; stTxt.textContent = t; };
+  const setStatus = () => {};
   const setCap = (who, text) => { cap.innerHTML = ''; if (!text) return; const s = document.createElement('small'); s.textContent = who; cap.appendChild(s); cap.appendChild(document.createTextNode(text)); };
   const pickVoices = () => {
     const vs = synth ? synth.getVoices() : [];
@@ -889,50 +929,16 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
   dockBtn.addEventListener('click', toggle);
 })();
 
-/* the three bars are the three products: hover, focus or tap one */
+/* hovering a bar lifts it; nothing else */
 (() => {
-  const pls = [...document.querySelectorAll('.pl')], hero = document.getElementById('leo');
-  const set = (i) => { LEO.hover = i; pls.forEach((p, k) => p.classList.toggle('on', k === i)); };
-  pls.forEach((p, i) => {
-    p.addEventListener('mouseenter', () => set(i));
-    p.addEventListener('focus', () => set(i));
-    p.addEventListener('click', () => { set(i); const line = p.querySelector('span').textContent; if (innerWidth <= 640) { const c = document.getElementById('caption'); c.innerHTML = '<small>Leogix ' + p.querySelector('b').textContent + '</small>'; c.appendChild(document.createTextNode(line)); } LEO.say && LEO.say(line); });
-  });
+  const hero = document.getElementById('leo');
   hero.addEventListener('pointermove', (e) => {
     const xs = LEO.barX; if (!xs || e.pointerType === 'touch') return;
-    const y = LEO.barY || 0, h = LEO.barH || 0;
-    if (Math.abs(e.clientY - y) > h * .75) { if (!pls.some((p) => p.matches(':hover'))) set(-1); return; }
+    if (Math.abs(e.clientY - (LEO.barY || 0)) > (LEO.barH || 0) * .75) { LEO.hover = -1; return; }
     let best = -1, bd = 1e9; xs.forEach((x, i) => { const d = Math.abs(e.clientX - x); if (d < bd) { bd = d; best = i; } });
-    set(bd < (LEO.barGap || 60) * .6 ? best : -1);
+    LEO.hover = bd < (LEO.barGap || 60) * .6 ? best : -1;
   });
-  hero.addEventListener('pointerleave', () => set(-1));
-  /* tapping the bars themselves on a phone */
-  hero.addEventListener('click', (e) => {
-    if (e.target.closest('button,a')) return;
-    const xs = LEO.barX; if (!xs) return;
-    const y = LEO.barY || 0, h = LEO.barH || 0;
-    if (Math.abs(e.clientY - y) > h * .75) return;
-    let best = -1, bd = 1e9; xs.forEach((x, i) => { const d = Math.abs(e.clientX - x); if (d < bd) { bd = d; best = i; } });
-    if (bd < (LEO.barGap || 60) * .6) { set(best); LEO.say && LEO.say(pls[best].querySelector('span').textContent); }
-  });
-  /* keep the labels under their bars */
-  const box = document.getElementById('plabels');
-  const place = () => { const xs = LEO.barX; if (xs) { const b = box.getBoundingClientRect(); pls.forEach((p, i) => { p.style.left = (xs[i] - b.left) + 'px'; }); } requestAnimationFrame(place); };
-  requestAnimationFrame(place);
-})();
-
-/* Leo's words drift in and out around the hero, in Hindi and English */
-(() => {
-  const host = document.getElementById('words3');
-  const W = [['Sales', 'Namaste, Rahul ji'], ['Sales', 'Site visit confirmed, Saturday 11 am'], ['Ask', 'Here’s a shorter version of that email'], ['Sales', 'Kal subah 11 baje theek rahega?'], ['Support', 'Your ticket is solved'], ['Sales', 'Budget ₹1.2 to 1.5 Cr, noted'], ['Ask', 'The difference is about 18%'], ['Support', 'Aapka refund process ho gaya hai'], ['Sales', 'I’ll send the location on WhatsApp'], ['Support', 'Connecting you to Priya from the team']];
-  const POS = [[6, 22], [72, 16], [4, 62], [76, 58], [12, 84], [66, 84]];
-  const spans = POS.map(([x, y]) => { const s = document.createElement('span'); s.style.left = x + '%'; s.style.top = y + '%'; host.appendChild(s); return s; });
-  let k = 0;
-  const fill = (s) => { const [tag, t] = W[k++ % W.length]; s.innerHTML = ''; const i = document.createElement('i'); i.textContent = tag; s.appendChild(i); s.appendChild(document.createTextNode(t)); };
-  spans.forEach((s, i) => { fill(s); setTimeout(() => s.classList.add('on'), 1200 + i * 450); });
-  if (reduce) return;
-  let n = 0;
-  setInterval(() => { const s = spans[n++ % spans.length]; s.classList.remove('on'); setTimeout(() => { fill(s); s.classList.add('on'); }, 1300); }, 2200);
+  hero.addEventListener('pointerleave', () => { LEO.hover = -1; });
 })();
 
 /* opening reel grows to fill the screen; videos play only on screen */
