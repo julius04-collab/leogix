@@ -58,7 +58,7 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 #loader .lbars i:nth-child(1){height:46px;animation-delay:-.2s}#loader .lbars i:nth-child(2){height:110px}#loader .lbars i:nth-child(3){height:64px;animation-delay:-.45s}
 @keyframes lb{50%{transform:scaleY(.45)}}
 #loader .lc{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
-#loader .num{font-size:clamp(90px,16vw,220px);font-weight:300;line-height:.8;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+#loader .count{font-size:clamp(90px,16vw,220px);font-weight:300;line-height:.8;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
 #loader .lc p{margin:0;max-width:24ch;font-size:16px;line-height:1.5;color:rgba(255,255,255,.6);text-align:right}
 
 /* top bar + floating dock */
@@ -269,14 +269,16 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
   /* phone: headline, words and buttons first, then Leo as the big visual (like Flowty's mobile hero) */
   .hero.h4{min-height:0;padding-top:calc(86px + env(safe-area-inset-top,0px));padding-bottom:40px}
   .h4in{gap:0}
+  .h4in{flex-direction:row;flex-wrap:wrap;align-items:baseline;justify-content:flex-start}
   .hero.h4 h1{display:contents}
-  .hero.h4 h1 .w:not(.slot){order:1;font-size:clamp(64px,23vw,120px);font-weight:600;letter-spacing:-.06em;line-height:.88}
+  .hero.h4 h1 .w:not(.slot){order:1;font-size:clamp(56px,19vw,120px);font-weight:600;letter-spacing:-.06em;line-height:.9}
+  .hero.h4 h1 .w:first-child{margin-right:.2em}
   .hero.h4 h1 .w.g{padding-bottom:.08em}
-  .h4base{order:2;flex-direction:column;align-items:flex-start;margin-top:22px}
+  .h4base{order:2;flex-basis:100%;flex-direction:column;align-items:flex-start;margin-top:22px}
   .hero.h4 .lede{font-size:17.5px}
   .hero.h4 .acts{margin-top:20px}
   .hero.h4 .acts .btn{min-height:50px;padding:0 20px;font-size:15.5px}
-  .hero.h4 h1 .slot{order:3;display:block;width:100%;height:min(72vw,340px);margin:28px 0 0}
+  .hero.h4 h1 .slot{order:3;display:block;flex-basis:100%;width:100%;height:min(72vw,340px);margin:28px 0 0}
   .h4right{display:none}
 }
 
@@ -403,7 +405,7 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 .after .in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(30px,6vw,90px);align-items:center}
 .photo{position:relative;aspect-ratio:4/5;border-radius:40px;overflow:visible}
 .photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:40px}
-.phone{position:absolute;right:-8%;bottom:-6%;width:clamp(230px,58%,300px);aspect-ratio:9/18.5;border-radius:44px;transform-style:preserve-3d;transform:perspective(1600px) translateY(var(--py,0px)) rotateZ(-3deg) rotateY(var(--ry,0deg));}
+.phone{position:absolute;right:-15%;bottom:-9%;width:clamp(140px,40%,250px);aspect-ratio:9/18.5;border-radius:44px;transform-style:preserve-3d;transform:perspective(1600px) translateY(var(--py,0px)) rotateZ(-3deg) rotateY(var(--ry,0deg));}
 
 .screen{position:relative;height:100%;border-radius:36px;background:var(--paper);overflow:hidden;padding:34px 14px 14px;display:flex;flex-direction:column;gap:9px;font-size:13px}
 
@@ -523,7 +525,7 @@ footer .word{transform:translateY(var(--fy,0px))}
   .pstage{width:min(62vw,300px)}
   .panel{min-height:0;padding-block:50px}
   .after .in,.build .in,.contact .in{grid-template-columns:1fr}
-  .photo{margin-right:22%}
+  .photo{margin-right:24%}
   .screen .s-h .st{display:none}
   .stickymedia{position:relative;top:0}
   .film{aspect-ratio:4/3}
@@ -561,7 +563,7 @@ footer .word{transform:translateY(var(--fy,0px))}
 <div id="loader" aria-hidden="true">
   <div class="lw">Leogix <span>Leo is getting ready</span></div>
   <div class="lbars"><i></i><i></i><i></i></div>
-  <div class="lc"><div class="num" id="lnum">00</div><p>Turn your sound on. Leo would like to say hello.</p></div>
+  <div class="lc"><div class="count" id="lnum">00</div><p>Turn your sound on. Leo would like to say hello.</p></div>
 </div>
 
 <header class="top gut">
@@ -862,10 +864,10 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
 /* loader: counts to 100, then wipes up */
 (() => {
   const L = document.getElementById('loader'), n = document.getElementById('lnum');
-  let seen = false; try { seen = sessionStorage.getItem('leo-seen') === '1'; sessionStorage.setItem('leo-seen', '1'); } catch (e) {}
+  const seen = /[?&]noloader/.test(location.search);
   const done = () => { L.classList.add('out'); document.body.classList.add('ready'); document.getElementById('dock').classList.add('on'); setTimeout(() => L.remove(), 1100); };
   if (reduce || seen) { L.remove(); document.body.classList.add('ready'); document.getElementById('dock').classList.add('on'); return; }
-  const t0 = performance.now(), D = 1700;
+  const t0 = performance.now(), D = 1500;
   const step = (now) => { const p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 2.4); n.textContent = String(Math.round(e * 100)).padStart(2, '0'); if (p < 1) requestAnimationFrame(step); else setTimeout(done, 180); };
   requestAnimationFrame(step);
 })();
