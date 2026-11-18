@@ -24,6 +24,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
@@ -114,6 +115,20 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 .chip.talk i{background:var(--ember);box-shadow:0 0 0 4px rgba(242,85,44,.2)}
 .chip.listen i{background:#16A34A;box-shadow:0 0 0 4px rgba(22,163,74,.2)}
 @keyframes msgin{from{opacity:0;transform:translateY(12px) scale(.98)}}
+.scr.real{padding:0;background:#ECEEF3;color:var(--ink);display:block}
+.scr.real::before{z-index:3}
+.scr.real .sbar{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 24px 0 26px;font-size:12px;background:#ECEEF3}
+.scr.real .sbar span{width:38px;height:11px;border-radius:3px;background:linear-gradient(90deg,var(--ink) 70%,rgba(22,19,26,.25) 70%)}
+.scr.real .vp{position:absolute;top:34px;left:0;right:0;bottom:0;overflow:hidden}
+.scr.real img{display:block;width:100%;height:auto}
+.scr.real .tr{position:relative;transform:translateY(var(--sy,0%));transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.scr.real .cover{position:absolute;left:2.6%;right:2.6%;bottom:0;top:var(--rv,42%);background:#fff;transition:top .6s cubic-bezier(.2,.7,.2,1)}
+.lcard .shot{margin-top:auto}
+.screen.real{padding:0;background:#ECEEF3;display:block}
+.screen.real .sbar{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 24px;font-size:11.5px}
+.screen.real .sbar span{width:34px;height:10px;border-radius:3px;background:linear-gradient(90deg,var(--ink) 70%,rgba(22,19,26,.25) 70%)}
+.screen.real img{display:block;width:100%;height:auto}
+.crop{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 1px 0 rgba(22,19,26,.04),0 10px 24px -16px rgba(22,19,26,.25)}
 /* the phone leans into the headline */
 .hphone{position:absolute;z-index:2;left:49%;top:14%;width:clamp(220px,min(21vw,31svh),310px);aspect-ratio:9/18.6;border-radius:46px;transform-style:preserve-3d;transform:perspective(1600px) translate3d(var(--px,0px),var(--py,0px),0) rotateZ(var(--rz,11deg)) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));filter:drop-shadow(0 50px 50px rgba(40,10,10,.28))}
 .hphone .pface{background:#1B171E;padding:10px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.08)}
@@ -448,22 +463,12 @@ footer .word{transform:translateY(var(--fy,0px))}
       <h1 aria-label="Meet Leo."><span class="ln"><span class="w">Meet</span></span><span class="ln"><span class="w slot" id="slot" aria-hidden="true"></span><span class="w g">Leo.</span></span></h1>
       <div class="hphone" id="hphone" aria-label="Leo's phone">
         <div class="pback" aria-hidden="true"><span class="cam"><i></i><i></i><i></i></span><img src="../assets/leogix-mark.png" alt=""></div>
-        <div class="pface"><div class="scr">
-          <span class="clock">11:02</span>
-          <div id="pidle" style="display:contents">
-            <div class="who"><span class="av">L</span><div><b>Leo</b><small>Sky Rise · sales line</small></div></div>
-            <p class="big">Tonight, <span>while your office was closed.</span></p>
-            <div class="row3"><span>Priya Sharma</span><em>Visit booked</em></div>
-            <div class="row3"><span>Rohan Mehta</span><em class="w">Call back 10 am</em></div>
-            <div class="row3"><span>Kavya Nair</span><em>Interested</em></div>
-            <div class="row3"><span>Amit Khanna</span><em>Visit booked</em></div>
-            <div class="ln2 leo" style="margin-top:auto"><small>9:00 am</small>Summaries for all 4 calls are waiting for your team.</div>
-          </div>
-          <div id="plive" style="display:none;flex-direction:column;gap:10px;height:100%">
-            <div class="who"><span class="av">PS</span><div><b>Priya Sharma</b><small id="ptime">Leo is calling…</small></div></div>
-            <div class="eqz" id="eqz" aria-hidden="true"></div>
-            <div class="lines" id="lines" aria-live="polite"></div>
-            <div class="endb" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85a1 1 0 0 1-1.41-.02L.29 13.08a1 1 0 0 1 0-1.41C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67a1 1 0 0 1 0 1.41l-2.48 2.48a1 1 0 0 1-1.41.02 11.3 11.3 0 0 0-2.67-1.85 1 1 0 0 1-.56-.9v-3.1A15 15 0 0 0 12 9z"/></svg></span></div>
+        <div class="pface"><div class="scr real">
+          <div class="sbar"><b>9:41</b><span></span></div>
+          <div class="vp">
+            <img id="scrIdle" src="media/screen-call-logs.jpg" alt="Leogix Sales call log: calls made by Leo">
+            <div class="tr" id="scrLive" hidden><img src="media/screen-transcript.jpg" alt="Leogix Sales call transcript"><i class="cover" id="cover"></i></div>
+            <img id="scrDone" src="media/screen-summary.jpg" alt="Leogix Sales AI summary of the call" hidden>
           </div>
         </div></div>
       </div>
@@ -476,11 +481,11 @@ footer .word{transform:translateY(var(--fy,0px))}
             <button class="btn dark" type="button" id="playCall"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="playTxt">Hear Leo on a call</span></button>
             <a class="btn line" href="#products">See what Leo does</a>
           </div>
-          <p class="hint" id="hint">A one-minute sales call. Sound on.</p>
+          <p class="hint" id="hint">A real Leo call from Leogix Sales, about 40 seconds. Sound on.</p>
         </div>
         <div class="minis">
           <a class="mini" href="#products"><p>One Leo, working across sales, questions and support.</p><span class="logos"><img src="../assets/leogix-sales-logo-sm.png" alt="Leogix Sales"><img src="../assets/leogix-ask-logo-sm.png" alt="Leogix Ask"><img src="../assets/leogix-support-logo-sm.png" alt="Leogix Support"></span></a>
-          <a class="mini dark" href="#lead"><small>Last night</small><b>4</b><span>leads called after hours</span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+          <a class="mini dark" href="#lead"><small>From the call log</small><b>7<span style="font-size:22px;color:rgba(255,255,255,.5)"> of 8</span></b><span>calls made by Leo</span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
         </div>
       </div>
     </div>
@@ -493,7 +498,7 @@ footer .word{transform:translateY(var(--fy,0px))}
         <div class="reel-frame" id="reelFrame">
           <video id="reelVid" src="../v5/media/hero.mp4" poster="../v5/media/hero.jpg" muted loop playsinline preload="metadata"></video>
           <div class="reel-cap">
-            <div><span class="label">11:02 pm, somewhere in Pune</span><p>A lead just filled a form. Leo is already dialling.</p></div>
+            <div><span class="label">A new enquiry, just in</span><p>Before anyone has seen it, Leo is already dialling.</p></div>
             <button class="vbtn" type="button" data-vid="reelVid" aria-label="Pause video"><svg class="pa" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
           </div>
         </div>
@@ -520,40 +525,40 @@ footer .word{transform:translateY(var(--fy,0px))}
       </div>
       <div class="ltrack" id="ltrack">
         <article class="lcard">
-          <span class="time"><i></i>11:02 pm</span>
-          <h3>Priya fills a form on 99acres.</h3>
-          <p>Your office closed hours ago. She's comparing three projects tonight.</p>
-          <div class="ui"><div class="row"><b>New lead</b><span class="muted">just now</span></div><div class="row"><span>Priya Sharma</span><span class="muted">2 BHK · Sarjapur</span></div></div>
+          <span class="time"><i></i>The enquiry</span>
+          <h3>A new enquiry comes in at midnight.</h3>
+          <p>It lands in Leogix Sales as a lead, already tied to the project it’s about.</p>
+          <div class="shot"><img class="crop" src="media/crop-lead.png" alt="A lead card in Leogix Sales" loading="lazy"></div>
         </article>
         <article class="lcard">
-          <span class="time"><i></i>11:02 pm</span>
-          <h3>Leo calls her before she closes the tab.</h3>
-          <p>No queue, no "we'll get back to you". In Hindi or English, whichever she answers in.</p>
-          <div class="ui"><div class="ring"><span class="av">L</span><div><b>Leo calling…</b><br><span class="muted">+91 98•• ••4120</span></div><span class="bars" aria-hidden="true"><i style="height:8px"></i><i style="height:18px"></i><i style="height:12px"></i><i style="height:20px"></i><i style="height:9px"></i></span></div></div>
+          <span class="time"><i></i>The call</span>
+          <h3>Leo calls before anyone is at their desk.</h3>
+          <p>Every call is logged: who Leo called, what the call was for, and how it went.</p>
+          <div class="shot"><img class="crop" src="media/crop-calllog.png" alt="A call log entry made by Leo" loading="lazy"></div>
         </article>
         <article class="lcard">
-          <span class="time"><i></i>11:05 pm</span>
-          <h3>He finds out what she actually needs.</h3>
-          <p>Budget, size, timeline, and the one thing she won't compromise on.</p>
-          <div class="ui"><div class="pills"><span>₹80 L budget</span><span>2 BHK</span><span>Moving by June</span><span class="ok">Near a school</span></div></div>
+          <span class="time"><i></i>The questions</span>
+          <h3>He finds out what Rahul actually needs.</h3>
+          <p>Size, tower, budget, who’s coming along, and how keen he sounds.</p>
+          <div class="shot"><img class="crop" src="media/crop-learned.png" alt="What Leo learned on the call: 3 BHK in Tower B, ₹1.2 to 1.5 Cr budget, visiting with his wife, keen" loading="lazy"></div>
         </article>
         <article class="lcard">
-          <span class="time"><i></i>11:07 pm</span>
+          <span class="time"><i></i>The booking</span>
           <h3>Saturday, 11 am. Booked.</h3>
-          <p>The visit goes on your team's calendar and the location goes to her WhatsApp.</p>
-          <div class="ui"><div class="wa">Hi Priya, see you Saturday at 11 am at Shree Kunj Greens. 📍 Location: maps.app/sk-greens</div></div>
+          <p>Leo sets the reminder and tells your team who’s meeting him at the site.</p>
+          <div class="shot"><img class="crop" src="media/crop-next.png" alt="Next step: WhatsApp reminder at 8 am on 11 Oct, Shivam meets him at the site office" loading="lazy"></div>
         </article>
         <article class="lcard dark">
-          <span class="time"><i></i>9:00 am</span>
-          <h3>Your team walks in to answers, not a to-do list.</h3>
-          <p>A summary, the recording and a score for every call Leo made overnight.</p>
-          <div class="ui"><div class="row"><span>Call quality</span><span class="score"><b>8.6</b><span class="muted" style="color:rgba(255,255,255,.5)">/10</span></span></div><div class="row"><span style="color:rgba(255,255,255,.66)">14 calls overnight</span><b>3 visits booked</b></div></div>
+          <span class="time"><i></i>The morning after</span>
+          <h3>Your team knows how every call went.</h3>
+          <p>Each call is scored on politeness, listening, objection handling and closing.</p>
+          <div class="shot"><img class="crop" src="media/crop-qa-bars.png" alt="Call quality scores out of 10" loading="lazy"></div>
         </article>
         <article class="lcard">
-          <span class="time"><i></i>Saturday</span>
-          <h3>Priya walks into your site office.</h3>
-          <p>Your best salesperson meets a buyer who's ready. That's the part Leo leaves to people.</p>
-          <div class="ui"><div class="row"><b>Site visit done</b><span class="pills"><span class="ok">Interested</span></span></div></div>
+          <span class="time"><i></i>The visit</span>
+          <h3>Rahul and his wife walk into your site office.</h3>
+          <p>Your salesperson meets a buyer who’s already keen. That part Leo leaves to people.</p>
+          <div class="shot"><img class="crop" src="media/crop-summary.png" alt="AI summary of the call with Rahul" loading="lazy"></div>
         </article>
       </div>
     </div>
@@ -627,13 +632,7 @@ footer .word{transform:translateY(var(--fy,0px))}
         <img src="../v5/media/t5.jpg" alt="A sales manager checking her phone" loading="lazy">
         <div class="phone" id="phone" aria-label="Call summary in Leogix Sales">
           <div class="pback" aria-hidden="true"><span class="cam"><i></i><i></i><i></i></span><img src="../assets/leogix-mark.png" alt=""></div>
-          <div class="pface"><div class="screen">
-            <div class="s-h"><span class="av">PS</span><div><b>Priya Sharma</b><small>Call by Leo · 4:12</small></div><span class="st">Interested</span></div>
-            <div class="blk"><small>Summary</small>Wants a 2 BHK under ₹80 L near a school. Moving by June. Comparing two other projects.</div>
-            <div class="blk"><small>Next step</small><b>Site visit · Sat 11:00 am</b><br>Location sent on WhatsApp</div>
-            <div class="blk"><div class="qa"><small style="margin:0">Call quality</small><b>8.6</b></div><div class="bar"><i></i></div></div>
-            <div class="blk play"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>Play the recording</div>
-          </div>
+          <div class="pface"><div class="screen real"><div class="sbar"><b>9:41</b><span></span></div><img src="media/screen-summary.jpg" alt="Leogix Sales: AI summary of Leo's call with Rahul Sharma" loading="lazy"></div>
         </div></div>
       </div>
       <div class="copy reveal">
@@ -643,7 +642,7 @@ footer .word{transform:translateY(var(--fy,0px))}
         <div class="facts">
           <div><span class="n">1</span><span><b>What they need.</b> Budget, size, timeline and the deal-breakers, pulled from the conversation.</span></div>
           <div><span class="n">2</span><span><b>What happens next.</b> The visit or callback Leo booked, already on the calendar.</span></div>
-          <div><span class="n">3</span><span><b>How the call went.</b> A quality score, so you can coach the team on what works.</span></div>
+          <div><span class="n">3</span><span><b>How the call went.</b> A score out of 100, with what to do better next time.</span></div>
         </div>
       </div>
     </div>
@@ -759,54 +758,42 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
   document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 })();
 
-/* the call: Leo speaks (browser voice as a stand-in), the bars move, the phone shows the call */
+/* the call: Leo speaks (browser voice as a stand-in), the bars move, and the real
+   Leogix Sales transcript screen fills in line by line on the phone */
 (() => {
+  /* the lines are the real transcript from the Leogix Sales call panel design */
   const S = [
-    ['leo', 'Hi Priya, this is Leo from Sky Rise. You asked about Shree Kunj Greens last night. Is now a good time?'],
-    ['cust', 'Yes, go ahead.'],
-    ['leo', 'Great. Are you looking at a two B H K or a three B H K?', 'Great. Are you looking at a 2 BHK or a 3 BHK?'],
-    ['cust', 'Two B H K. My budget is around eighty lakh.', '2 BHK. My budget is around ₹80 lakh.'],
-    ['leo', 'That works. Tower B has two B H K homes in your range, and there is a school five minutes away. Would you like to see it this Saturday at eleven?', 'That works. Tower B has 2 BHK homes in your range, and there’s a school five minutes away. Would you like to see it this Saturday at 11?'],
-    ['cust', 'Saturday works.'],
-    ['leo', 'Done. I have booked Saturday at eleven and sent the location on WhatsApp. See you there, Priya.', 'Done. I’ve booked Saturday at 11 and sent the location on WhatsApp. See you there, Priya.']
+    ['leo', 'Hello Rahul ji, this is Leo calling from Sky Rise about your visit to Shree Kunj Greens.'],
+    ['cust', 'Yes, hello. Is Saturday still fine?'],
+    ['leo', 'Yes, Saturday the eleventh of October at eleven A M is confirmed. Will anyone come with you?'],
+    ['cust', 'My wife will come. Can we see the Tower B three B H K?'],
+    ['leo', 'Of course. Shivam from our team will show you the Tower B sample flat.'],
+    ['cust', 'Okay, perfect. Please send the location.']
   ];
-  const lines = document.getElementById('lines'), pidle = document.getElementById('pidle'), plive = document.getElementById('plive'), ptime = document.getElementById('ptime'), eqz = document.getElementById('eqz');
+  const REV = [448, 519, 609, 700, 790, 861], IMG_H = 936, START = 398;
+  const idle = document.getElementById('scrIdle'), liveEl = document.getElementById('scrLive'), doneEl = document.getElementById('scrDone'), cover = document.getElementById('cover');
   const status = document.getElementById('status'), stTxt = document.getElementById('statusTxt');
   const btn = document.getElementById('playCall'), btnTxt = document.getElementById('playTxt'), dockBtn = document.getElementById('dockPlay'), dockTxt = document.getElementById('dockTxt'), hint = document.getElementById('hint');
-  for (let i = 0; i < 22; i++) eqz.appendChild(document.createElement('i'));
-  const eqb = [...eqz.children];
   const synth = window.speechSynthesis;
-  let playing = false, run = 0, timers = [], t0 = 0, clockT = null;
+  let playing = false, run = 0, timers = [];
   const setStatus = (cls, t) => { status.className = 'chip status ' + cls; stTxt.textContent = t; };
-  const live = (on) => { pidle.style.display = on ? 'none' : 'contents'; plive.style.display = on ? 'flex' : 'none'; };
+  const show = (which) => { idle.hidden = which !== 'idle'; liveEl.hidden = which !== 'live'; doneEl.hidden = which !== 'done'; };
+  const reveal = (y) => { cover.style.setProperty('--rv', (y / IMG_H * 100).toFixed(2) + '%'); const vp = liveEl.parentElement, VIEW_H = vp.clientHeight * 390 / Math.max(1, vp.clientWidth); const over = Math.max(0, y + 40 - VIEW_H); liveEl.style.setProperty('--sy', (-over / IMG_H * 100).toFixed(2) + '%'); };
   const pickVoices = () => {
     const vs = synth ? synth.getVoices() : [];
     const en = vs.filter((v) => /^en/i.test(v.lang)), inV = en.filter((v) => /IN/i.test(v.lang));
-    const male = /(rishi|ravi|prabhat|male|daniel|alex|aaron)/i, fem = /(veena|lekha|heera|neerja|female|samantha|karen|zira)/i;
+    const male = /(rishi|ravi|prabhat|male|daniel|alex|aaron)/i;
     const leo = inV.find((v) => male.test(v.name)) || en.find((v) => male.test(v.name)) || inV[0] || en[0] || vs[0];
-    const cust = inV.find((v) => fem.test(v.name) && v !== leo) || en.find((v) => fem.test(v.name) && v !== leo) || inV.find((v) => v !== leo) || leo;
+    const cust = inV.find((v) => v !== leo) || en.find((v) => male.test(v.name) && v !== leo) || leo;
     return { leo, cust };
   };
   if (synth) synth.getVoices();
-  const eqLoop = () => { const a = LEO.speaking ? LEO.amp : (LEO.listen ? .25 : 0); eqb.forEach((b, i) => { b.style.height = (6 + a * 28 * Math.abs(Math.sin(performance.now() / 120 + i * 1.3))).toFixed(1) + 'px'; }); eqz.classList.toggle('on', !!LEO.speaking); if (playing) requestAnimationFrame(eqLoop); else eqb.forEach((b) => b.style.height = '6px'); };
-  const add = (who, text) => {
-    const m = document.createElement('div');
-    m.className = 'ln2 ' + who;
-    m.innerHTML = '<small>' + (who === 'leo' ? 'Leo' : 'Priya') + '</small>';
-    m.appendChild(document.createTextNode(text));
-    lines.appendChild(m);
-    while (lines.children.length > 3) lines.removeChild(lines.firstChild);
-  };
-  const resetUi = () => { btnTxt.textContent = 'Hear Leo on a call'; dockTxt.textContent = 'Hear Leo'; dockBtn.classList.remove('live'); clearInterval(clockT); };
+  const resetUi = () => { btnTxt.textContent = 'Hear Leo on a call'; dockTxt.textContent = 'Hear Leo'; dockBtn.classList.remove('live'); };
   const finish = (my) => {
     if (my !== run) return;
-    playing = false; LEO.amp = 0; LEO.listen = 0; LEO.speaking = false; clearInterval(clockT);
-    lines.innerHTML = '';
-    const d = document.createElement('div'); d.className = 'ln2 done';
-    d.innerHTML = '<small>Call ended</small><b>Site visit booked, Sat 11 am</b><div class="tags"><span>₹80 L</span><span>2 BHK</span><span>Near a school</span></div>';
-    lines.appendChild(d);
-    ptime.textContent = 'Call ended · summary sent';
-    setStatus('', 'Call done. Your team has the summary');
+    playing = false; LEO.amp = 0; LEO.listen = 0; LEO.speaking = false;
+    timers.push(setTimeout(() => { if (my === run) show('done'); }, 900));
+    setStatus('', 'Call done. Summary ready for your team');
     resetUi(); btnTxt.textContent = 'Hear it again';
     hint.textContent = 'Leo’s voice here is a stand-in. The real one is warmer.';
   };
@@ -817,19 +804,17 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
     setStatus('', 'Call paused'); resetUi();
   };
   const start = () => {
-    const my = ++run; playing = true; lines.innerHTML = ''; live(true);
+    const my = ++run; playing = true;
+    show('live'); reveal(START);
     btnTxt.textContent = 'Stop the call'; dockTxt.textContent = 'Stop'; dockBtn.classList.add('live');
-    hint.textContent = 'Playing a sample call. Sound on.';
-    t0 = Date.now(); ptime.textContent = 'On a call · 0:00';
-    clockT = setInterval(() => { const s = Math.floor((Date.now() - t0) / 1000); ptime.textContent = 'On a call · ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }, 500);
-    requestAnimationFrame(eqLoop);
+    hint.textContent = 'Playing the call from the Leogix Sales transcript. Sound on.';
     const V = pickVoices();
     let i = 0;
     const next = () => {
       if (my !== run) return;
       if (i >= S.length) return finish(my);
-      const [who, say, show] = S[i++];
-      add(who, show || say);
+      const k = i, [who, say] = S[i++];
+      reveal(REV[k]);
       if (who === 'leo') { setStatus('talk', 'Leo is talking'); LEO.speaking = true; LEO.listen = 0; }
       else { setStatus('listen', 'Leo is listening'); LEO.speaking = false; LEO.listen = 1; }
       const est = Math.max(1200, say.split(/\s+/).length * 380);
@@ -837,8 +822,8 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
         const u = new SpeechSynthesisUtterance(say);
         u.voice = who === 'leo' ? V.leo : V.cust;
         u.lang = (u.voice && u.voice.lang) || 'en-IN';
-        u.rate = who === 'leo' ? 1.02 : 1.05;
-        u.pitch = who === 'leo' ? .92 : (V.cust === V.leo ? 1.35 : 1.05);
+        u.rate = 1.02;
+        u.pitch = who === 'leo' ? .95 : (V.cust === V.leo ? .75 : 1);
         let ended = false;
         const go = () => { if (ended) return; ended = true; timers.push(setTimeout(next, 380)); };
         u.onboundary = () => { if (who === 'leo') LEO.amp = 1; };
@@ -847,7 +832,7 @@ window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
         synth.speak(u);
       } else timers.push(setTimeout(next, est));
     };
-    next();
+    timers.push(setTimeout(next, 500));
   };
   const toggle = () => { if (playing) stop(); else { document.getElementById('leo').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); start(); } };
   btn.addEventListener('click', toggle);
