@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Leogix | Meet Leo</title>
+<meta name="description" content="Leogix builds Leo, an AI that calls your leads, answers your customers and picks up your helpdesk. Leogix Sales, Leogix Ask and Leogix Support.">
+<meta property="og:title" content="Leogix | Meet Leo">
+<meta property="og:description" content="Leo calls your leads, answers your customers and picks up your helpdesk. Leogix builds him.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../v5/media/hero.jpg">
+<meta name="theme-color" content="#F6F3EF">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F3EF; --paper-2:#EDE7E1; --card:#FFFFFF; --ink:#16131A; --ink-2:#5E5660; --ink-3:#958B92; --line:rgba(22,19,26,.10);
+  --ember:#F2552C; --crimson:#D91845; --amber:#FFB01F; --night:#16131A;
+  --grad:linear-gradient(100deg,#D91845 0%,#F2552C 45%,#FFB01F 100%);
+  --font:'Urbanist',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --w:1200px; --gut:max(16px,env(safe-area-inset-left,0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img,video,canvas{display:block}
+.gut{padding-left:var(--gut);padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{width:min(var(--w),100%);margin:0 auto}
+.label{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.label svg{width:18px;height:18px}
+h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clamp(42px,6.4vw,92px);text-wrap:balance}
+.g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gl{display:inline-block;width:.62em;height:.62em;vertical-align:.04em;margin:0 .12em}
+.gl i{display:none}
+.sub{font-size:clamp(18px,1.6vw,21px);line-height:1.55;color:var(--ink-2);max-width:46ch}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 24px;border-radius:999px;border:0;font:inherit;font-size:16.5px;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s}
+.btn svg{width:18px;height:18px;flex-shrink:0}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.hot{background:var(--grad);color:#fff;box-shadow:0 14px 30px -14px rgba(217,24,69,.7)}
+.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px rgba(22,19,26,.18)}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible,.dock a:focus-visible,.dock button:focus-visible{outline:3px solid var(--ember);outline-offset:3px}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.on{opacity:1;transform:none}
+
+/* loader */
+#loader{position:fixed;inset:0;z-index:100;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,4vw,48px);transition:clip-path 1s cubic-bezier(.76,0,.24,1);clip-path:inset(0 0 0 0)}
+#loader.out{clip-path:inset(0 0 100% 0)}
+#loader .lw{display:flex;align-items:center;justify-content:space-between;font-size:18px;font-weight:700;letter-spacing:-.01em}
+#loader .lw span{color:rgba(255,255,255,.5);font-weight:500;font-size:15px}
+#loader .lbars{display:flex;align-items:center;gap:10px;height:120px;align-self:center}
+#loader .lbars i{width:16px;border-radius:9px;background:var(--grad);animation:lb 1s ease-in-out infinite}
+#loader .lbars i:nth-child(1){height:46px;animation-delay:-.2s}#loader .lbars i:nth-child(2){height:110px}#loader .lbars i:nth-child(3){height:64px;animation-delay:-.45s}
+@keyframes lb{50%{transform:scaleY(.45)}}
+#loader .lc{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+#loader .num{font-size:clamp(90px,16vw,220px);font-weight:300;line-height:.8;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+#loader .lc p{margin:0;max-width:24ch;font-size:16px;line-height:1.5;color:rgba(255,255,255,.6);text-align:right}
+
+/* top bar + floating dock */
+.top{position:absolute;top:0;left:0;right:0;z-index:20;padding-top:calc(20px + env(safe-area-inset-top,0px))}
+.top .in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none}
+.top .brand img{height:28px;width:auto}
+.top .ext{font-size:15px;font-weight:600;color:var(--ink-2);text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:999px}
+.top .ext:hover{background:rgba(255,255,255,.7);color:var(--ink)}
+.dock{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;transform:translate(-50%,140%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(22,19,26,.9);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);box-shadow:0 20px 40px -18px rgba(22,19,26,.55);transition:transform .7s cubic-bezier(.2,.8,.2,1);max-width:calc(100% - 24px)}
+.dock.on{transform:translate(-50%,0)}
+.dock a{display:block;padding:11px 16px;border-radius:999px;color:rgba(255,255,255,.66);font-size:14.5px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .3s,color .3s}
+.dock a:hover{color:#fff}
+.dock a.on{background:rgba(255,255,255,.12);color:#fff}
+.dock .mk{padding:8px 12px 8px 10px}
+.dock .mk img{height:22px;width:auto}
+.dock button{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px 0 12px;border:0;border-radius:999px;background:var(--grad);color:#fff;font:inherit;font-size:14.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.dock button .eq{display:flex;align-items:center;gap:2px;height:16px}
+.dock button .eq i{width:3px;height:6px;border-radius:2px;background:#fff}
+.dock button.live .eq i{animation:lb .7s ease-in-out infinite}
+.dock button.live .eq i:nth-child(2){animation-delay:-.2s}.dock button.live .eq i:nth-child(3){animation-delay:-.4s}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:grid;align-items:center;padding-top:110px;padding-bottom:60px;overflow:hidden}
+.hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:24px;align-items:center}
+.hero h1{margin:18px 0 0;font-size:clamp(68px,10.5vw,170px);font-weight:700;letter-spacing:-.055em;line-height:.86}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(40%) rotate(4deg);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.ready .hero h1 .w{opacity:1;transform:none}
+.ready .hero h1 .w:nth-child(2){transition-delay:.12s}
+.hero .lede{margin:28px 0 0;font-size:clamp(22px,2.3vw,32px);font-weight:500;line-height:1.22;letter-spacing:-.02em;color:var(--ink-2);max-width:20ch}
+.hero .lede b{color:var(--ink);font-weight:700}
+.hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.hero .hint{margin:16px 0 0;font-size:14px;color:var(--ink-3)}
+.stage{position:relative;aspect-ratio:1/1;width:100%;max-width:680px;justify-self:end}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.stage .glow{position:absolute;inset:16%;border-radius:50%;background:radial-gradient(circle,rgba(242,85,44,.42),rgba(255,176,31,.16) 45%,transparent 70%);filter:blur(30px);z-index:1;transition:transform .4s}
+.stage .floor{position:absolute;left:24%;right:24%;bottom:5%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(110,30,20,.28),transparent);z-index:1;transform:scaleX(var(--fs,1))}
+.chip{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:9px 14px 9px 10px;border-radius:999px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 30px -14px rgba(80,20,10,.35);font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--ink-3)}
+.chip.talk i{background:var(--ember);box-shadow:0 0 0 4px rgba(242,85,44,.2)}
+.chip.listen i{background:#16A34A;box-shadow:0 0 0 4px rgba(22,163,74,.2)}
+.status{top:8%;left:2%}
+.callcard{position:absolute;z-index:3;right:0;bottom:4%;width:min(330px,62%);display:grid;gap:8px;pointer-events:none}
+.msg{padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.42;box-shadow:0 14px 30px -18px rgba(80,20,10,.4);animation:msgin .5s cubic-bezier(.2,.7,.2,1) both}
+.msg small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;opacity:.6}
+.msg.leo{background:var(--ink);color:#fff;border-bottom-left-radius:6px}
+.msg.cust{background:#fff;color:var(--ink);justify-self:end;border-bottom-right-radius:6px;max-width:85%}
+.msg.done{background:#fff;color:var(--ink)}
+.msg.done .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.msg.done .tags span{padding:5px 10px;border-radius:999px;background:#E7F7EC;color:#15803D;font-size:13px;font-weight:700}
+@keyframes msgin{from{opacity:0;transform:translateY(12px) scale(.98)}}
+
+/* reel (grows on scroll) */
+.reel{position:relative;height:190vh}
+.reel-pin{position:sticky;top:0;height:100svh;display:grid;place-items:center;padding:16px}
+.reel-frame{position:relative;width:min(calc(var(--rw,58)*1%),100%);height:calc(var(--rh,58)*1svh);border-radius:var(--rr,44px);overflow:hidden;background:var(--night);box-shadow:0 40px 80px -40px rgba(80,20,10,.45)}
+.reel-frame video,.reel-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.reel-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,14,20,0) 40%,rgba(18,14,20,.78) 100%)}
+.reel-cap{position:absolute;z-index:1;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(20px,4vw,52px);display:flex;align-items:flex-end;justify-content:space-between;gap:24px;color:#fff;opacity:var(--ro,0);transform:translateY(calc((1 - var(--ro,0)) * 24px))}
+.reel-cap .label{color:rgba(255,255,255,.7)}
+.reel-cap p{margin:14px 0 0;font-size:clamp(30px,4.8vw,72px);font-weight:600;line-height:1.02;letter-spacing:-.04em;max-width:15ch}
+.vbtn{flex-shrink:0;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.14);color:#fff;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.vbtn svg{width:16px;height:16px}
+.vbtn .pl{display:none}.vbtn.paused .pl{display:block}.vbtn.paused .pa{display:none}
+
+/* statement: words light up */
+.state{padding-block:clamp(90px,12vw,170px) clamp(40px,6vw,80px)}
+.state p{margin:22px 0 0;font-size:clamp(32px,4.6vw,66px);font-weight:600;line-height:1.08;letter-spacing:-.035em;max-width:22ch}
+.state p .wd{color:rgba(22,19,26,.14);transition:color .4s}
+.state p .wd.lit{color:var(--ink)}
+.state p .wd.hot.lit{color:var(--ember)}
+
+/* one lead, start to finish (horizontal on scroll) */
+.lead{position:relative;height:420vh}
+.lead-pin{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;gap:clamp(24px,4vh,48px)}
+.lead-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.lead-head .prog{display:flex;gap:6px;padding-bottom:12px}
+.lead-head .prog i{width:28px;height:4px;border-radius:4px;background:rgba(22,19,26,.12);overflow:hidden;position:relative}
+.lead-head .prog i b{position:absolute;inset:0;background:var(--grad);transform-origin:left;transform:scaleX(var(--p,0))}
+.ltrack{display:flex;gap:20px;padding-left:max(var(--gut),calc((100vw - var(--w))/2));padding-right:20vw;will-change:transform}
+.lcard{flex-shrink:0;width:clamp(290px,30vw,400px);min-height:clamp(380px,52vh,470px);padding:28px;border-radius:32px;background:var(--card);display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 60px -40px rgba(80,20,10,.35)}
+.lcard .time{font-size:15px;font-weight:700;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.lcard .time i{width:8px;height:8px;border-radius:50%;background:var(--ember)}
+.lcard h3{margin:0;font-size:clamp(26px,2.3vw,34px);font-weight:700;letter-spacing:-.03em;line-height:1.05}
+.lcard p{margin:0;font-size:16px;line-height:1.55;color:var(--ink-2)}
+.lcard .ui{margin-top:auto;padding:16px;border-radius:20px;background:var(--paper);display:grid;gap:8px;font-size:14.5px}
+.lcard .ui .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.lcard .ui b{font-weight:700}
+.lcard .ui .muted{color:var(--ink-3)}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pills span{padding:7px 12px;border-radius:999px;background:#fff;font-weight:700;font-size:14px}
+.pills span.ok{background:#E7F7EC;color:#15803D}
+.wa{justify-self:end;max-width:90%;padding:10px 13px;border-radius:14px 14px 4px 14px;background:#DCF8C6;color:#111;line-height:1.4}
+.ring{display:flex;align-items:center;gap:12px}
+.ring .av{width:42px;height:42px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-weight:800}
+.ring .bars{display:flex;gap:3px;align-items:center;height:22px;margin-left:auto}
+.ring .bars i{width:3px;border-radius:2px;background:var(--ember);animation:lb .9s ease-in-out infinite}
+.ring .bars i:nth-child(odd){animation-delay:-.3s}
+.lcard.dark{background:var(--ink);color:#fff}
+.lcard.dark p{color:rgba(255,255,255,.66)}
+.lcard.dark .time{color:rgba(255,255,255,.5)}
+.lcard.dark .ui{background:rgba(255,255,255,.08)}
+.score{display:flex;align-items:baseline;gap:4px}
+.score b{font-size:34px;letter-spacing:-.03em}
+
+/* products with sticky Leo */
+.prods{padding-block:clamp(80px,10vw,140px) 40px}
+.prods .head{margin-bottom:clamp(30px,5vw,60px)}
+.prods .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,80px)}
+.prods .stick{position:sticky;top:0;height:100svh;display:grid;place-items:center}
+.pstage{position:relative;width:min(100%,560px);aspect-ratio:1/1}
+.pstage canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.pstage .glow{position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,rgba(242,85,44,.35),transparent 70%);filter:blur(30px);z-index:1}
+.orbit{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .8s}
+.orbit.on{opacity:1}
+.orbit svg{width:100%;height:100%;overflow:visible}
+.orbit text{font-size:15px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;fill:var(--ink-3)}
+.orbit.spin svg{animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit.pulse span{position:absolute;inset:14%;border-radius:50%;border:1.5px solid rgba(242,85,44,.35);animation:pulse 3.2s ease-out infinite}
+.orbit.pulse span:nth-child(2){animation-delay:1.06s}.orbit.pulse span:nth-child(3){animation-delay:2.13s}
+@keyframes pulse{from{transform:scale(.7);opacity:1}to{transform:scale(1.25);opacity:0}}
+.orbit.wave{display:flex;align-items:center;justify-content:center;gap:5px;top:auto;height:22%;bottom:-6%}
+.orbit.wave i{width:4px;border-radius:3px;background:var(--ink);opacity:.18;height:var(--h);animation:lb 1.2s ease-in-out infinite;animation-delay:var(--d)}
+.pname{position:absolute;left:0;right:0;top:-2%;z-index:3;text-align:center;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.panel{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:40px}
+.panel .tag{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:#fff;font-size:13.5px;font-weight:700;color:var(--ink-2)}
+.panel .tag i{width:8px;height:8px;border-radius:50%;background:#16A34A}
+.panel .tag.soon i{background:var(--amber)}
+.panel img.logo{height:56px;width:auto;margin-top:26px;align-self:flex-start}
+.panel h3{margin:22px 0 0;font-size:clamp(36px,4.2vw,60px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.panel p{margin:18px 0 0;font-size:clamp(18px,1.5vw,20px);line-height:1.6;color:var(--ink-2);max-width:42ch}
+.panel ul{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:10px}
+.panel li{display:flex;align-items:center;gap:12px;font-size:16.5px;font-weight:600}
+.panel li svg{width:22px;height:22px;flex-shrink:0;color:var(--ember)}
+.panel .btn{margin-top:32px;align-self:flex-start}
+
+/* after the call: phone in hand */
+.after{padding-block:clamp(80px,10vw,140px)}
+.after .in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(30px,6vw,90px);align-items:center}
+.photo{position:relative;aspect-ratio:4/5;border-radius:40px;overflow:visible}
+.photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:40px}
+.phone{position:absolute;right:-8%;bottom:-6%;width:clamp(230px,58%,300px);aspect-ratio:9/18.5;border-radius:44px;background:var(--ink);padding:10px;box-shadow:0 50px 90px -40px rgba(40,10,10,.7);transform:translateY(var(--py,0px)) rotate(-3deg)}
+.screen{position:relative;height:100%;border-radius:36px;background:var(--paper);overflow:hidden;padding:34px 14px 14px;display:flex;flex-direction:column;gap:9px;font-size:13px}
+.screen::before{content:"";position:absolute;top:10px;left:50%;width:76px;height:20px;border-radius:12px;background:var(--ink);transform:translateX(-50%)}
+.screen .s-h{display:flex;align-items:center;gap:9px}
+.screen .s-h .av{width:34px;height:34px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px}
+.screen .s-h b{display:block;font-size:14.5px}
+.screen .s-h small{color:var(--ink-3);font-weight:600}
+.screen .s-h .st{margin-left:auto;padding:4px 9px;border-radius:999px;background:#E7F7EC;color:#15803D;font-weight:700;font-size:11.5px}
+.screen .blk{padding:11px 12px;border-radius:16px;background:#fff;line-height:1.42;opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
+.screen .blk.on{opacity:1;transform:none}
+.screen .blk small{display:block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.screen .qa{display:flex;align-items:center;justify-content:space-between}
+.screen .qa b{font-size:24px;letter-spacing:-.03em}
+.screen .bar{height:5px;border-radius:5px;background:var(--paper-2);overflow:hidden;margin-top:6px}
+.screen .bar i{display:block;height:100%;width:86%;background:var(--grad)}
+.screen .play{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff}
+.screen .play span{width:26px;height:26px;border-radius:50%;background:var(--grad);display:grid;place-items:center}
+.screen .play svg{width:10px;height:10px}
+.after .copy p{margin:20px 0 0}
+.after .facts{display:grid;gap:14px;margin-top:30px}
+.after .facts div{display:flex;gap:14px;align-items:flex-start;font-size:17px;line-height:1.5;color:var(--ink-2)}
+.after .facts b{color:var(--ink)}
+.after .facts span.n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--ember)}
+
+/* how we build */
+.build{padding-block:clamp(60px,8vw,120px)}
+.build .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,6vw,90px)}
+.stickymedia{position:sticky;top:max(90px,calc(50svh - 290px));align-self:start}
+.film{position:relative;aspect-ratio:4/5;max-height:580px;border-radius:36px;overflow:hidden;background:var(--night)}
+.film .fv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
+.film .fv.on{opacity:1}
+.film::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(18,14,20,.35) 0%,rgba(18,14,20,0) 22%,rgba(18,14,20,0) 60%,rgba(18,14,20,.5) 100%)}
+.film .ix{position:absolute;top:20px;left:22px;z-index:2;color:#fff;font-weight:700;font-size:15px;letter-spacing:.06em}
+.film .tag{position:absolute;left:16px;right:16px;bottom:16px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 18px;border-radius:22px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.film .tag span{display:block;font-weight:700;font-size:16px}
+.film .tag small{color:var(--ink-3);font-weight:600;font-size:13.5px}
+.film .tag button{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;flex-shrink:0;border:0;cursor:pointer}
+.film .tag button svg{width:14px;height:14px}
+.film .tag button .pl{display:none}.film .tag button.paused .pl{display:block}.film .tag button.paused .pa{display:none}
+.steps{padding-block:20px}
+.step{padding:clamp(28px,5vh,48px) 0;border-top:1px solid var(--line);opacity:.32;transition:opacity .5s}
+.step.on{opacity:1}
+.step .n{font-size:14px;font-weight:800;color:var(--ember);letter-spacing:.08em}
+.step h3{margin:10px 0 0;font-size:clamp(28px,2.8vw,40px);font-weight:700;letter-spacing:-.035em}
+.step p{margin:12px 0 0;font-size:18px;line-height:1.6;color:var(--ink-2);max-width:42ch}
+
+/* curved gallery */
+.gallery{padding-block:clamp(80px,10vw,140px) clamp(60px,8vw,110px);overflow:hidden}
+.ghead{display:grid;grid-template-columns:1fr 1fr;gap:24px 48px;align-items:end;margin-bottom:clamp(36px,5vw,64px)}
+.ghead h2{margin:18px 0 0}
+.ghead p{margin:0;justify-self:end}
+.curve{position:relative;perspective:1100px;height:clamp(300px,34vw,430px);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.curve.grabbing{cursor:grabbing}
+.curve .track{position:absolute;left:0;top:0;height:100%;display:flex;gap:18px;transform-style:preserve-3d;will-change:transform}
+.tile{position:relative;flex-shrink:0;width:clamp(210px,22vw,290px);height:100%;border-radius:28px;overflow:hidden;background:var(--night);box-shadow:0 30px 50px -34px rgba(80,20,10,.5)}
+.tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.tile span{position:absolute;left:14px;bottom:14px;z-index:1;padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.86);font-size:13.5px;font-weight:700}
+.curve::before,.curve::after{content:"";position:absolute;top:0;bottom:0;width:8vw;z-index:2;pointer-events:none}
+.curve::before{left:0;background:linear-gradient(90deg,var(--paper),transparent)}
+.curve::after{right:0;background:linear-gradient(-90deg,var(--paper),transparent)}
+
+/* numbers */
+.nums{padding-block:clamp(40px,6vw,80px)}
+.nums .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.num{padding:clamp(24px,3vw,36px);border-radius:32px;background:var(--card)}
+.num b{display:block;font-size:clamp(56px,7vw,104px);font-weight:300;letter-spacing:-.05em;line-height:.9}
+.num p{margin:18px 0 0;font-size:17px;line-height:1.5;color:var(--ink-2)}
+.num p strong{color:var(--ink)}
+
+/* contact */
+.contact{padding-block:clamp(90px,12vw,170px) clamp(60px,8vw,100px)}
+.contact .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(30px,6vw,90px);align-items:start}
+.contact .sub{margin-top:22px}
+.contact .direct{margin-top:26px;font-size:16px;color:var(--ink-2)}
+.contact .direct a{font-weight:700;color:var(--ink)}
+.cform{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:clamp(20px,3vw,34px);border-radius:32px;background:var(--card)}
+.cform label{display:grid;gap:7px;font-size:15px;font-weight:600;color:var(--ink-2);min-width:0}
+.cform .full{grid-column:1/-1}
+.cform input,.cform select,.cform textarea{width:100%;min-width:0;min-height:54px;padding:14px 16px;border-radius:16px;border:1px solid rgba(22,19,26,.14);background:var(--paper);color:var(--ink);font:inherit;font-size:16px}
+.cform textarea{min-height:120px;resize:vertical}
+.cform select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235E5660' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:18px;padding-right:42px}
+.cform input:focus-visible,.cform select:focus-visible,.cform textarea:focus-visible{outline:3px solid var(--ember);outline-offset:1px}
+.cform .note{margin:0;align-self:center;font-size:15px;color:var(--ink-2)}
+.cform .bad{border-color:var(--crimson)}
+
+/* footer */
+footer{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));overflow:hidden}
+.ftop{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;padding-top:40px;border-top:1px solid var(--line)}
+.ftop p{margin:0;font-size:clamp(22px,2.4vw,32px);font-weight:600;letter-spacing:-.03em;max-width:20ch}
+.fcols{display:flex;gap:clamp(30px,6vw,80px)}
+.fcols div{display:grid;gap:10px;align-content:start}
+.fcols b{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.fcols a{text-decoration:none;font-weight:600;color:var(--ink-2)}
+.fcols a:hover{color:var(--ink)}
+.word{display:flex;align-items:center;justify-content:center;gap:.04em;margin:clamp(30px,5vw,60px) 0 0;font-size:clamp(84px,21vw,330px);font-weight:800;letter-spacing:-.065em;line-height:.8;white-space:nowrap}
+.word .gl{width:.5em;height:.5em;margin:0 .06em 0 0}
+.fbase{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:26px;font-size:14px;color:var(--ink-3)}
+
+@media (max-width:900px){
+  .hero{padding-top:90px}
+  .hero .in{grid-template-columns:1fr}
+  .stage{justify-self:center;max-width:520px;margin-top:-10px}
+  .callcard{width:min(300px,78%)}
+  .reel{height:150vh}
+  .reel-cap{flex-direction:column;align-items:flex-start}
+  .lead{height:auto}
+  .lead-pin{position:relative;height:auto;padding-block:80px 40px}
+  .lead-head .prog{display:none}
+  .ltrack{flex-direction:column;padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .lcard{width:100%;min-height:0}
+  .prods .grid{grid-template-columns:1fr}
+  .prods .stick{position:sticky;top:0;height:46svh;z-index:2;background:linear-gradient(var(--paper) 80%,rgba(246,243,239,0))}
+  .pstage{width:min(78vw,360px)}
+  .panel{min-height:0;padding-block:50px}
+  .after .in,.build .in,.contact .in{grid-template-columns:1fr}
+  .photo{margin-right:22%}
+  .screen .s-h .st{display:none}
+  .stickymedia{position:relative;top:0}
+  .film{aspect-ratio:4/3}
+  .ghead{grid-template-columns:1fr}
+  .ghead p{justify-self:start}
+  .nums .in{grid-template-columns:1fr}
+  .dock .lk{display:none}
+}
+@media (max-width:560px){
+  .cform{grid-template-columns:1fr}
+  #loader .lc{flex-direction:column;align-items:flex-start}
+  #loader .lc p{text-align:left}
+  .top .ext{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hero h1 .w{opacity:1;transform:none}
+  .reel{height:auto}.reel-pin{position:relative;height:auto;padding-block:40px}.reel-frame{width:100%;height:70svh}.reel-cap{opacity:1;transform:none}
+  .lead{height:auto}.lead-pin{position:relative;height:auto;padding-block:80px}.ltrack{flex-wrap:wrap}
+  .screen .blk{opacity:1;transform:none}
+  .state p .wd{color:var(--ink)}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#D91845"/><stop offset=".5" stop-color="#F2552C"/><stop offset="1" stop-color="#FFB01F"/></linearGradient>
+    <symbol id="glyph" viewBox="0 0 24 24"><rect x="1" y="7.5" width="5.4" height="9" rx="2.7" fill="url(#gg)"/><rect x="9.3" y="1" width="5.4" height="22" rx="2.7" fill="url(#gg)"/><rect x="17.6" y="5" width="5.4" height="14" rx="2.7" fill="url(#gg)"/></symbol>
+    <symbol id="tick" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".14"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div id="loader" aria-hidden="true">
+  <div class="lw">Leogix <span>Leo is getting ready</span></div>
+  <div class="lbars"><i></i><i></i><i></i></div>
+  <div class="lc"><div class="num" id="lnum">00</div><p>Turn your sound on. Leo would like to say hello.</p></div>
+</div>
+
+<header class="top gut">
+  <div class="in">
+    <a class="brand" href="#leo"><img src="../assets/leogix-mark.png" alt="">Leogix</a>
+    <a class="ext" href="https://ask.leogix.com" target="_blank" rel="noopener">Try Leogix Ask <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">(opens in a new tab)</span></a>
+  </div>
+</header>
+
+<nav class="dock" id="dock" aria-label="Main">
+  <a class="mk" href="#leo" aria-label="Back to top"><img src="../assets/leogix-mark.png" alt=""></a>
+  <a class="lk" href="#lead">How Leo works</a>
+  <a class="lk" href="#products">Products</a>
+  <a class="lk" href="#build">How we build</a>
+  <a class="lk" href="#contact">Contact</a>
+  <button type="button" id="dockPlay" aria-label="Hear Leo on a call"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="dockTxt">Hear Leo</span></button>
+</nav>
+
+<main>
+  <section class="hero gut" id="leo">
+    <div class="in">
+      <div>
+        <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>Leogix</span>
+        <h1><span class="w">Meet</span> <span class="w g">Leo.</span></h1>
+        <p class="lede">He calls your leads, answers your customers and picks up your helpdesk. <b>Leogix builds him.</b></p>
+        <div class="acts">
+          <button class="btn hot" type="button" id="playCall"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="playTxt">Hear Leo on a call</span></button>
+          <a class="btn line" href="#products">See what Leo does</a>
+        </div>
+        <p class="hint" id="hint">A one-minute sales call. Sound on.</p>
+      </div>
+      <div class="stage" id="stage">
+        <div class="glow" id="glow"></div>
+        <div class="floor" id="floor"></div>
+        <canvas id="leoc" aria-hidden="true"></canvas>
+        <span class="chip status" id="status" role="status"><i></i><span id="statusTxt">Leo is waiting for a call</span></span>
+        <div class="callcard" id="callcard" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reel" id="reel" aria-label="Leo at work">
+    <div class="reel-pin">
+      <div class="reel-frame" id="reelFrame">
+        <video id="reelVid" src="../v5/media/hero.mp4" poster="../v5/media/hero.jpg" muted loop playsinline preload="metadata"></video>
+        <div class="reel-cap">
+          <div><span class="label">11:02 pm, somewhere in Pune</span><p>A lead just filled a form. Leo is already dialling.</p></div>
+          <button class="vbtn" type="button" data-vid="reelVid" aria-label="Pause video"><svg class="pa" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="state gut">
+    <div class="in">
+      <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>Why Leo exists</span>
+      <p id="words">Most enquiries arrive when nobody is at the desk. By morning, many have already called someone else. <span class="hot">Leo is always at the desk.</span></p>
+    </div>
+  </section>
+
+  <section class="lead" id="lead" aria-label="One lead, start to finish">
+    <div class="lead-pin">
+      <div class="in gut lead-head" style="padding:0">
+        <div>
+          <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>How Leo works</span>
+          <h2 style="margin-top:16px">One lead, <span class="g">start to finish.</span></h2>
+        </div>
+        <div class="prog" id="prog" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+      </div>
+      <div class="ltrack" id="ltrack">
+        <article class="lcard">
+          <span class="time"><i></i>11:02 pm</span>
+          <h3>Priya fills a form on 99acres.</h3>
+          <p>Your office closed hours ago. She's comparing three projects tonight.</p>
+          <div class="ui"><div class="row"><b>New lead</b><span class="muted">just now</span></div><div class="row"><span>Priya Sharma</span><span class="muted">2 BHK · Sarjapur</span></div></div>
+        </article>
+        <article class="lcard">
+          <span class="time"><i></i>11:02 pm</span>
+          <h3>Leo calls her before she closes the tab.</h3>
+          <p>No queue, no "we'll get back to you". In Hindi or English, whichever she answers in.</p>
+          <div class="ui"><div class="ring"><span class="av">L</span><div><b>Leo calling…</b><br><span class="muted">+91 98•• ••4120</span></div><span class="bars" aria-hidden="true"><i style="height:8px"></i><i style="height:18px"></i><i style="height:12px"></i><i style="height:20px"></i><i style="height:9px"></i></span></div></div>
+        </article>
+        <article class="lcard">
+          <span class="time"><i></i>11:05 pm</span>
+          <h3>He finds out what she actually needs.</h3>
+          <p>Budget, size, timeline, and the one thing she won't compromise on.</p>
+          <div class="ui"><div class="pills"><span>₹80 L budget</span><span>2 BHK</span><span>Moving by June</span><span class="ok">Near a school</span></div></div>
+        </article>
+        <article class="lcard">
+          <span class="time"><i></i>11:07 pm</span>
+          <h3>Saturday, 11 am. Booked.</h3>
+          <p>The visit goes on your team's calendar and the location goes to her WhatsApp.</p>
+          <div class="ui"><div class="wa">Hi Priya, see you Saturday at 11 am at Shree Kunj Greens. 📍 Location: maps.app/sk-greens</div></div>
+        </article>
+        <article class="lcard dark">
+          <span class="time"><i></i>9:00 am</span>
+          <h3>Your team walks in to answers, not a to-do list.</h3>
+          <p>A summary, the recording and a score for every call Leo made overnight.</p>
+          <div class="ui"><div class="row"><span>Call quality</span><span class="score"><b>8.6</b><span class="muted" style="color:rgba(255,255,255,.5)">/10</span></span></div><div class="row"><span style="color:rgba(255,255,255,.66)">14 calls overnight</span><b>3 visits booked</b></div></div>
+        </article>
+        <article class="lcard">
+          <span class="time"><i></i>Saturday</span>
+          <h3>Priya walks into your site office.</h3>
+          <p>Your best salesperson meets a buyer who's ready. That's the part Leo leaves to people.</p>
+          <div class="ui"><div class="row"><b>Site visit done</b><span class="pills"><span class="ok">Interested</span></span></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="prods gut" id="products">
+    <div class="in">
+      <div class="head reveal">
+        <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>The Leogix family</span>
+        <h2 style="margin-top:16px">One Leo. <span class="g">Three jobs.</span></h2>
+      </div>
+      <div class="grid">
+        <div class="stick">
+          <div class="pstage">
+            <div class="glow"></div>
+            <canvas id="prodc" aria-hidden="true"></canvas>
+            <div class="orbit wave on" data-o="0" aria-hidden="true"></div>
+            <div class="orbit spin" data-o="1" aria-hidden="true"><svg viewBox="0 0 400 400"><defs><path id="circ" d="M200,200 m-176,0 a176,176 0 1,1 352,0 a176,176 0 1,1 -352,0"/></defs><text><textPath href="#circ">Ask anything · Draft a reply · Check a number · Think it through · Ask anything · Draft a reply ·</textPath></text></svg></div>
+            <div class="orbit pulse" data-o="2" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="pname" id="pname">Leogix Sales</span>
+          </div>
+        </div>
+        <div>
+          <article class="panel" data-mode="0" data-name="Leogix Sales">
+            <span class="tag"><i></i>Live</span>
+            <img class="logo" src="../assets/leogix-sales-logo.png" alt="Leogix Sales">
+            <h3>Leads in. <span class="g">Visits out.</span></h3>
+            <p>Leo calls every new lead, follows up exactly when he said he would, books site visits and scores every call. Your team spends the day with buyers, not dial pads.</p>
+            <ul>
+              <li><svg><use href="#tick"/></svg>Calls in Hindi and English</li>
+              <li><svg><use href="#tick"/></svg>Books visits straight onto your team's calendar</li>
+              <li><svg><use href="#tick"/></svg>Every call recorded, summarised and scored</li>
+            </ul>
+            <a class="btn dark" href="#contact" data-interest="A Leogix Sales demo">Book a Sales demo</a>
+          </article>
+          <article class="panel" data-mode="1" data-name="Leogix Ask">
+            <span class="tag"><i></i>Live at ask.leogix.com</span>
+            <img class="logo" src="../assets/leogix-ask-logo.png" alt="Leogix Ask">
+            <h3>The same Leo, <span class="g">when you type.</span></h3>
+            <p>Draft a reply to a tricky customer, check a number, or think a decision through. Leo answers like someone who's done the reading.</p>
+            <ul>
+              <li><svg><use href="#tick"/></svg>Free to try in your browser</li>
+              <li><svg><use href="#tick"/></svg>Clear answers, without the filler</li>
+              <li><svg><use href="#tick"/></svg>Built by the team behind Leogix Sales</li>
+            </ul>
+            <a class="btn dark" href="https://ask.leogix.com" target="_blank" rel="noopener">Try Ask Leo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </article>
+          <article class="panel" data-mode="2" data-name="Leogix Support">
+            <span class="tag soon"><i></i>Coming soon</span>
+            <img class="logo" src="../assets/leogix-support-logo.png" alt="Leogix Support">
+            <h3>Your helpdesk, <span class="g">picked up.</span></h3>
+            <p>Leo answers your support line, fixes the common problems on the call, and hands the rest to your team with the whole story already written down.</p>
+            <ul>
+              <li><svg><use href="#tick"/></svg>No hold music, at any hour</li>
+              <li><svg><use href="#tick"/></svg>Hands over with full context, never "please repeat that"</li>
+              <li><svg><use href="#tick"/></svg>Learns your product the way a new hire would</li>
+            </ul>
+            <a class="btn dark" href="#contact" data-interest="Early access to Leogix Support">Ask for early access</a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="after gut" id="after">
+    <div class="in">
+      <div class="photo reveal">
+        <img src="../v5/media/t5.jpg" alt="A sales manager checking her phone" loading="lazy">
+        <div class="phone" id="phone" aria-label="Call summary in Leogix Sales">
+          <div class="screen">
+            <div class="s-h"><span class="av">PS</span><div><b>Priya Sharma</b><small>Call by Leo · 4:12</small></div><span class="st">Interested</span></div>
+            <div class="blk"><small>Summary</small>Wants a 2 BHK under ₹80 L near a school. Moving by June. Comparing two other projects.</div>
+            <div class="blk"><small>Next step</small><b>Site visit · Sat 11:00 am</b><br>Location sent on WhatsApp</div>
+            <div class="blk"><div class="qa"><small style="margin:0">Call quality</small><b>8.6</b></div><div class="bar"><i></i></div></div>
+            <div class="blk play"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>Play the recording</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy reveal">
+        <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>After every call</span>
+        <h2 style="margin-top:16px">Leo talks. <span class="g">Then he writes it down.</span></h2>
+        <p class="sub">Every call ends with a note your manager can read in ten seconds, so nothing a buyer said gets lost between the call and the visit.</p>
+        <div class="facts">
+          <div><span class="n">1</span><span><b>What they need.</b> Budget, size, timeline and the deal-breakers, pulled from the conversation.</span></div>
+          <div><span class="n">2</span><span><b>What happens next.</b> The visit or callback Leo booked, already on the calendar.</span></div>
+          <div><span class="n">3</span><span><b>How the call went.</b> A quality score, so you can coach the team on what works.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="build gut" id="build">
+    <div class="in">
+      <div class="stickymedia">
+        <div class="film" id="film">
+          <video class="fv on" src="../v5/media/b1.mp4" poster="../v5/media/b1.jpg" muted loop playsinline preload="metadata"></video>
+          <video class="fv" src="../v5/media/b2.mp4" poster="../v5/media/b2.jpg" muted loop playsinline preload="none"></video>
+          <video class="fv" src="../v5/media/b3.mp4" poster="../v5/media/b3.jpg" muted loop playsinline preload="none"></video>
+          <video class="fv" src="../v5/media/b4.mp4" poster="../v5/media/b4.jpg" muted loop playsinline preload="none"></video>
+          <span class="ix" id="filmix">01 / 04</span>
+          <div class="tag"><div><span id="filmtitle">Sitting with the sales team</span><small id="filmsub">Step 1 of 4</small></div><button type="button" id="filmBtn" aria-label="Pause video"><svg class="pa" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg><svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button></div>
+        </div>
+      </div>
+      <div class="steps">
+        <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>How we build</span>
+        <h2 style="margin-top:16px">We train Leo <span class="g">like a new hire.</span></h2>
+        <div class="step on" data-t="Sitting with the sales team"><span class="n">01</span><h3>Sit with the team</h3><p>Before we write a line, we sit with the people who'll work next to Leo. We listen to their calls and learn what a good one sounds like.</p></div>
+        <div class="step" data-t="Learning the trade"><span class="n">02</span><h3>Learn the trade</h3><p>Real estate has its own language: carpet area, possession dates, BHK, token amounts. Leo learns it the way a new salesperson would.</p></div>
+        <div class="step" data-t="Writing every line by hand"><span class="n">03</span><h3>Write every word</h3><p>Every line Leo says and every screen your team sees is written and tested by people. Nothing is left to whatever a model feels like saying.</p></div>
+        <div class="step" data-t="Proving it on a busy Monday"><span class="n">04</span><h3>Prove it on a Monday</h3><p>Leo goes live when he holds up on an ordinary, busy Monday, not when the demo looks good. Then we keep listening.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery gut" aria-label="Where Leo works">
+    <div class="in">
+      <div class="ghead reveal">
+        <div><span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>Where Leo works</span><h2>Wherever the <span class="g">phone rings.</span></h2></div>
+        <p class="sub">Sales floors in growing cities. Site offices on a Saturday. Helpdesks that never really close.</p>
+      </div>
+    </div>
+    <div class="curve" id="curve"><div class="track">
+      <div class="tile"><video src="../v5/media/t1.mp4" poster="../v5/media/t1.jpg" muted loop playsinline preload="none"></video><span>Sales floors</span></div>
+      <div class="tile"><video src="../v5/media/t2.mp4" poster="../v5/media/t2.jpg" muted loop playsinline preload="none"></video><span>Growing cities</span></div>
+      <div class="tile"><video src="../v5/media/t3.mp4" poster="../v5/media/t3.jpg" muted loop playsinline preload="none"></video><span>Planning the week</span></div>
+      <div class="tile"><video src="../v5/media/t4.mp4" poster="../v5/media/t4.jpg" muted loop playsinline preload="none"></video><span>Every sales call</span></div>
+      <div class="tile"><video src="../v5/media/t5.mp4" poster="../v5/media/t5.jpg" muted loop playsinline preload="none"></video><span>A question at midnight</span></div>
+      <div class="tile"><video src="../v5/media/t6.mp4" poster="../v5/media/t6.jpg" muted loop playsinline preload="none"></video><span>Long after hours</span></div>
+    </div></div>
+  </section>
+
+  <section class="nums gut" aria-label="Leo in numbers">
+    <div class="in">
+      <div class="num reveal"><b>24/7</b><p><strong>Leo doesn't have a shift.</strong> The 11 pm lead gets the same call as the 11 am one.</p></div>
+      <div class="num reveal"><b>2</b><p><strong>Languages, Hindi and English.</strong> Leo answers in whichever one the buyer speaks.</p></div>
+      <div class="num reveal"><b>100<span class="g">%</span></b><p><strong>Of calls written up.</strong> Recorded, summarised and scored. None forgotten.</p></div>
+    </div>
+  </section>
+
+  <section class="contact gut" id="contact">
+    <div class="in">
+      <div class="reveal">
+        <span class="label"><svg aria-hidden="true"><use href="#glyph"/></svg>Work with us</span>
+        <h2 style="margin-top:16px">Put Leo <span class="g">on your team.</span></h2>
+        <p class="sub">Tell us what your team spends too much time on. We'll show you what Leo would do with it.</p>
+        <p class="direct">Or write to us at <a href="mailto:hello@leogix.com">hello@leogix.com</a></p>
+      </div>
+      <form class="cform reveal" id="form" novalidate>
+        <label>Your name<input name="name" autocomplete="name" required></label>
+        <label>Work email<input name="email" type="email" autocomplete="email" required></label>
+        <label class="full">What you're interested in
+          <select name="interest" id="interest">
+            <option>A Leogix Sales demo</option>
+            <option>Leogix Ask</option>
+            <option>Early access to Leogix Support</option>
+            <option>Something else</option>
+          </select>
+        </label>
+        <label class="full">Message<textarea name="message" placeholder="For example: we get 300 leads a week and call back maybe half."></textarea></label>
+        <button class="btn hot" type="submit">Open email draft</button>
+        <p class="note" id="note" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="gut">
+  <div class="in">
+    <div class="ftop">
+      <p>Leo does the calling. <span style="color:var(--ink-3)">Your team does the selling.</span></p>
+      <div class="fcols">
+        <div><b>Products</b><a href="#products">Leogix Sales</a><a href="https://ask.leogix.com" target="_blank" rel="noopener">Leogix Ask</a><a href="#products">Leogix Support</a></div>
+        <div><b>Company</b><a href="#lead">How Leo works</a><a href="#build">How we build</a><a href="#contact">Contact</a></div>
+      </div>
+    </div>
+    <p class="word" aria-label="Leogix"><svg class="gl" aria-hidden="true"><use href="#glyph"/></svg><span class="g">Leogix</span></p>
+    <div class="fbase"><span>© 2026 Leogix</span><span>hello@leogix.com</span></div>
+  </div>
+</footer>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+window.LEO = { amp: 0, listen: 0, mode: 0, ready: false };
+
+/* loader: counts to 100, then wipes up */
+(() => {
+  const L = document.getElementById('loader'), n = document.getElementById('lnum');
+  let seen = false; try { seen = sessionStorage.getItem('leo-seen') === '1'; sessionStorage.setItem('leo-seen', '1'); } catch (e) {}
+  const done = () => { L.classList.add('out'); document.body.classList.add('ready'); document.getElementById('dock').classList.add('on'); setTimeout(() => L.remove(), 1100); };
+  if (reduce || seen) { L.remove(); document.body.classList.add('ready'); document.getElementById('dock').classList.add('on'); return; }
+  const t0 = performance.now(), D = 1700;
+  const step = (now) => { const p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 2.4); n.textContent = String(Math.round(e * 100)).padStart(2, '0'); if (p < 1) requestAnimationFrame(step); else setTimeout(done, 180); };
+  requestAnimationFrame(step);
+})();
+
+/* reveal on scroll */
+(() => {
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+})();
+
+/* the call: Leo speaks (browser voice as a stand-in), the form reacts, the transcript builds */
+(() => {
+  const S = [
+    ['leo', 'Hi Priya, this is Leo from Sky Rise. You asked about Shree Kunj Greens last night. Is now a good time?'],
+    ['cust', 'Yes, go ahead.'],
+    ['leo', 'Great. Are you looking at a two B H K or a three B H K?', 'Great. Are you looking at a 2 BHK or a 3 BHK?'],
+    ['cust', 'Two B H K. My budget is around eighty lakh.', '2 BHK. My budget is around ₹80 lakh.'],
+    ['leo', 'That works. Tower B has two B H K homes in your range, and there is a school five minutes away. Would you like to see it this Saturday at eleven?', 'That works. Tower B has 2 BHK homes in your range, and there’s a school five minutes away. Would you like to see it this Saturday at 11?'],
+    ['cust', 'Saturday works.'],
+    ['leo', 'Done. I have booked Saturday at eleven and sent the location on WhatsApp. See you there, Priya.', 'Done. I’ve booked Saturday at 11 and sent the location on WhatsApp. See you there, Priya.']
+  ];
+  const card = document.getElementById('callcard'), status = document.getElementById('status'), stTxt = document.getElementById('statusTxt');
+  const btn = document.getElementById('playCall'), btnTxt = document.getElementById('playTxt'), dockBtn = document.getElementById('dockPlay'), dockTxt = document.getElementById('dockTxt'), hint = document.getElementById('hint');
+  const synth = window.speechSynthesis;
+  let playing = false, run = 0, timers = [];
+  const setStatus = (cls, t) => { status.className = 'chip status ' + cls; stTxt.textContent = t; };
+  const pickVoices = () => {
+    const vs = synth ? synth.getVoices() : [];
+    const en = vs.filter((v) => /^en/i.test(v.lang));
+    const inV = en.filter((v) => /IN/i.test(v.lang));
+    const male = /(rishi|ravi|prabhat|male|daniel|alex|aaron|google uk english male)/i, fem = /(veena|lekha|heera|neerja|female|samantha|karen|zira|google uk english female)/i;
+    const leo = inV.find((v) => male.test(v.name)) || en.find((v) => male.test(v.name)) || inV[0] || en[0] || vs[0];
+    const cust = inV.find((v) => fem.test(v.name) && v !== leo) || en.find((v) => fem.test(v.name) && v !== leo) || inV.find((v) => v !== leo) || leo;
+    return { leo, cust };
+  };
+  if (synth) synth.getVoices();
+  const add = (who, text) => {
+    const m = document.createElement('div');
+    m.className = 'msg ' + who;
+    m.innerHTML = '<small>' + (who === 'leo' ? 'Leo' : 'Priya') + '</small>';
+    m.appendChild(document.createTextNode(text));
+    card.appendChild(m);
+    while (card.children.length > 3) card.removeChild(card.firstChild);
+  };
+  const finish = (my) => {
+    if (my !== run) return;
+    playing = false; LEO.amp = 0; LEO.listen = 0; LEO.speaking = false;
+    card.innerHTML = '';
+    const d = document.createElement('div'); d.className = 'msg done';
+    d.innerHTML = '<small>Call ended · 0:58</small><b>Site visit booked, Sat 11 am</b><div class="tags"><span>₹80 L budget</span><span>2 BHK</span><span>Near a school</span></div>';
+    card.appendChild(d);
+    setStatus('', 'Call done. Summary sent to your team');
+    btnTxt.textContent = 'Hear it again'; dockTxt.textContent = 'Hear Leo'; dockBtn.classList.remove('live');
+    hint.textContent = 'Leo’s voice here is a stand-in. The real one is warmer.';
+  };
+  const stop = () => {
+    run++; playing = false; timers.forEach(clearTimeout); timers = [];
+    if (synth) synth.cancel();
+    LEO.amp = 0; LEO.listen = 0; LEO.speaking = false;
+    setStatus('', 'Call paused'); btnTxt.textContent = 'Hear Leo on a call'; dockTxt.textContent = 'Hear Leo'; dockBtn.classList.remove('live');
+  };
+  const start = () => {
+    const my = ++run; playing = true; card.innerHTML = '';
+    btnTxt.textContent = 'Stop the call'; dockTxt.textContent = 'Stop'; dockBtn.classList.add('live');
+    hint.textContent = 'Playing a sample call. Sound on.';
+    const V = pickVoices();
+    let i = 0;
+    const next = () => {
+      if (my !== run) return;
+      if (i >= S.length) return finish(my);
+      const [who, say, show] = S[i++];
+      add(who, show || say);
+      if (who === 'leo') { setStatus('talk', 'Leo is talking'); LEO.speaking = true; LEO.listen = 0; }
+      else { setStatus('listen', 'Leo is listening'); LEO.speaking = false; LEO.listen = 1; }
+      const words = say.split(/\s+/).length, est = Math.max(1200, words * 380);
+      if (synth && V.leo) {
+        const u = new SpeechSynthesisUtterance(say);
+        u.voice = who === 'leo' ? V.leo : V.cust;
+        u.lang = (u.voice && u.voice.lang) || 'en-IN';
+        u.rate = who === 'leo' ? 1.02 : 1.05;
+        u.pitch = who === 'leo' ? .92 : (V.cust === V.leo ? 1.35 : 1.05);
+        let ended = false;
+        const go = () => { if (ended) return; ended = true; timers.push(setTimeout(next, 380)); };
+        u.onboundary = () => { if (who === 'leo') LEO.amp = 1; };
+        u.onend = go; u.onerror = go;
+        timers.push(setTimeout(go, est * 2.2 + 2500));
+        synth.speak(u);
+      } else {
+        timers.push(setTimeout(next, est));
+      }
+    };
+    next();
+  };
+  const toggle = () => { if (playing) stop(); else { document.getElementById('leo').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); start(); } };
+  btn.addEventListener('click', toggle);
+  dockBtn.addEventListener('click', toggle);
+})();
+
+/* opening reel grows to fill the screen; videos play only on screen */
+const playIf = (v, on) => { if (!v) return; if (on && !reduce && !v.dataset.user) { if (v.preload === 'none') v.preload = 'auto'; v.play().catch(() => {}); } else if (!on) v.pause(); };
+const watch = (el, fn) => new IntersectionObserver((es) => es.forEach((e) => fn(e.isIntersecting)), { threshold: .15 }).observe(el);
+const setBtn = (b, paused) => { b.classList.toggle('paused', paused); b.setAttribute('aria-label', paused ? 'Play video' : 'Pause video'); };
+(() => {
+  const reel = document.getElementById('reel'), frame = document.getElementById('reelFrame'), rv = document.getElementById('reelVid'), rb = document.querySelector('.vbtn[data-vid="reelVid"]');
+  watch(reel, (on) => playIf(rv, on));
+  rb.addEventListener('click', () => { if (rv.paused) { delete rv.dataset.user; rv.play().catch(() => {}); setBtn(rb, false); } else { rv.dataset.user = '1'; rv.pause(); setBtn(rb, true); } });
+  if (reduce) { setBtn(rb, true); return; }
+  const tick = () => {
+    const r = reel.getBoundingClientRect(), span = r.height - innerHeight;
+    const p = Math.min(1, Math.max(0, -r.top / (span * .7))), e = 1 - Math.pow(1 - p, 3);
+    frame.style.setProperty('--rw', (58 + 42 * e).toFixed(2));
+    frame.style.setProperty('--rh', (58 + 42 * e).toFixed(2));
+    frame.style.setProperty('--rr', (44 - 44 * e).toFixed(1) + 'px');
+    frame.style.setProperty('--ro', Math.min(1, Math.max(0, (p - .35) / .4)).toFixed(3));
+  };
+  addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); tick();
+})();
+
+/* statement: words light up as you read down */
+(() => {
+  const p = document.getElementById('words');
+  const walk = (node, hot) => [...node.childNodes].forEach((c) => {
+    if (c.nodeType === 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach((t) => { if (!t) return; if (/^\s+$/.test(t)) f.appendChild(document.createTextNode(t)); else { const s = document.createElement('span'); s.className = 'wd' + (hot ? ' hot' : ''); s.textContent = t; f.appendChild(s); } }); c.replaceWith(f); }
+    else walk(c, hot || c.classList.contains('hot'));
+  });
+  walk(p, false);
+  const ws = [...p.querySelectorAll('.wd')];
+  if (reduce) { ws.forEach((w) => w.classList.add('lit')); return; }
+  const tick = () => { const r = p.getBoundingClientRect(), vh = innerHeight; const prog = Math.min(1, Math.max(0, (vh * .85 - r.top) / (r.height + vh * .45))); const n = Math.round(prog * ws.length); ws.forEach((w, i) => w.classList.toggle('lit', i < n)); };
+  addEventListener('scroll', tick, { passive: true }); tick();
+})();
+
+/* one lead: the cards slide sideways as you scroll down */
+(() => {
+  const sec = document.getElementById('lead'), track = document.getElementById('ltrack'), bars = [...document.querySelectorAll('#prog b')];
+  const mq = matchMedia('(max-width:900px)');
+  const tick = () => {
+    if (reduce || mq.matches) { track.style.transform = ''; return; }
+    const r = sec.getBoundingClientRect(), span = r.height - innerHeight;
+    const p = Math.min(1, Math.max(0, -r.top / span));
+    const max = Math.max(0, track.scrollWidth - innerWidth);
+    track.style.transform = 'translate3d(' + (-p * max).toFixed(1) + 'px,0,0)';
+    bars.forEach((b, i) => b.style.setProperty('--p', Math.min(1, Math.max(0, p * bars.length - i)).toFixed(3)));
+  };
+  addEventListener('scroll', tick, { passive: true }); addEventListener('resize', tick); tick();
+})();
+
+/* products: the panel in view sets Leo's mode */
+(() => {
+  const panels = [...document.querySelectorAll('.panel')], orbits = [...document.querySelectorAll('.orbit')], pname = document.getElementById('pname');
+  const wave = document.querySelector('.orbit.wave');
+  for (let i = 0; i < 26; i++) { const b = document.createElement('i'); b.style.setProperty('--h', (14 + Math.abs(Math.sin(i * 1.7)) * 46).toFixed(0) + 'px'); b.style.setProperty('--d', (-i * .09).toFixed(2) + 's'); wave.appendChild(b); }
+  const set = (m) => { LEO.mode = m; orbits.forEach((o) => o.classList.toggle('on', +o.dataset.o === m)); pname.textContent = panels[m].dataset.name; };
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) set(+e.target.dataset.mode); }), { rootMargin: '-45% 0px -45% 0px' });
+  panels.forEach((p) => io.observe(p));
+  document.querySelectorAll('[data-interest]').forEach((a) => a.addEventListener('click', () => { document.getElementById('interest').value = a.dataset.interest; }));
+})();
+
+/* after the call: the summary fills in, phone drifts */
+(() => {
+  const blks = [...document.querySelectorAll('.screen .blk')], phone = document.getElementById('phone'), sec = document.getElementById('after');
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { blks.forEach((b, i) => setTimeout(() => b.classList.add('on'), 250 + i * 380)); io.disconnect(); } }), { threshold: .35 });
+  io.observe(sec);
+  if (reduce) return;
+  const tick = () => { const r = sec.getBoundingClientRect(); const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; phone.style.setProperty('--py', (p * 60).toFixed(1) + 'px'); };
+  addEventListener('scroll', tick, { passive: true }); tick();
+})();
+
+/* how we build: the step in view drives the film */
+(() => {
+  const steps = [...document.querySelectorAll('.step')], fvs = [...document.querySelectorAll('.film .fv')];
+  const ix = document.getElementById('filmix'), ttl = document.getElementById('filmtitle'), sub = document.getElementById('filmsub'), fb = document.getElementById('filmBtn');
+  let cur = 0, vis = false, user = false;
+  const show = (i) => { cur = i; steps.forEach((s, k) => s.classList.toggle('on', k === i)); ix.textContent = '0' + (i + 1) + ' / 04'; ttl.textContent = steps[i].dataset.t; sub.textContent = 'Step ' + (i + 1) + ' of 4'; fvs.forEach((v, k) => { v.classList.toggle('on', k === i); if (k === i) playIf(v, vis && !user); else v.pause(); }); };
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) show(steps.indexOf(e.target)); }), { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach((s) => io.observe(s));
+  watch(document.getElementById('film'), (on) => { vis = on; playIf(fvs[cur], on && !user); });
+  fb.addEventListener('click', () => { user = !user; setBtn(fb, user); playIf(fvs[cur], !user && vis); });
+  if (reduce) setBtn(fb, true);
+})();
+
+/* curved gallery: drifts sideways, bends at the edges, drag or flick it */
+(() => {
+  const curve = document.getElementById('curve'), track = curve.querySelector('.track');
+  track.innerHTML += track.innerHTML;
+  const tiles = [...track.children];
+  let x = 0, vis = false, drag = null, vel = 0, last = performance.now();
+  const AUTO = reduce ? 0 : -(innerWidth < 700 ? 60 : 90);
+  curve.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, start: x, lx: e.clientX, lt: performance.now() }; vel = 0; curve.classList.add('grabbing'); curve.setPointerCapture(e.pointerId); });
+  curve.addEventListener('pointermove', (e) => { if (!drag) return; const now = performance.now(), dt = Math.max(1, now - drag.lt); vel = (e.clientX - drag.lx) / dt * 1000 * .8 + vel * .2; drag.lx = e.clientX; drag.lt = now; x = drag.start + (e.clientX - drag.x); });
+  const end = () => { if (!drag) return; drag = null; curve.classList.remove('grabbing'); };
+  curve.addEventListener('pointerup', end); curve.addEventListener('pointercancel', end);
+  curve.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); x -= e.deltaX; vel = 0; } }, { passive: false });
+  const bend = () => {
+    const half = track.scrollWidth / 2, cw = curve.clientWidth;
+    while (x <= -half) x += half; while (x > 0) x -= half;
+    if (drag) drag.start = x - (drag.lx - drag.x);
+    track.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
+    tiles.forEach((t) => { const c = t.offsetLeft + x + t.offsetWidth / 2; const a = Math.max(-1.2, Math.min(1.2, (c - cw / 2) / (cw / 2))); t.style.transform = 'rotateY(' + (-a * 26).toFixed(2) + 'deg) translateZ(' + (Math.abs(a) * 70).toFixed(1) + 'px)'; });
+  };
+  const loop = (now) => {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    const r = curve.getBoundingClientRect(), on = r.bottom > 0 && r.top < innerHeight;
+    if (on !== vis) { vis = on; tiles.forEach((t) => playIf(t.querySelector('video'), vis)); }
+    if (vis || drag) { if (!drag) { vel += (AUTO - vel) * Math.min(1, dt * 1.6); x += vel * dt; } bend(); }
+    requestAnimationFrame(loop);
+  };
+  vel = AUTO; bend(); requestAnimationFrame(loop);
+})();
+
+/* dock highlights the section in view */
+(() => {
+  const links = [...document.querySelectorAll('.dock .lk')];
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-50% 0px -50% 0px' });
+  ['lead', 'products', 'build', 'contact'].forEach((id) => io.observe(document.getElementById(id)));
+})();
+
+/* contact form opens an email draft */
+(() => {
+  const f = document.getElementById('form'), note = document.getElementById('note');
+  f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(f), name = String(d.get('name') || '').trim(), email = String(d.get('email') || '').trim();
+    f.name.classList.toggle('bad', !name); f.email.classList.toggle('bad', !/^\S+@\S+\.\S+$/.test(email));
+    if (!name || !/^\S+@\S+\.\S+$/.test(email)) { note.textContent = 'Add your name and a work email first.'; return; }
+    const body = 'Name: ' + name + '\nEmail: ' + email + '\nInterested in: ' + d.get('interest') + '\n\n' + (d.get('message') || '');
+    location.href = 'mailto:hello@leogix.com?subject=' + encodeURIComponent(d.get('interest') + ' (' + name + ')') + '&body=' + encodeURIComponent(body);
+    note.textContent = 'Your email app should open with the message ready.';
+  });
+})();
+</script>
+
+<script type="module">
+/* Leo's body: a living form in the Leogix colours. It breathes, leans toward the cursor,
+   moves with Leo's voice, and changes shape for each product. */
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const NOISE = `
+vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
+vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
+float snoise(vec3 v){
+  const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);
+  vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);
+  vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);
+  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;
+  i=mod289(i);
+  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
+  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;
+  vec4 j=p-49.0*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);
+  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);
+  vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);
+  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));
+  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+  vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);
+  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+  p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
+  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;
+  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+}`;
+
+const VERT = NOISE + `
+uniform float uTime,uAmp,uListen,uM0,uM1,uM2,uPull;
+uniform vec3 uDir;
+varying vec3 vN; varying vec3 vW; varying float vD;
+float disp(vec3 p){
+  float t=uTime;
+  float base=snoise(p*.85+vec3(0.0,t*.2,t*.07))*.11+snoise(p*1.9+vec3(t*.15))*.025;
+  float sales=sin(p.y*7.0-t*2.6)*.028*(.5+uAmp*1.2);
+  float ask=snoise(p*2.0+vec3(t*.3))*.05+sin(atan(p.z,p.x)*6.0+t*.8)*.02;
+  float sup=snoise(p*.75+vec3(t*.12))*.1+sin(t*1.1)*.025;
+  float voice=snoise(p*2.8+vec3(t*2.4))*uAmp*.16;
+  float listen=sin(length(p.xz)*12.0-t*7.0)*.03*uListen;
+  float pull=pow(max(dot(p,uDir),0.0),6.0)*.12*uPull;
+  return base*(.7+.3*uM2)+sales*uM0+ask*uM1+sup*uM2*.6+voice+listen+pull;
+}
+void main(){
+  vec3 p=normalize(position);
+  vec3 t1=normalize(abs(p.y)<.95?cross(p,vec3(0.0,1.0,0.0)):cross(p,vec3(1.0,0.0,0.0)));
+  vec3 t2=normalize(cross(p,t1));
+  float e=.012;
+  vec3 a=normalize(p+t1*e), b=normalize(p+t2*e);
+  float d=disp(p);
+  vec3 P=p*(1.0+d), A=a*(1.0+disp(a)), B=b*(1.0+disp(b));
+  vec3 n=normalize(cross(A-P,B-P));
+  if(dot(n,p)<0.0) n=-n;
+  vD=d;
+  vec4 w=modelMatrix*vec4(P,1.0);
+  vW=w.xyz; vN=normalize(mat3(modelMatrix)*n);
+  gl_Position=projectionMatrix*viewMatrix*w;
+}`;
+
+const FRAG = `
+uniform float uTime,uAmp,uM1,uListen;
+varying vec3 vN; varying vec3 vW; varying float vD;
+void main(){
+  vec3 N=normalize(vN), V=normalize(cameraPosition-vW);
+  vec3 crimson=vec3(.85,.09,.27), ember=vec3(.95,.33,.17), amber=vec3(1.0,.69,.12), deep=vec3(.42,.04,.12);
+  float g=.5+.5*(N.y*.65+N.x*.35)+vD*1.6+sin(uTime*.3)*.05;
+  vec3 col=mix(crimson,ember,smoothstep(.15,.55,g));
+  col=mix(col,amber,smoothstep(.62,1.0,g));
+  col=mix(deep,col,smoothstep(-.2,.35,g));
+  vec3 L=normalize(vec3(.45,.85,.6));
+  float diff=(dot(N,L)+.35)/1.35;
+  col*=.62+.55*clamp(diff,0.0,1.0);
+  float spec=pow(max(dot(reflect(-L,N),V),0.0),48.0);
+  vec3 L2=normalize(vec3(-.7,.1,.5));
+  float spec2=pow(max(dot(reflect(-L2,N),V),0.0),22.0)*.35;
+  float fr=pow(1.0-max(dot(N,V),0.0),2.6);
+  col=mix(col,vec3(1.0,.94,.9),fr*.6);
+  col+=vec3(1.0,.97,.92)*(spec*.85+spec2);
+  col+=vec3(1.0,.8,.5)*uAmp*.08;
+  col+=.05*uM1*sin(vW.y*38.0+uTime*2.0)*fr;
+  gl_FragColor=vec4(col,1.0);
+}`;
+
+class Leo {
+  constructor(canvas, opts) {
+    this.c = canvas; this.o = opts || {};
+    this.r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    this.r.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+    this.r.setClearColor(0x000000, 0);
+    this.s = new THREE.Scene();
+    this.cam = new THREE.PerspectiveCamera(32, 1, .1, 50); this.cam.position.set(0, 0, 4.6);
+    this.u = { uTime: { value: 0 }, uAmp: { value: 0 }, uListen: { value: 0 }, uM0: { value: 1 }, uM1: { value: 0 }, uM2: { value: 0 }, uPull: { value: 0 }, uDir: { value: new THREE.Vector3(0, 0, 1) } };
+    const geo = new THREE.IcosahedronGeometry(1, innerWidth < 700 ? 64 : 96);
+    this.m = new THREE.Mesh(geo, new THREE.ShaderMaterial({ uniforms: this.u, vertexShader: VERT, fragmentShader: FRAG }));
+    this.s.add(this.m);
+    this.ptr = { x: 0, y: 0, on: 0 }; this.rot = { x: 0, y: 0 }; this.vis = true; this.t = 0;
+    canvas.parentElement.addEventListener('pointermove', (e) => { const b = canvas.getBoundingClientRect(); this.ptr.x = ((e.clientX - b.left) / b.width) * 2 - 1; this.ptr.y = -(((e.clientY - b.top) / b.height) * 2 - 1); this.ptr.on = 1; });
+    canvas.parentElement.addEventListener('pointerleave', () => { this.ptr.on = 0; });
+    new ResizeObserver(() => this.size()).observe(canvas);
+    new IntersectionObserver((es) => { this.vis = es[0].isIntersecting; }).observe(canvas);
+    this.size();
+  }
+  size() { const w = this.c.clientWidth, h = this.c.clientHeight; if (!w || !h) return; this.r.setSize(w, h, false); this.cam.aspect = w / h; this.cam.updateProjectionMatrix(); }
+  frame(dt, mode) {
+    if (!this.vis) return;
+    const u = this.u, k = Math.min(1, dt * 3);
+    this.t += dt * (reduceM ? .25 : 1);
+    u.uTime.value = this.t;
+    const tgt = [0, 0, 0]; tgt[mode] = 1;
+    u.uM0.value += (tgt[0] - u.uM0.value) * k; u.uM1.value += (tgt[1] - u.uM1.value) * k; u.uM2.value += (tgt[2] - u.uM2.value) * k;
+    if (this.o.voice) {
+      if (LEO.speaking) { LEO.amp = Math.max(LEO.amp * .9, .38 + .3 * Math.abs(Math.sin(this.t * 7.3) * Math.sin(this.t * 3.1))); }
+      else LEO.amp *= .9;
+      u.uAmp.value += (LEO.amp - u.uAmp.value) * Math.min(1, dt * 10);
+      u.uListen.value += ((LEO.listen || 0) - u.uListen.value) * k;
+    } else { u.uAmp.value += ((mode === 0 ? .12 + .08 * Math.sin(this.t * 2.2) : 0) - u.uAmp.value) * k; }
+    u.uPull.value += (this.ptr.on - u.uPull.value) * Math.min(1, dt * 2.5);
+    u.uDir.value.set(this.ptr.x, this.ptr.y, .9).normalize();
+    this.rot.y += ((this.ptr.on ? this.ptr.x * .35 : 0) - this.rot.y) * k * .6;
+    this.rot.x += ((this.ptr.on ? -this.ptr.y * .25 : 0) - this.rot.x) * k * .6;
+    this.m.rotation.y = this.t * .12 + this.rot.y;
+    this.m.rotation.x = Math.sin(this.t * .2) * .1 + this.rot.x;
+    const br = 1 + Math.sin(this.t * 1.3) * .015 + u.uAmp.value * .03;
+    this.m.scale.setScalar(br);
+    if (this.o.onFrame) this.o.onFrame(br, u.uAmp.value);
+    this.r.render(this.s, this.cam);
+  }
+}
+
+const reduceM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let hero, prod;
+try {
+  const glow = document.getElementById('glow'), floor = document.getElementById('floor');
+  hero = new Leo(document.getElementById('leoc'), { voice: true, onFrame: (br, a) => { floor.style.setProperty('--fs', (br * (1 - a * .08)).toFixed(3)); glow.style.transform = 'scale(' + (1 + a * .18).toFixed(3) + ')'; } });
+  prod = new Leo(document.getElementById('prodc'), {});
+  prod.cam.position.z = 4.9;
+  let last = performance.now();
+  const loop = (now) => { const dt = Math.min(.05, (now - last) / 1000); last = now; hero.frame(dt, 0); prod.frame(dt, LEO.mode || 0); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+  LEO.ready = true;
+} catch (e) {
+  document.querySelectorAll('#leoc,#prodc').forEach((c) => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFB01F,#F2552C 45%,#D91845 80%);z-index:2'; c.replaceWith(d); });
+}
+</script>
+</body>
+</html>
