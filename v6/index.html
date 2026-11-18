@@ -266,8 +266,17 @@ h2{margin:0;font-weight:700;letter-spacing:-.04em;line-height:.98;font-size:clam
 .icard{transition:transform .3s}
 @media (max-width:1100px){.icard:not(.dark){display:none}}
 @media (max-width:760px){
-  .h4base{flex-direction:column;align-items:flex-start}
-  .hero.h4 h1{font-size:16.5vw}
+  /* phone: headline, words and buttons first, then Leo as the big visual (like Flowty's mobile hero) */
+  .hero.h4{min-height:0;padding-top:calc(86px + env(safe-area-inset-top,0px));padding-bottom:40px}
+  .h4in{gap:0}
+  .hero.h4 h1{display:contents}
+  .hero.h4 h1 .w:not(.slot){order:1;font-size:clamp(64px,23vw,120px);font-weight:600;letter-spacing:-.06em;line-height:.88}
+  .hero.h4 h1 .w.g{padding-bottom:.08em}
+  .h4base{order:2;flex-direction:column;align-items:flex-start;margin-top:22px}
+  .hero.h4 .lede{font-size:17.5px}
+  .hero.h4 .acts{margin-top:20px}
+  .hero.h4 .acts .btn{min-height:50px;padding:0 20px;font-size:15.5px}
+  .hero.h4 h1 .slot{order:3;display:block;width:100%;height:min(72vw,340px);margin:28px 0 0}
   .h4right{display:none}
 }
 
@@ -502,7 +511,7 @@ footer .word{transform:translateY(var(--fy,0px))}
 @media (max-width:900px){
   .reel{height:190vh}
   .reel-cap{flex-direction:column;align-items:flex-start}
-  .reel-row{font-size:clamp(40px,11vw,90px)}
+  .reel-row{font-size:clamp(40px,12vw,90px);flex-direction:column;gap:.16em}
   .lead{height:auto}
   .lead-pin{position:relative;height:auto;padding-block:80px 40px}
   .lead-head .prog{display:none}
@@ -510,8 +519,8 @@ footer .word{transform:translateY(var(--fy,0px))}
   .ltrack{flex-direction:column;padding-right:max(16px,env(safe-area-inset-right,0px))}
   .lcard{width:100%;min-height:0}
   .prods .grid{grid-template-columns:1fr}
-  .prods .stick{position:sticky;top:0;height:46svh;z-index:2;background:linear-gradient(var(--paper) 80%,rgba(246,243,239,0))}
-  .pstage{width:min(78vw,360px)}
+  .prods .stick{position:sticky;top:0;height:36svh;z-index:2;background:linear-gradient(var(--paper) 80%,rgba(246,243,239,0))}
+  .pstage{width:min(62vw,300px)}
   .panel{min-height:0;padding-block:50px}
   .after .in,.build .in,.contact .in{grid-template-columns:1fr}
   .photo{margin-right:22%}
@@ -966,7 +975,7 @@ const setBtn = (b, paused) => { b.classList.toggle('paused', paused); b.setAttri
   const tick = () => {
     const r = reel.getBoundingClientRect(), span = r.height - innerHeight;
     const p = Math.min(1, Math.max(0, -r.top / (span * .75))), e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-    const fs = parseFloat(getComputedStyle(row).fontSize), w0 = fs * 2.2, h0 = fs * 1.05;
+    const fs = parseFloat(getComputedStyle(row).fontSize), narrow = innerWidth < 700, w0 = narrow ? innerWidth * .62 : fs * 2.2, h0 = narrow ? innerWidth * .62 * .62 : fs * 1.05;
     frame.style.setProperty('--fw', (w0 + (innerWidth - w0) * e).toFixed(1) + 'px');
     frame.style.setProperty('--fh', (h0 + (innerHeight - h0) * e).toFixed(1) + 'px');
     frame.style.setProperty('--rr', (fs * .55 * (1 - e)).toFixed(1) + 'px');
@@ -1199,7 +1208,7 @@ try {
     /* where should Leo be? */
     let where = 'park', tg;
     const hb = heroS.getBoundingClientRect();
-    if (hb.bottom > innerHeight * .42) { where = 'hero'; const m = mid(slot); tg = { x: m.x, y: m.y, h: m.h * 1.55, a: 1 }; }
+    if (hb.bottom > innerHeight * .42) { where = 'hero'; const m = mid(slot); tg = { x: m.x, y: m.y, h: Math.min(m.h * 1.55, m.w * .62), a: 1 }; }
     else if (inMid(leadS, .62)) { where = 'lead'; const m = mid(leadA); tg = { x: m.x, y: m.y, h: m.h, a: 1 }; }
     else if (inMid(prodS, .62)) { where = 'prod'; const m = mid(prodA); tg = { x: m.x, y: m.y, h: m.h * .62, a: 1 }; }
     if (where === 'park') { const m = mid(dockB); tg = { x: m.x - m.w / 2 + 22, y: m.y, h: 14, a: 0 }; }
