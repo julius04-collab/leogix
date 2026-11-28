@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leogix Hero Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1A1D23;--mute:#A3A8B3;--grey:#5C6370;--line:#ECE7E2;--bg:#E9E4DE;--y:#FFC531;--o:#F75831;--r:#E8253A;--m:#D6198A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:Urbanist,system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.page{max-width:1500px;margin:0 auto;padding:48px 16px 80px}
+.intro{max-width:1440px;margin:0 auto 28px;display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.intro h1{font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--grey)}
+.intro h2{font-size:32px;font-weight:500;letter-spacing:-.02em;margin-top:6px}
+.intro p{max-width:520px;font-size:15px;line-height:1.55;color:var(--grey)}
+.opt{max-width:1440px;margin:0 auto 56px}
+.opt .lab{display:flex;gap:12px;align-items:baseline;margin-bottom:14px;flex-wrap:wrap}
+.opt .lab b{font-size:13px;font-weight:700;background:var(--ink);color:#fff;border-radius:99px;padding:5px 12px}
+.opt .lab span{font-size:18px;font-weight:600}
+.opt .lab em{font-style:normal;color:var(--grey);font-size:14px}
+.stage{position:relative;width:100%;overflow:hidden;border-radius:28px;box-shadow:0 30px 80px -30px rgba(60,40,20,.35)}
+.art{position:absolute;left:0;top:0;width:1440px;height:900px;transform-origin:0 0;overflow:hidden;background:#fff}
+
+/* shared nav */
+.nav{position:absolute;left:0;right:0;top:0;height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.brand img{width:34px;height:auto}
+.links{display:flex;gap:44px;font-size:15px;font-weight:500;color:var(--grey)}
+.links span{display:flex;align-items:center;gap:6px}
+.links svg{width:12px;height:12px}
+.cta{display:flex;gap:10px;align-items:center}
+.btn{height:46px;padding:0 22px;border-radius:99px;display:inline-flex;align-items:center;gap:10px;font:600 15px Urbanist;border:0}
+.btn.dark{background:var(--ink);color:#fff;box-shadow:0 10px 24px -10px rgba(26,29,35,.6),inset 0 1px 0 rgba(255,255,255,.18)}
+.btn.dark i{width:28px;height:28px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;margin-right:-12px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.line{background:rgba(255,255,255,.7);border:1px solid rgba(26,29,35,.12);color:var(--ink)}
+.btn svg{width:14px;height:14px}
+
+/* ===== A: ribbon ===== */
+#A .art{background:linear-gradient(180deg,#FFFDFB 0%,#FBF4EE 45%,#F7E9E0 100%)}
+#A canvas{position:absolute;left:0;bottom:0;width:1440px;height:560px}
+#A .glow{position:absolute;inset:0;background:radial-gradient(900px 380px at 50% 18%,rgba(255,255,255,.95),transparent 70%)}
+#A .copy{position:absolute;left:0;right:0;top:168px;text-align:center;z-index:3}
+#A .pill{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 6px;border-radius:99px;background:rgba(255,255,255,.8);border:1px solid rgba(26,29,35,.07);font-size:13px;font-weight:600;color:var(--grey);margin-bottom:26px}
+#A .pill .mk{display:flex}
+#A .pill .mk img{width:24px;height:24px;border-radius:50%;background:#fff;padding:3px;border:1.5px solid #fff;margin-left:-6px;object-fit:contain}
+#A .pill .mk img:first-child{margin-left:0}
+#A h3{font-size:76px;line-height:1.02;font-weight:500;letter-spacing:-.035em}
+#A h3 em{font-weight:300;font-style:italic;letter-spacing:-.02em}
+#A .sub{font-size:18px;line-height:1.55;color:var(--grey);margin:24px auto 0;max-width:560px}
+#A .acts{display:flex;justify-content:center;gap:6px;margin-top:32px}
+#A .family{position:absolute;left:0;right:0;bottom:44px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:16px}
+#A .family small{font-size:13px;font-weight:600;color:rgba(255,255,255,.92);letter-spacing:.02em}
+#A .chips{display:flex;gap:12px}
+#A .chip{display:flex;align-items:center;gap:12px;height:60px;padding:0 20px 0 10px;border-radius:18px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.7);box-shadow:0 10px 30px -14px rgba(120,30,10,.35)}
+#A .chip img{width:40px;height:40px;object-fit:contain;padding:6px;border-radius:12px;background:#fff}
+#A .chip b{font-size:15px;font-weight:600;display:block}
+#A .chip span{font-size:12px;font-weight:600;color:var(--grey);display:flex;align-items:center;gap:5px}
+#A .chip span:before{content:"";width:6px;height:6px;border-radius:50%;background:#1DA35B}
+#A .chip.soon span:before{background:#C7A13A}
+
+/* ===== B: rising glass bars ===== */
+#B .art{background:#fff}
+#B .grid{position:absolute;inset:96px 0 0;display:flex;justify-content:space-between;padding:0 6px;pointer-events:none}
+#B .grid i{width:1px;background:linear-gradient(180deg,rgba(26,29,35,.06),rgba(26,29,35,0) 70%)}
+#B .copy{position:absolute;left:144px;top:206px;z-index:3}
+#B h3{font-size:88px;line-height:1.04;font-weight:500;letter-spacing:-.04em}
+#B h3 .m{color:#AEB3BD}
+#B h3 .row{display:flex;align-items:center;gap:22px;white-space:nowrap}
+#B .marks{display:inline-flex;align-items:center;height:78px;padding:0 10px 0 12px;border-radius:99px;background:linear-gradient(110deg,#FFE7B0,#FFD2C0 45%,#F9C6DF);box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 -6px 14px rgba(214,25,138,.12),0 16px 30px -14px rgba(232,37,58,.45);position:relative}
+#B .marks img{width:56px;height:56px;border-radius:50%;background:#fff;padding:9px;object-fit:contain;border:3px solid #fff;margin-left:-14px;box-shadow:0 6px 14px -6px rgba(0,0,0,.25);transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+#B .marks img:first-child{margin-left:0}
+#B .marks img.on{transform:translateY(-8px) scale(1.08)}
+#B .sub{font-size:19px;line-height:1.55;color:#4A505C;margin-top:30px;max-width:520px}
+#B .acts{display:flex;gap:10px;margin-top:34px}
+#B .tiles{position:absolute;left:8px;right:8px;bottom:8px;height:380px;display:grid;grid-template-columns:repeat(14,1fr);grid-template-rows:repeat(5,1fr);gap:6px;z-index:1}
+#B .t{border-radius:16px;opacity:0;transition:opacity 1.1s ease,transform 1.1s ease;transform:translateY(6px);
+  background:linear-gradient(165deg,rgba(255,255,255,.92),rgba(255,255,255,.35) 45%,rgba(255,255,255,.05) 90%),var(--c);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -10px 20px rgba(255,255,255,.25)}
+#B .t.on{transform:none}
+#B .who{position:absolute;right:64px;top:230px;z-index:3;width:300px;display:flex;flex-direction:column;gap:10px}
+#B .who .k{font-size:13px;font-weight:600;color:var(--grey);margin-bottom:4px}
+#B .row2{display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid rgba(26,29,35,.07);transition:background .4s,box-shadow .4s}
+#B .row2.on{background:#fff;box-shadow:0 14px 30px -18px rgba(60,20,10,.35)}
+#B .row2 img{width:36px;height:36px;object-fit:contain;padding:5px;border-radius:10px;background:#FFF6F1}
+#B .row2 b{font-size:15px;font-weight:600;display:block}
+#B .row2 span{font-size:13px;color:var(--grey)}
+#B .row2 u{margin-left:auto;text-decoration:none;font-size:11px;font-weight:700;padding:4px 8px;border-radius:99px;background:#E7F6EE;color:#13814A}
+#B .row2 u.s{background:#FBF1DA;color:#94700F}
+
+.notes{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.notes div{background:#fff;border-radius:20px;padding:22px 24px;font-size:15px;line-height:1.6;color:#3E4450}
+.notes b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px}
+@media(max-width:800px){.notes{grid-template-columns:1fr}.intro h2{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="intro">
+    <div><h1>LEOGIX.COM · HOMEPAGE</h1><h2>Hero: two directions</h2></div>
+    <p>Both come from the Leogix mark itself: the rising bars and the ribbon that wraps them. The yellow → orange → red → magenta range is the family palette Sales, Ask and Support already share.</p>
+  </div>
+
+  <section class="opt" id="A">
+    <div class="lab"><b>A</b><span>The Ribbon</span><em>The ribbon from the mark becomes a flowing silk horizon</em></div>
+    <div class="stage"><div class="art">
+      <div class="glow"></div>
+      <canvas width="2880" height="1120"></canvas>
+      <div class="nav">
+        <div class="brand"><img src="../assets/leogix-mark.png" alt="">Leogix</div>
+        <div class="links"><span>Products <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4.5 6 7.5l3-3"/></svg></span><span>How it works</span><span>Company</span><span>Trust</span></div>
+        <div class="cta"><button class="btn dark">Talk to us</button></div>
+      </div>
+      <div class="copy">
+        <div class="pill"><span class="mk"><img src="../assets/leogix-sales-logo-sm.png" alt=""><img src="../assets/leogix-ask-logo-sm.png" alt=""><img src="../assets/leogix-support-logo-sm.png" alt=""></span>One family of AI products</div>
+        <h3>The <em>intelligence</em> behind<br>every customer conversation.</h3>
+        <p class="sub">Leogix builds AI products that answer, call and follow up for growing businesses. One mind across every conversation.</p>
+        <div class="acts"><button class="btn dark">Explore products <i><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5"/></svg></i></button><button class="btn ghost">How it works</button></div>
+      </div>
+      <div class="family">
+        <div class="chips">
+          <div class="chip"><img src="../assets/leogix-sales-logo-sm.png" alt=""><div><b>Leogix Sales</b><span>Live</span></div></div>
+          <div class="chip"><img src="../assets/leogix-ask-logo-sm.png" alt=""><div><b>Leogix Ask</b><span>Live</span></div></div>
+          <div class="chip soon"><img src="../assets/leogix-support-logo-sm.png" alt=""><div><b>Leogix Support</b><span>Coming soon</span></div></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="opt" id="B">
+    <div class="lab"><b>B</b><span>Rising Bars</span><em>The bars from the mark, built as a field of glass tiles that keeps climbing</em></div>
+    <div class="stage"><div class="art">
+      <div class="grid"></div>
+      <div class="tiles"></div>
+      <div class="nav">
+        <div class="brand"><img src="../assets/leogix-mark.png" alt="">Leogix</div>
+        <div class="links"><span>Products <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4.5 6 7.5l3-3"/></svg></span><span>How it works</span><span>Company</span><span>Trust</span></div>
+        <div class="cta"><button class="btn line">Log in</button><button class="btn dark">Talk to us</button></div>
+      </div>
+      <div class="copy">
+        <h3><span class="row">One <span class="m">intelligence</span> <span class="marks"><img src="../assets/leogix-sales-logo-sm.png" alt=""><img src="../assets/leogix-ask-logo-sm.png" alt=""><img src="../assets/leogix-support-logo-sm.png" alt=""></span></span><span class="row"><span class="m">for every</span> conversation.</span></h3>
+        <p class="sub">Leogix builds AI products that answer, call and follow up, so growing businesses never miss a customer.</p>
+        <div class="acts"><button class="btn dark">Explore products <i><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5"/></svg></i></button></div>
+      </div>
+      <div class="who">
+        <div class="k">The Leogix family</div>
+        <div class="row2"><img src="../assets/leogix-sales-logo-sm.png" alt=""><div><b>Sales</b><span>Calls and follows up</span></div><u>Live</u></div>
+        <div class="row2"><img src="../assets/leogix-ask-logo-sm.png" alt=""><div><b>Ask</b><span>Answers anything</span></div><u>Live</u></div>
+        <div class="row2"><img src="../assets/leogix-support-logo-sm.png" alt=""><div><b>Support</b><span>Helps after the sale</span></div><u class="s">Soon</u></div>
+      </div>
+    </div></div>
+  </section>
+
+  <div class="notes">
+    <div><b>A · The Ribbon</b>From the LuminaAI reference: a calm centred headline with one italic word, over moving silk. The silk runs through the whole family palette (yellow on the left, magenta on the right), so the hero shows the brand range without a single product screen. The three product chips replace the usual "trusted by" logo strip.</div>
+    <div><b>B · Rising Bars</b>From the Synthio reference: a two-tone headline with a live object sitting inside it. Here that object is the three product marks, and they lift one by one. The glass tiles climb left to right like the bars in the logo, and the columns shift colour as each product lights up on the right.</div>
+  </div>
+</div>
+
+<script>
+// fit artboards
+const arts=[...document.querySelectorAll('.stage')];
+function fit(){arts.forEach(s=>{const w=s.clientWidth,k=w/1440;s.style.height=900*k+'px';s.firstElementChild.style.transform='scale('+k+')'})}
+addEventListener('resize',fit);fit();
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ===== A: silk ribbon =====
+(()=>{
+  const cv=document.querySelector('#A canvas'),c=cv.getContext('2d'),W=2880,H=1120;
+  const stops=[[0,'#FFD04A'],[.32,'#FF8A2A'],[.55,'#F75831'],[.75,'#E8253A'],[1,'#D6198A']];
+  function grad(a){const g=c.createLinearGradient(0,0,W,0);stops.forEach(([p,col])=>g.addColorStop(p,col));return g}
+  const layers=[
+    {base:.40,amp:150,f:1.2,sp:.10,ph:0,  a:.28,blur:28},
+    {base:.47,amp:120,f:1.7,sp:-.13,ph:2, a:.38,blur:14},
+    {base:.55,amp:100,f:1.1,sp:.16,ph:4,  a:.55,blur:6},
+    {base:.62,amp:80, f:2.1,sp:-.09,ph:1, a:.75,blur:2},
+    {base:.70,amp:55, f:1.5,sp:.12,ph:3,  a:.95,blur:0},
+  ];
+  function y(L,x,t){const u=x/W*Math.PI*2;return H*L.base+Math.sin(u*L.f+t*L.sp*6+L.ph)*L.amp+Math.sin(u*L.f*2.3-t*L.sp*4+L.ph*1.7)*L.amp*.35}
+  function frame(ts){
+    const t=reduce?0:ts/1000;c.clearRect(0,0,W,H);
+    layers.forEach((L,i)=>{
+      c.save();c.filter=L.blur?`blur(${L.blur}px)`:'none';
+      c.beginPath();c.moveTo(0,H);for(let x=0;x<=W;x+=24)c.lineTo(x,y(L,x,t));c.lineTo(W,H);c.closePath();
+      c.globalAlpha=L.a;c.fillStyle=grad();c.fill();
+      // sheen across the band
+      const sg=c.createLinearGradient(0,H*L.base-L.amp,0,H);sg.addColorStop(0,'rgba(255,255,255,.55)');sg.addColorStop(.18,'rgba(255,255,255,0)');sg.addColorStop(1,'rgba(255,255,255,.18)');
+      c.globalAlpha=L.a*.9;c.fillStyle=sg;c.fill();
+      // highlight edge
+      c.filter='none';c.globalAlpha=.7-i*.06;c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=2.4;c.beginPath();
+      for(let x=0;x<=W;x+=24){const yy=y(L,x,t);x?c.lineTo(x,yy):c.moveTo(x,yy)}c.stroke();
+      c.restore();
+    });
+    // horizon reflection fade
+    const fg=c.createLinearGradient(0,H*.78,0,H);fg.addColorStop(0,'rgba(255,240,230,0)');fg.addColorStop(1,'rgba(255,236,226,.55)');c.fillStyle=fg;c.fillRect(0,H*.78,W,H*.22);
+    if(!reduce)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// ===== B: rising glass tiles =====
+(()=>{
+  const g=document.querySelector('#B .grid');for(let i=0;i<15;i++)g.appendChild(document.createElement('i'));
+  const box=document.querySelector('#B .tiles'),C=14,R=5,tiles=[];
+  const pal=['#FFD04A','#FFB23A','#FF8A2A','#F96E2E','#F75831','#EE3F36','#E8253A','#DF1F5E','#D6198A'];
+  function mix(a,b,k){const p=s=>[1,3,5].map(i=>parseInt(s.substr(i,2),16));const A=p(a),B=p(b);return'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(',')+')'}
+  function colAt(x){const f=x*(pal.length-1),i=Math.min(pal.length-2,Math.floor(f));return mix(pal[i],pal[i+1],f-i)}
+  for(let r=0;r<R;r++)for(let col=0;col<C;col++){const d=document.createElement('div');d.className='t';d.style.setProperty('--c',colAt(col/(C-1)));box.appendChild(d);tiles.push({d,r,col})}
+  const rows=[...document.querySelectorAll('#B .row2')],marks=[...document.querySelectorAll('#B .marks img')];
+  let step=0;
+  function tick(){
+    const t=step*.55,focus=step%3; // which product is lit
+    marks.forEach((m,i)=>m.classList.toggle('on',i===focus));rows.forEach((m,i)=>m.classList.toggle('on',i===focus));
+    const centre=[2.5,6.5,10.5][focus];
+    tiles.forEach(({d,r,col})=>{
+      // rising staircase like the mark, plus a breathing wave and a lift near the lit product
+      const rise=.8+col/(C-1)*2.9, wave=Math.sin(col*.7-t)*.7, lift=Math.max(0,1.3-Math.abs(col-centre)*.45);
+      const h=rise+wave+lift; const fromBottom=R-1-r;
+      let o=Math.max(0,Math.min(1,h-fromBottom)); if(o>0)o=.18+o*.72;
+      // left area under the copy stays quieter
+      if(col<6&&fromBottom>1)o*=.35;
+      d.style.opacity=o.toFixed(2);d.classList.toggle('on',o>.3);
+    });
+    step++;
+  }
+  tick();if(!reduce)setInterval(tick,1600);
+})();
+</script>
+</body>
+</html>
